@@ -1,9 +1,14 @@
 import React, {useState, useEffect} from 'react';
+
 import Link from 'next/link';
 import Head from 'next/head';
-import AppLayout from '../../components/AppLayout';
-import Password from 'antd/lib/input/Password';
+
+import {Button, Input} from 'semantic-ui-react'
+
+
 import axios from 'axios'
+
+import AppLayout from '../../components/AppLayout';
 
 const Register = () =>{
 
@@ -42,12 +47,12 @@ const Register = () =>{
     useEffect(() => {
         if(password===''){
             setPasswordValid(false)
-            setPasswordValidTxt('8자 이상 15자 이하, 영문 대소문자, 숫자, 특수 문자 포함된 비밀번호를 입력해주세요.')
+            setPasswordValidTxt('8자 이상 20 이하, 영문 대소문자, 숫자, 특수 문자 포함된 비밀번호를 입력해주세요.')
         }else if(validatePassword(password)){
             setPasswordValid(true)
             setPasswordValidTxt('사용 가능한 비밀번호입니다.')
             //비밀번호, 재입력한 비밀번호 일치 확인
-            if(Password === ''){
+            if(password === ''){
                 setPasswordCheckValid(false)
                 setPasswordCheckValidTxt('')
             }
@@ -60,7 +65,7 @@ const Register = () =>{
             }
         } else{
             setPasswordValid(false)
-            setPasswordValidTxt('8자  이상 15자 이내, 영문 대소문자, 숫자, 특수 문자 포함된 비밀번호를 입력해주세요.')
+            setPasswordValidTxt('8자 이상 20 이하, 영문 대소문자, 숫자, 특수 문자 포함된 비밀번호를 입력해주세요.')
         }
     },[password, passwordCheck]);
 
@@ -86,40 +91,53 @@ const Register = () =>{
         }
     },[setEmailValid, passwordValid, passwordCheckValid, name]);
 
-
-
+    axios.defaults.baseURL = 'http://localhost:5555'
+    
+    //regiser 보내기
+    function onRegisterClick(name, email, password){
+        return axios.post(('/users/create/'),
+        {   
+            email,
+            name,
+            password
+        })
+        .then((response) => {
+            console.log (response.data)
+        })
+    }
 
     return (
         <>
             <Head>
                 <title>BITC2C</title>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.18.1/antd.css" />
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/3.18.1/antd.js"></script>
+                <link
+                    rel="stylesheet"
+                    href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css"
+                />
             </Head>
             <AppLayout>
                 <div>
                     <h1>Register</h1>
                     <div>
-                        <input type="text" onChange={e => setName(e.target.value)} name="username" placeholder="Name"/>
+                        <Input type="text" onChange={e => setName(e.target.value)} name="username" placeholder="Name" />
                     </div>
                     <div>
-                        <input onChange={e => setEmail(e.target.value)} type="text" name="email" placeholder="Email"/>
+                        <Input onChange={e => setEmail(e.target.value)} type="text" name="email" placeholder="Email" />
                         <a>{emailValidTxt}</a>
-                    </div>  
-
-                    <div>
-                        <input type="password" onChange={e => setPassword(e.target.value)} name="pass" placeholder="Password"/>
+                    </div>
+                    <div >
+                        <Input type="password" onChange={e => setPassword(e.target.value)} name="pass" placeholder="Password" />
                         <a>{passwordValidTxt}</a>
                     </div>
-                    <div>
-                        <input type="password" onChange={e => setPasswordCheck(e.target.value)} name="passCheck" placeholder="Password Check"/>
+                    <div >
+                        <Input type="password" onChange={e => setPasswordCheck(e.target.value)} name="passCheck" placeholder="Password Check" />
                         <a>{passwordCheckValidTxt}</a>
                     </div>
 
                     <div >
-                        <button id='registbtn'>
+                        <Button id='registbtn' onClick={() => onRegisterClick(name, email, password)}>
                             Register
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </AppLayout>
