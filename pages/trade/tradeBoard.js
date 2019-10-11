@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import AppLayout from '../../components/AppLayout';
@@ -8,38 +8,21 @@ const tradebox = require('../../module/tradeBox');
 
 
 
+
+
 const TradeBoard =()=> {
-    const [Item,setItem] = useState({content:[]});
+    const [items, setItems] = useState([]);
     let i =1;
 
-    
-
-    axios.get('http://localhost:5555/tradeboards/index/'+i).then((response)=>{
-        console.log('yamyam',response.data);
-        setItem(response.data)
-        console.log(Item)
-        return i
-        }).catch((e) =>{
-            console.log(e)
-    });
-
-   
-        
-    
-    console.log(2);
-    
-   
-    
-    
-    
-    // item.map((userItem)=>{
-    //     const item = userItem;
-    //     console.log(item.id);
-    // })
+    axios.get('http://localhost:5555/tradeboards/index/'+i).then(response => {
+        setItems(response.data);
+        console.log(items)
+    })
+ 
+    console.log("items: " + items.toString())
     return (
         
 
-        
         <AppLayout>
             
             <div className="trade-list-in">
@@ -51,9 +34,13 @@ const TradeBoard =()=> {
 
                 <div calssName="info-wrapper">
                     <div className="name width20 spe-width">
+
                         <a>
                             <span>
                                 <span className="font-weight">item</span>
+                                {items.map(item => (
+                                <span key={item.id}>{item.createdAt}</span>
+                                ))}
                                 <div className="icon-tips-hover ivu-tooltip"></div>
                             </span>
                         </a>
@@ -71,7 +58,6 @@ const TradeBoard =()=> {
                 </div>
             </div>
         </AppLayout>
-
     );
 };
 
