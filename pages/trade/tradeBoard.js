@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 import React,{useState,useEffect} from 'react';
+=======
+import React,{useState, useEffect} from 'react';
+>>>>>>> 63e2bc147762d5b61830065c2372461edd966875
 import Link from 'next/link';
 import Head from 'next/head';
 import AppLayout from '../../components/AppLayout';
 import axios from 'axios';
 const tradebox = require('../../module/tradeBox');
 
+<<<<<<< HEAD
 
 
 
@@ -20,8 +25,29 @@ const TradeBoard =()=> {
     })
  
     console.log("items: " + items.toString())
+=======
+const TradeBoard =()=> {
+    const [items, setItems] = useState('')
+
+    const baseURL = 'http://localhost:5555'
+    const i = 1
+    function getItems() {
+        axios.get(baseURL +'/tradeboards/index/1')
+            .then((response) => {
+                console.log(response.data)
+                const data = response.data
+                setItems(data)
+            })
+    }
+
+    useEffect(() =>{
+        getItems()
+    },[])
+
+    console.log('items :',items)
+
+>>>>>>> 63e2bc147762d5b61830065c2372461edd966875
     return (
-        
 
         <AppLayout>
             
@@ -50,9 +76,11 @@ const TradeBoard =()=> {
                     <span className="price average">10000000krw</span>
                     <div className="operation average">
                         <div className="trade-btn-control">
-                            <button class="ui button">
+                            <button className="ui button">
                                 Follow
                             </button>
+                        </div>
+                        <div>
                         </div>
                     </div>
                 </div>

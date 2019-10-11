@@ -1,24 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 
 import Head from 'next/head';
 
 import AppLayout from '../../components/AppLayout';
 import { Button, Input } from 'semantic-ui-react'
-import basicStyle from '../../components/BasicStyle'
+import axios from "axios"
+import Router from "next/router"
 
 const Login = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [alert, setAlert] = useState('')
 
-    useEffect(() => {
-        console.log(email)
-        console.log(password)
-    }, [email]);
+    const baseURL = 'http://localhost:5555'
+    //regiser 보내기
+    function onLoginClick(email, password){
+        return axios.post((baseURL+'/users/login/'),
+            {
+                email,
+                password
+            })
+            .then((response) => {
+                    console.log(response.data)
+                    Router.push('/');
 
-    const onClickLogin = () => {
-
+            }).catch((e) => {
+                setAlert("아이디 또는 비밀번호를 다시 확인하세요.\n 등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.")
+            })
     }
 
     return (
@@ -38,11 +48,14 @@ const Login = () => {
                     </div>
 
                     <div>
-                        <Input onChange={e => setPassword(e.target.value)} name="pass" placeholder="Password" />
+                        <Input onChange={e => setPassword(e.target.value)} type="password" name="pass" placeholder="Password" />
+                    </div>
+                    <div>
+                        <a>{alert}</a>
                     </div>
 
                     <div>
-                        <Button onClick={onClickLogin}>
+                        <Button onClick={() => onLoginClick(email, password)}>
                             Login
                         </Button>
                     </div>

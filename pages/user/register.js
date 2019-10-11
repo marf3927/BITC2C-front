@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-
+import Router from 'next/router'
 import Link from 'next/link';
 import Head from 'next/head';
 
@@ -91,18 +91,18 @@ const Register = () =>{
         }
     },[setEmailValid, passwordValid, passwordCheckValid, name]);
 
-    axios.defaults.baseURL = 'http://localhost:5555'
-    
+
+    const baseURL = 'http://localhost:5555'
     //regiser 보내기
     function onRegisterClick(name, email, password){
-        return axios.post(('/users/create/'),
+        return axios.post((baseURL+'/users/create/'),
         {   
             email,
             name,
             password
         })
         .then((response) => {
-            console.log (response.data)
+            Router.push('/user/login/');
         })
     }
 
