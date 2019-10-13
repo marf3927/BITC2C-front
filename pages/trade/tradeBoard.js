@@ -9,7 +9,6 @@ const TradeBoard = () => {
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
     const [selected, setSelected] = useState("All")
-    const [tapActive, setTapActive] = useState([true, false, false])
 
     const baseURL = 'http://localhost:5555'
 
@@ -19,21 +18,18 @@ const TradeBoard = () => {
 
     function getItems() {
         if (selected === "All") {
-            setTapActive([true, false, false])
             axios.get(baseURL + '/tradeboards/index/' + page)
                 .then((response) => {
                     const data = response.data
                     setItems(data)
                 })
         } else if (selected === "Buy") {
-            setTapActive([false, true, false])
             axios.get(baseURL + '/tradeboards/sell/' + page)
                 .then((response) => {
                     const data = response.data
                     setItems(data)
                 })
         } else if (selected === "Sell") {
-            setTapActive([false, false, true])
             axios.get(baseURL + '/tradeboards/buy/' + page)
                 .then((response) => {
                     const data = response.data
@@ -59,8 +55,6 @@ const TradeBoard = () => {
     }
 
     return (
-
-
         <>
             <Head>
                 <title>BITC2C</title>
@@ -72,9 +66,9 @@ const TradeBoard = () => {
             <AppLayout>
                 <div>
                     <div className="ui pointing secondary menu">
-                        <a id="All" className="item active" onClick={() => tabClick("All")}>All</a>
-                        <a id="Buy" className="item" onClick={() => tabClick("Buy")}>Buy</a>
-                        <a id="Sell" className="item" onClick={() => tabClick("Sell")}>Sell</a>
+                        <a id="All" className={`item ${selected ==="All" ? "active" : ""}`} onClick={() => tabClick("All")}>All</a>
+                        <a id="Buy" className={`item ${selected ==="Buy" ? "active" : ""}`} onClick={() => tabClick("Buy")}>Buy</a>
+                        <a id="Sell" className={`item ${selected ==="Sell" ? "active" : ""}`} onClick={() => tabClick("Sell")}>Sell</a>
                     </div>
                     <div className="ui segment active tab">
                     <Table singleLine>
