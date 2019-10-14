@@ -9,7 +9,6 @@ import AppLayout from '../../components/AppLayout';
 import axios from 'axios';
 const tradebox = require('../../module/tradeBox');
 
-<<<<<<< HEAD
 
 
 
@@ -25,7 +24,7 @@ const TradeBoard =()=> {
     })
  
     console.log("items: " + items.toString())
-=======
+
 const TradeBoard =()=> {
     const [items, setItems] = useState('')
 
@@ -46,7 +45,7 @@ const TradeBoard =()=> {
 
     console.log('items :',items)
 
->>>>>>> 63e2bc147762d5b61830065c2372461edd966875
+
     return (
 
         <AppLayout>
