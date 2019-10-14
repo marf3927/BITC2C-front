@@ -1,91 +1,124 @@
-<<<<<<< HEAD
-import React,{useState,useEffect} from 'react';
-=======
-import React,{useState, useEffect} from 'react';
->>>>>>> 63e2bc147762d5b61830065c2372461edd966875
-import Link from 'next/link';
-import Head from 'next/head';
-import AppLayout from '../../components/AppLayout';
-import axios from 'axios';
-const tradebox = require('../../module/tradeBox');
+import React, {useState, useEffect} from 'react'
+import Link from 'next/link'
+import AppLayout from '../../components/AppLayout'
+import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
+import axios from 'axios'
 
 
-
-
-
-
-const TradeBoard =()=> {
-    const [items, setItems] = useState([]);
-    let i =1;
-
-    axios.get('http://localhost:5555/tradeboards/index/'+i).then(response => {
-        setItems(response.data);
-        console.log(items)
-    })
- 
-    console.log("items: " + items.toString())
-
-const TradeBoard =()=> {
-    const [items, setItems] = useState('')
+const TradeBoard = () => {
+    const [items, setItems] = useState([])
+    const [page, setPage] = useState(1)
+    const [selected, setSelected] = useState("All")
 
     const baseURL = 'http://localhost:5555'
-    const i = 1
-    function getItems() {
-        axios.get(baseURL +'/tradeboards/index/1')
-            .then((response) => {
-                console.log(response.data)
-                const data = response.data
-                setItems(data)
-            })
+
+    useEffect(() => {
+        getItems()
+    }, [, page, selected])
+
+    function getDetail(){
+        return 
     }
 
-    useEffect(() =>{
-        getItems()
-    },[])
+    function getItems() {
+        if (selected === "All") {
+            axios.get(baseURL + '/tradeboards/index/' + page)
+                .then((response) => {
+                    const data = response.data
+                    setItems(data)
+                })
+        } else if (selected === "Buy") {
+            axios.get(baseURL + '/tradeboards/sell/' + page)
+                .then((response) => {
+                    const data = response.data
+                    setItems(data)
+                })
+        } else if (selected === "Sell") {
+            axios.get(baseURL + '/tradeboards/buy/' + page)
+                .then((response) => {
+                    const data = response.data
+                    setItems(data)
+                })
+        }
 
-    console.log('items :',items)
 
+    
+
+    }
+
+
+    function tabClick(e) {
+        setSelected(e)
+        setPage(1)
+    }
+
+    function NextPageClick() {
+        setPage(page + 1)
+    }
+
+    function PreviousPageClick() {
+        if (page > 1) {
+            setPage(page - 1)
+        }
+    }
 
     return (
-
-        <AppLayout>
+        <>
             
-            <div className="trade-list-in">
-                <div className="user-list average">
-                    <div className="avatar-container middle zero">
+            <AppLayout>
+                <div>
+                    <div className="ui pointing secondary menu">
+                        <a id="All" className={`item ${selected ==="All" ? "active" : ""}`} onClick={() => tabClick("All")}>All</a>
+                        <a id="Buy" className={`item ${selected ==="Buy" ? "active" : ""}`} onClick={() => tabClick("Buy")}>Buy</a>
+                        <a id="Sell" className={`item ${selected ==="Sell" ? "active" : ""}`} onClick={() => tabClick("Sell")}>Sell</a>
 
                     </div>
+                    <div className="ui segment active tab">
+                    <Table singleLine>
+                        <Table.Header>
+                            <Table.Row>
+                                <Table.HeaderCell>method</Table.HeaderCell>
+                                <Table.HeaderCell>status</Table.HeaderCell>
+                                <Table.HeaderCell>type</Table.HeaderCell>
+                                <Table.HeaderCell>price</Table.HeaderCell>
+                                <Table.HeaderCell>amount</Table.HeaderCell>
+                                <Table.HeaderCell>updated</Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                            {items.map((item) => {
+
+                                return   <Link href={{ pathname :"/trade/TBdetail", query : {id: item.id}}}  key={item.id} ><Table.Row >
+                                    <Table.Cell>{item.method}</Table.Cell>
+                                    <Table.Cell>{item.status}</Table.Cell>
+                                    <Table.Cell>{item.type}</Table.Cell>
+                                    <Table.Cell>{item.price}</Table.Cell>
+                                    <Table.Cell>{item.amount}</Table.Cell>
+                                    <Table.Cell>{item.updatedAt}</Table.Cell>
+                                </Table.Row>
+                                </Link>
+                            })}
+                        </Table.Body>
+                    </Table>
                 </div>
-
-                <div calssName="info-wrapper">
-                    <div className="name width20 spe-width">
-
-                        <a>
-                            <span>
-                                <span className="font-weight">item</span>
-                                {items.map(item => (
-                                <span key={item.id}>{item.createdAt}</span>
-                                ))}
-                                <div className="icon-tips-hover ivu-tooltip"></div>
-                            </span>
-                        </a>
-                    </div>
-                    <span className="stars width20 average spe-width18">0.3729amount</span>
-                    <span className="amout width20 average">1000000krw</span>
-                    <span className="price average">10000000krw</span>
-                    <div className="operation average">
-                        <div className="trade-btn-control">
-                            <button className="ui button">
-                                Follow
-                            </button>
-                        </div>
-                        <div>
-                        </div>
-                    </div>
                 </div>
-            </div>
-        </AppLayout>
-    );
-};
+                <div>
+                    <span><Button onClick={() => PreviousPageClick()}><Icon name="caret left"/></Button></span>
+                    <span><a>{page}</a></span>
+                    <span><Button onClick={() => NextPageClick()}><Icon name="caret right"/></Button></span>
+                    <span className="ui icon input">
+                        <Input type="text" id="page" name="page" placeholder="Page..."/>
+                        <i aria-hidden="true" className="search circular link icon" onClick={e => {
+                            if (document.getElementById('page').value >= 1) {
+                                setPage(document.getElementById('page').value)
+                            }
+                        }}></i>
+                    </span>
+                </div>
+            </AppLayout>
+       </>
+    )
+}
+
 
 export default TradeBoard;
