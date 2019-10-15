@@ -39,9 +39,13 @@ const TradeBoard = () => {
                 })
         }
     }
-    function gotoDetail(item){
+    function gotoDetail(item,status){
         const itemID=item;
-        Router.push('/trade/TBdetail?id='+itemID)
+        const statusCode=status
+        if(status === 0){
+            Router.push('/trade/TBdetail?id='+itemID)
+        }
+        
     }
 
     function tabClick(e) {
@@ -85,7 +89,7 @@ const TradeBoard = () => {
                         <Table.Body>
                             {items.map((item) => {
 
-                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id)}>
+                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status)}>
                                     <Table.Cell>{item.method}</Table.Cell>
                                     <Table.Cell>{item.status}</Table.Cell>
                                     <Table.Cell>{item.type}</Table.Cell>

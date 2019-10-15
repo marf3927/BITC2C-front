@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import AppLayout from '../../components/AppLayout'
 import axios from 'axios'
 import fetch from 'isomorphic-unfetch'
-
+import Router from 'next/router'
 
 
 
@@ -35,9 +35,9 @@ const TBdetail = ({ id }) => {
         console.log("asd2")
     }
     // console.log(props.key);
-    function gotoTrdae(){
+    function gotoTrade(){
 
-
+        Router.push('/trade/TBtrade')
     }
     return (
         <>
@@ -49,7 +49,7 @@ const TBdetail = ({ id }) => {
   
                         <div className="four column centered row">
                             <div className="column">
-                                <button className="ui primary button">
+                                <button className="ui primary button" onClick={()=>gotoTrade()}>
                                     BUY
                  </button>
                             </div>
