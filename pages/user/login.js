@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-
+import {useSelector } from "react-redux";
 import Head from 'next/head';
 
 import AppLayout from '../../components/AppLayout';
@@ -14,7 +14,8 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [alert, setAlert] = useState('')
 
-    const baseURL = 'http://localhost:5555'
+    const baseURL = useSelector(state => state.auth.baseURL, [])
+
     //regiser 보내기
     function onLoginClick(email, password){
         return axios.post((baseURL+'/users/login/'),
@@ -24,8 +25,8 @@ const Login = () => {
             })
             .then((response) => {
                     console.log(response.data)
-                    Router.push('/');
 
+                    Router.push('/');
             }).catch((e) => {
                 setAlert("아이디 또는 비밀번호를 다시 확인하세요.\n 등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.")
             })

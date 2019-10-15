@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 import AppLayout from '../../components/AppLayout'
+import { useSelector} from "react-redux";
 import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 import axios from 'axios'
 
@@ -9,8 +10,7 @@ const TradeBoard = () => {
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
     const [selected, setSelected] = useState("All")
-
-    const baseURL = 'http://localhost:5555'
+    const baseURL = useSelector(state => state.auth.baseURL, [])
 
     useEffect(() => {
         getItems()

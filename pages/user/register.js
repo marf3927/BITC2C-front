@@ -1,14 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import Router from 'next/router'
-import Link from 'next/link';
+import {useSelector } from "react-redux";
 import Head from 'next/head';
-
 import {Button, Input} from 'semantic-ui-react'
-
-
 import axios from 'axios'
-
 import AppLayout from '../../components/AppLayout';
+
 
 const Register = () =>{
 
@@ -92,7 +89,7 @@ const Register = () =>{
     },[setEmailValid, passwordValid, passwordCheckValid, name]);
 
 
-    const baseURL = 'http://localhost:5555'
+    const baseURL = useSelector(state => state.auth.baseURL, [])
     //regiser 보내기
     function onRegisterClick(name, email, password){
         return axios.post((baseURL+'/users/create/'),
