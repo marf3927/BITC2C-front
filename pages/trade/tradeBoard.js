@@ -40,10 +40,6 @@ const TradeBoard = () => {
                     setItems(data)
                 })
         }
-
-
-    
-
     }
 
 
