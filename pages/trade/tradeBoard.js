@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
-import Head from 'next/head'
 import AppLayout from '../../components/AppLayout'
 import { useSelector} from "react-redux";
 import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 import axios from 'axios'
+
 
 const TradeBoard = () => {
     const [items, setItems] = useState([])
@@ -15,6 +15,10 @@ const TradeBoard = () => {
     useEffect(() => {
         getItems()
     }, [, page, selected])
+
+    function getDetail(){
+        return 
+    }
 
     function getItems() {
         if (selected === "All") {
@@ -37,7 +41,11 @@ const TradeBoard = () => {
                 })
         }
 
+
+    
+
     }
+
 
     function tabClick(e) {
         setSelected(e)
@@ -56,19 +64,14 @@ const TradeBoard = () => {
 
     return (
         <>
-            <Head>
-                <title>BITC2C</title>
-                <link
-                    rel="stylesheet"
-                    href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css"
-                />
-            </Head>
+            
             <AppLayout>
                 <div>
                     <div className="ui pointing secondary menu">
                         <a id="All" className={`item ${selected ==="All" ? "active" : ""}`} onClick={() => tabClick("All")}>All</a>
                         <a id="Buy" className={`item ${selected ==="Buy" ? "active" : ""}`} onClick={() => tabClick("Buy")}>Buy</a>
                         <a id="Sell" className={`item ${selected ==="Sell" ? "active" : ""}`} onClick={() => tabClick("Sell")}>Sell</a>
+
                     </div>
                     <div className="ui segment active tab">
                     <Table singleLine>
@@ -84,7 +87,8 @@ const TradeBoard = () => {
                         </Table.Header>
                         <Table.Body>
                             {items.map((item) => {
-                                return <Table.Row key={item.id}>
+
+                                return   <Link href={{ pathname :"/trade/TBdetail", query : {id: item.id}}}  key={item.id} ><Table.Row >
                                     <Table.Cell>{item.method}</Table.Cell>
                                     <Table.Cell>{item.status}</Table.Cell>
                                     <Table.Cell>{item.type}</Table.Cell>
@@ -92,6 +96,7 @@ const TradeBoard = () => {
                                     <Table.Cell>{item.amount}</Table.Cell>
                                     <Table.Cell>{item.updatedAt}</Table.Cell>
                                 </Table.Row>
+                                </Link>
                             })}
                         </Table.Body>
                     </Table>
@@ -111,8 +116,9 @@ const TradeBoard = () => {
                     </span>
                 </div>
             </AppLayout>
-        </>
+       </>
     )
 }
 
-export default TradeBoard
+
+export default TradeBoard;
