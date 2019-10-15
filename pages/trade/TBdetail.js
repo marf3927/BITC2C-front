@@ -1,16 +1,19 @@
 import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
+import { useSelector} from "react-redux";
 import {useRouter} from 'next/router'
 import AppLayout from '../../components/AppLayout'
 import axios from 'axios'
+import fetch from 'isomorphic-unfetch'
 
 
-const TBdetail= ({})=>{
+const TBdetail= ({id})=>{
+    const baseURL = useSelector(state => state.auth.baseURL, [])
+
     const router = useRouter();
    
     const [items,setItems] =useState([])
-   
-    const baseURL = 'http://localhost:5555'
+
     //console.log('asdasd',id);
     useEffect(() => {
         
@@ -43,6 +46,11 @@ const TBdetail= ({})=>{
 
      </>
     )
+}
+
+TBdetail.getInitialProps = async ({ req }) => {
+    const res = await fetch('http://localhost:3000/trade/tradeBoard')
+    return { id: res }
 }
 
 export default TBdetail;
