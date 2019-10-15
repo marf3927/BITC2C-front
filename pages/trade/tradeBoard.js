@@ -4,7 +4,7 @@ import AppLayout from '../../components/AppLayout'
 import { useSelector} from "react-redux";
 import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 import axios from 'axios'
-
+import Router from "next/router"
 
 const TradeBoard = () => {
     const [items, setItems] = useState([])
@@ -16,9 +16,7 @@ const TradeBoard = () => {
         getItems()
     }, [, page, selected])
 
-    function getDetail(){
-        return 
-    }
+    
 
     function getItems() {
         if (selected === "All") {
@@ -41,7 +39,10 @@ const TradeBoard = () => {
                 })
         }
     }
-
+    function gotoDetail(item){
+        const itemID=item;
+        Router.push('/trade/TBdetail?id='+itemID)
+    }
 
     function tabClick(e) {
         setSelected(e)
@@ -84,7 +85,7 @@ const TradeBoard = () => {
                         <Table.Body>
                             {items.map((item) => {
 
-                                return   <Link href={{ pathname :"/trade/TBdetail", query : {id: item.id}}}  key={item.id} ><Table.Row >
+                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id)}>
                                     <Table.Cell>{item.method}</Table.Cell>
                                     <Table.Cell>{item.status}</Table.Cell>
                                     <Table.Cell>{item.type}</Table.Cell>
@@ -92,7 +93,7 @@ const TradeBoard = () => {
                                     <Table.Cell>{item.amount}</Table.Cell>
                                     <Table.Cell>{item.updatedAt}</Table.Cell>
                                 </Table.Row>
-                                </Link>
+                                
                             })}
                         </Table.Body>
                     </Table>

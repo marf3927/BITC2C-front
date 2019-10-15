@@ -7,6 +7,8 @@ import axios from 'axios'
 import fetch from 'isomorphic-unfetch'
 
 
+
+
 const TBdetail = ({ id }) => {
     const baseURL = useSelector(state => state.auth.baseURL, [])
 
@@ -33,21 +35,25 @@ const TBdetail = ({ id }) => {
         console.log("asd2")
     }
     // console.log(props.key);
+    function gotoTrdae(){
+
+
+    }
     return (
         <>
 
 
             <AppLayout>
-                <div class="ui two column centered grid">
+                <div className="ui two column centered grid">
                     {JSON.stringify(items)}
   
-                        <div class="four column centered row">
-                            <div class="column">
-                                <button class="ui primary button">
+                        <div className="four column centered row">
+                            <div className="column">
+                                <button className="ui primary button">
                                     BUY
                  </button>
                             </div>
-                            <div class="column">
+                            <div className="column">
                                 
                             </div>
                         </div>
