@@ -7,21 +7,26 @@ import axios from 'axios'
 const TBdetail= ({})=>{
     const router = useRouter();
     const [items,setItems] =useState([])
-
+    const [id,setId] = useState(router.query.id);
     const baseURL = 'http://localhost:5555'
 
     useEffect(() => {
-        console.log(router.query);
+        
         getItems()
-    }, [ ])
-
+    }, [ ,items,id])
+    console.log('id',router.query.id);
     // console.log(props.location.query);
-    function getItems(id){
+    function getItems(){
+        setId(router.query.id)
+        console.log('item11',router.query.id)
+        console.log("asd1")
+        
         axios.get(baseURL+'/detail?id='+id).then((response)=>{
             const data = response.data
             setItems(data)
 
         })
+        console.log("asd2")
     }
    // console.log(props.key);
     return (
@@ -31,7 +36,7 @@ const TBdetail= ({})=>{
      <AppLayout>
             
             <a>{items.type}</a>
-            <a>{router.query.detail}</a>
+      
 
         </AppLayout>
 
