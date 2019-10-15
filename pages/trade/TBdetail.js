@@ -4,24 +4,25 @@ import {useRouter} from 'next/router'
 import AppLayout from '../../components/AppLayout'
 import axios from 'axios'
 
+
 const TBdetail= ({})=>{
     const router = useRouter();
+   
     const [items,setItems] =useState([])
-    const [id,setId] = useState(router.query.id);
+   
     const baseURL = 'http://localhost:5555'
-
+    //console.log('asdasd',id);
     useEffect(() => {
         
         getItems()
-    }, [ ,items,id])
-    console.log('id',router.query.id);
+    }, [])
+
     // console.log(props.location.query);
     function getItems(){
-        setId(router.query.id)
-        console.log('item11',router.query.id)
-        console.log("asd1")
-        
-        axios.get(baseURL+'/detail?id='+id).then((response)=>{
+        const {id} = router.query
+        console.log('asdfsasdf',id);
+        axios.get(baseURL+'/tradeboards/detail?id='+id).then((response)=>{
+           console.log("start")
             const data = response.data
             setItems(data)
 
@@ -35,8 +36,8 @@ const TBdetail= ({})=>{
            
      <AppLayout>
             
-            <a>{items.type}</a>
-      
+          {items.type}
+
 
         </AppLayout>
 
