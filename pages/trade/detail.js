@@ -15,8 +15,9 @@ const Detail = ({ id }) => {
     const baseURL = useSelector(state => state.auth.baseURL, [])
 
     const router = useRouter();
-    console.log("3333: ", router.query);
-    const [items,setItems] =useState([])
+
+    const [items, setItems] = useState([])
+
 
     //console.log('asdasd',id);
     useEffect(() => {
@@ -27,56 +28,66 @@ const Detail = ({ id }) => {
     // console.log(props.location.query);
     function getItems() {
         const { id } = router.query
-        
+
         axios.get(baseURL + '/trade/detail?id=' + id).then((response) => {
-            
+
             const data = response.data
             setItems(data)
 
         })
-      
+
     }
     // console.log(props.key);
-    function gotoTrade(){
-        var token = Cookies.get("logintoken");
-        console.log("zzzzzzzzz: ",token);
-       // const token = Cookies.get('logintoken');
+    function gotoTrade() {
+        const { id } = router.query
+
+        const token = Cookies.get("logintoken");
+        console.log(token);
+        // const token = Cookies.get('logintoken');
         //console.log('token = ',token);
-        axios.get(baseURL +'/users/someAPI',{
-            params:{
-                token:token
-            }
-        }).then((data)=>{
-            console.log(data.data.email);
-            Router.push('/trade/Exchange')
-        }).catch((e)=>{
-            console.log(e);
+        axios.post(baseURL + '/trade/exchange', {
+            token, id
+        }).then((data) => {
+            console.log('goto tarde', data.data);
+            Router.push({
+                pathname: '/trade/exchange',
+                query: { name: data.data }
+            })
         })
 
-    }
-    // console.log(props.key);
+        }
     return (
-        <>
+            <>
 
 
-            <AppLayout>
-                <div>
-                    <span><Button id="WritingBoard" onClick={() => gotoTrade()}>Writing</Button></span>
+                <AppLayout>
+                    <div className="ui two column centered grid">
+                        {JSON.stringify(items)}
+
+                        <div className="four column centered row">
+                            <div className="column">
+                                <button className="ui primary button" onClick={() => gotoTrade()}>
+                                    BUY
+                 </button>
+                            </div>
+                            <div className="column">
+
+                            </div>
+                        </div>
+                    </div>
 
 
-                </div>
 
 
-            </AppLayout>
+                </AppLayout>
 
-        </>
-    )
-}
+            </>
+        )
+    }
 
-Detail.getInitialProps = async ({ req }) => {
-    const res = await fetch('http://localhost:3000/trade/list')
-    console.log("??????: ", res);
-    return { id: res }
-}
+    Detail.getInitialProps = async ({ req }) => {
+        const res = await fetch('http://localhost:3000/trade/list')
+        return { id: res }
+    }
 
-export default Detail;
+    export default Detail;

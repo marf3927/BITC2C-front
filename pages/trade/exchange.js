@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import axios from 'axios';
-
+import { withRouter } from 'next/router'
 
 
 
@@ -12,7 +12,7 @@ const Exchange = ()=>{
 
     },[])
 
-    return <div>TBrade</div>
+    return <div>{Router.query}</div>
 
 }
 
