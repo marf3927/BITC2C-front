@@ -11,6 +11,7 @@ import Cookies from 'js-cookie';
 
 
 const TBdetail = ({ id }) => {
+    axios.defaults.headers.post['Access-Control-Allow-Origin']='*';
     const baseURL = useSelector(state => state.auth.baseURL, [])
 
     const router = useRouter();
@@ -44,12 +45,13 @@ const TBdetail = ({ id }) => {
         //console.log('token = ',token);
         axios.get(baseURL +'/users/someAPI',{
             params:{
-            token : 'asdf'
-        }}
-           
-    ).then((data)=>{
-            console.log(data);
+                token:token
+            }
+        }).then((data)=>{
+            console.log(data.data.email);
             Router.push('/trade/TBtrade')
+        }).catch((e)=>{
+            console.log(e);
         })
         
     }
