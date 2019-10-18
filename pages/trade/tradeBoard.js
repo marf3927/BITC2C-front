@@ -63,6 +63,16 @@ const TradeBoard = () => {
         }
     }
 
+    function statusConfirm(number){
+        console.log(number)
+        if(number ===0){
+            return "Standby"
+        }else if(number === 1){
+            return "Progress"
+        }else {
+            return "completed"
+        }
+    }
     return (
         <>
             
@@ -91,7 +101,7 @@ const TradeBoard = () => {
 
                                 return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status)}>
                                     <Table.Cell>{item.method}</Table.Cell>
-                                    <Table.Cell>{item.status}</Table.Cell>
+                                    <Table.Cell>{statusConfirm(item.status)}</Table.Cell>
                                     <Table.Cell>{item.type}</Table.Cell>
                                     <Table.Cell>{item.price}</Table.Cell>
                                     <Table.Cell>{item.amount}</Table.Cell>
