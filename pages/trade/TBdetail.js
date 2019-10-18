@@ -5,6 +5,9 @@ import {useRouter} from 'next/router'
 import AppLayout from '../../components/AppLayout'
 import axios from 'axios'
 import fetch from 'isomorphic-unfetch'
+import Router from 'next/router'
+import Cookies from 'js-cookie';
+import { Button, Table, Input, Icon, Tab } from 'semantic-ui-react'
 
 
 const TBdetail= ({id})=>{
@@ -31,21 +34,40 @@ const TBdetail= ({id})=>{
             setItems(data)
 
         })
-        console.log("asd2")
+      
     }
-   // console.log(props.key);
+    // console.log(props.key);
+    function gotoTrade(){
+        var token = Cookies.get("logintoken");
+        console.log("zzzzzzzzz: ",token);
+       // const token = Cookies.get('logintoken');
+        //console.log('token = ',token);
+        axios.get(baseURL +'/users/someAPI',{
+            params: {
+                token: token
+            }
+    }).then((data)=>{
+            console.log(data);
+            Router.push('/trade/TBtrade')
+        })
+
+    }
+    // console.log(props.key);
     return (
         <>
 
-           
-     <AppLayout>
-            
-          {items.type}
+
+            <AppLayout>
+                <div>
+                    <span><Button id="WritingBoard" onClick={() => gotoTrade()}>Writing</Button></span>
 
 
-        </AppLayout>
+                </div>
 
-     </>
+
+            </AppLayout>
+
+        </>
     )
 }
 
