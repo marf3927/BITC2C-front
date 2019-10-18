@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import {useSelector } from "react-redux";
 import Head from 'next/head';
-
+import { Cookies } from 'react-cookie';
 import AppLayout from '../../components/AppLayout';
 import { Button, Input } from 'semantic-ui-react'
 import axios from "axios"
 import Router from "next/router"
 
 const Login = () => {
-
+    const cookies = new Cookies();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [alert, setAlert] = useState('')
@@ -24,8 +24,9 @@ const Login = () => {
                 password
             })
             .then((response) => {
-                    console.log(response.data)
-
+                    console.log('front_login_',response.data)
+                    const token = response.data.token;
+                    cookies.set('logintoken',token)
                     Router.push('/');
             }).catch((e) => {
                 setAlert("아이디 또는 비밀번호를 다시 확인하세요.\n 등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.")
