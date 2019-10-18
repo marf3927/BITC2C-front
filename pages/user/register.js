@@ -105,9 +105,6 @@ const Register = () =>{
 
     return (
         <>
-            <Head>
-                <title>BITC2C</title>
-            </Head>
             <AppLayout>
                 <div>
                     <h1>Register</h1>

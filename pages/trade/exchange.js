@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 
-const TBtrade = ()=>{
+const Exchange = ()=>{
     const baseURL = useSelector(state => state.auth.baseURL, [])
 
     useEffect(()=>{
@@ -16,4 +16,4 @@ const TBtrade = ()=>{
 
 }
 
-export default TBtrade;
+export default Exchange;

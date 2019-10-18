@@ -6,7 +6,7 @@ import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 import axios from 'axios'
 import Router from "next/router"
 
-const TradeBoard = () => {
+const List = () => {
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
     const [selected, setSelected] = useState("All")
@@ -16,23 +16,21 @@ const TradeBoard = () => {
         getItems()
     }, [, page, selected])
 
-    
-
     function getItems() {
         if (selected === "All") {
-            axios.get(baseURL + '/tradeboards/index/' + page)
+            axios.get(baseURL + '/trade/index/' + page)
                 .then((response) => {
                     const data = response.data
                     setItems(data)
                 })
         } else if (selected === "Buy") {
-            axios.get(baseURL + '/tradeboards/sell/' + page)
+            axios.get(baseURL + '/trade/sell/' + page)
                 .then((response) => {
                     const data = response.data
                     setItems(data)
                 })
         } else if (selected === "Sell") {
-            axios.get(baseURL + '/tradeboards/buy/' + page)
+            axios.get(baseURL + '/trade/buy/' + page)
                 .then((response) => {
                     const data = response.data
                     setItems(data)
@@ -43,7 +41,7 @@ const TradeBoard = () => {
         const itemID=item;
         const statusCode=status
         if(status === 0){
-            Router.push('/trade/TBdetail?id='+itemID)
+            Router.push('/trade/Detail?id='+itemID)
         }
         
     }
@@ -132,4 +130,4 @@ const TradeBoard = () => {
 }
 
 
-export default TradeBoard;
+export default List;

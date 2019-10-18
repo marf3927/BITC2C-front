@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad39d735-5009-4cba-8402-d5f54727677a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/pages/QnA.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/QnA/detail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/admin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/admin/boardmanage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/admin/usermanage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/user/mypage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/module/tradeBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/module/tradeBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/trade/TBdetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/detail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/trade/TBtrade.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/exchange.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/trade/tradeBoard.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/user/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/user/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user/register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/user/user.js" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,6 +59,11 @@
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pages" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -78,7 +96,7 @@
       <workItem from="1571372832201" duration="403000" />
       <workItem from="1571373248780" duration="969000" />
       <workItem from="1571374432281" duration="521000" />
-      <workItem from="1571375422109" duration="2556000" />
+      <workItem from="1571375422109" duration="4098000" />
     </task>
     <servers />
   </component>

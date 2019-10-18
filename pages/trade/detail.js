@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 
 
 
-const TBdetail = ({ id }) => {
+const Detail = ({ id }) => {
     const baseURL = useSelector(state => state.auth.baseURL, [])
 
     const router = useRouter();
@@ -28,7 +28,7 @@ const TBdetail = ({ id }) => {
     function getItems() {
         const { id } = router.query
         
-        axios.get(baseURL + '/tradeboards/detail?id=' + id).then((response) => {
+        axios.get(baseURL + '/trade/detail?id=' + id).then((response) => {
             
             const data = response.data
             setItems(data)
@@ -44,12 +44,13 @@ const TBdetail = ({ id }) => {
         //console.log('token = ',token);
         axios.get(baseURL +'/users/someAPI',{
             params:{
-            token : 'asdf'
-        }}
-           
-    ).then((data)=>{
-            console.log(data);
-            Router.push('/trade/TBtrade')
+                token:token
+            }
+        }).then((data)=>{
+            console.log(data.data.email);
+            Router.push('/trade/Exchange')
+        }).catch((e)=>{
+            console.log(e);
         })
         
     }
@@ -82,9 +83,9 @@ const TBdetail = ({ id }) => {
     )
 }
 
-TBdetail.getInitialProps = async ({ req }) => {
+Detail.getInitialProps = async ({ req }) => {
     const res = await fetch('http://localhost:3000/trade/tradeBoard')
     return { id: res }
 }
 
-export default TBdetail;
+export default Detail;
