@@ -40,8 +40,11 @@ const List = () => {
     function gotoDetail(item,status){
         const itemID=item;
         const statusCode=status
-        if(status === 0){
-            Router.push('/trade/Detail?id='+itemID)
+        //진행상황이 0 이면 detail 페이지로 1이면 excahnge 페이지로
+        if(statusCode === 0){
+            Router.push('/trade/detail?id='+itemID)
+        }else if(statusCode ===1){
+            Router.push('/trade/exchange?id='+itemID)
         }
         
     }
