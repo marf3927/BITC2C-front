@@ -8,10 +8,11 @@ import fetch from 'isomorphic-unfetch'
 
 
 const TBdetail= ({id})=>{
+    console.log("2222: ", id);
     const baseURL = useSelector(state => state.auth.baseURL, [])
 
     const router = useRouter();
-   
+    console.log("3333: ", router);
     const [items,setItems] =useState([])
 
     //console.log('asdasd',id);
@@ -23,7 +24,7 @@ const TBdetail= ({id})=>{
     // console.log(props.location.query);
     function getItems(){
         const {id} = router.query
-        console.log('asdfsasdf',id);
+        console.log('!!!!!: ', router.query);
         axios.get(baseURL+'/tradeboards/detail?id='+id).then((response)=>{
            console.log("start")
             const data = response.data
@@ -50,6 +51,7 @@ const TBdetail= ({id})=>{
 
 TBdetail.getInitialProps = async ({ req }) => {
     const res = await fetch('http://localhost:3000/trade/tradeBoard')
+    console.log("??????: ", res);
     return { id: res }
 }
 

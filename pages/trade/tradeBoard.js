@@ -58,10 +58,20 @@ const TradeBoard = () => {
         }
     }
 
+    function WritingBoard() {
+       console.log("writing");
+    }
+
     return (
         <>
-            
+
             <AppLayout>
+                <style jsx>{`
+                    .WTbutton {
+                        float: right;
+                        color: rgb(92, 5, 80);
+                    }
+                `}</style>
                 <div>
                     <div className="ui pointing secondary menu">
                         <a id="All" className={`item ${selected ==="All" ? "active" : ""}`} onClick={() => tabClick("All")}>All</a>
@@ -110,6 +120,7 @@ const TradeBoard = () => {
                             }
                         }}></i>
                     </span>
+                    <span className="WTbutton"><Button id="WritingBoard" onClick={() => WritingBoard()}>Writing</Button></span>
                 </div>
             </AppLayout>
        </>
