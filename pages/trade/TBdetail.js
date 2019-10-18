@@ -6,6 +6,7 @@ import AppLayout from '../../components/AppLayout'
 import axios from 'axios'
 import fetch from 'isomorphic-unfetch'
 import Router from 'next/router'
+import Cookies from 'js-cookie';
 
 
 
@@ -15,6 +16,7 @@ const TBdetail = ({ id }) => {
     const router = useRouter();
 
     const [items, setItems] = useState([])
+    
 
     //console.log('asdasd',id);
     useEffect(() => {
@@ -25,9 +27,9 @@ const TBdetail = ({ id }) => {
     // console.log(props.location.query);
     function getItems() {
         const { id } = router.query
-    
+        
         axios.get(baseURL + '/tradeboards/detail?id=' + id).then((response) => {
-      
+            
             const data = response.data
             setItems(data)
 
@@ -36,8 +38,20 @@ const TBdetail = ({ id }) => {
     }
     // console.log(props.key);
     function gotoTrade(){
-
-        Router.push('/trade/TBtrade')
+        const token = Cookies.get("logintoken");
+        console.log(token);
+       // const token = Cookies.get('logintoken');
+        //console.log('token = ',token);
+        axios.get(baseURL +'/users/someAPI',{
+            params:{
+            token : 'asdf'
+        }}
+           
+    ).then((data)=>{
+            console.log(data);
+            Router.push('/trade/TBtrade')
+        })
+        
     }
     return (
         <>
