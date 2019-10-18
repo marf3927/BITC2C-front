@@ -12,8 +12,7 @@ const Login = () => {
     const cookies = new Cookies();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [alert, setAlert] = useState('')
-
+    const [alert, setAlert] = useState('aaa')
     const baseURL = useSelector(state => state.auth.baseURL, [])
 
     //regiser 보내기
