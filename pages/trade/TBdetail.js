@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
-import { useSelector } from "react-redux";
-import { useRouter } from 'next/router'
+import { useSelector} from "react-redux";
+import {useRouter} from 'next/router'
 import AppLayout from '../../components/AppLayout'
 import axios from 'axios'
 import fetch from 'isomorphic-unfetch'
-import Router from 'next/router'
 
 
 const TBdetail= ({id})=>{
@@ -13,12 +12,12 @@ const TBdetail= ({id})=>{
     const baseURL = useSelector(state => state.auth.baseURL, [])
 
     const router = useRouter();
-    console.log("3333: ", router);
+    console.log("3333: ", router.query);
     const [items,setItems] =useState([])
 
     //console.log('asdasd',id);
     useEffect(() => {
-
+        
         getItems()
     }, [])
 
@@ -32,39 +31,21 @@ const TBdetail= ({id})=>{
             setItems(data)
 
         })
-      
+        console.log("asd2")
     }
-    // console.log(props.key);
-    function gotoTrade(){
-
-        Router.push('/trade/TBtrade')
-    }
+   // console.log(props.key);
     return (
         <>
 
-
-            <AppLayout>
-                <div className="ui two column centered grid">
-                    {JSON.stringify(items)}
-  
-                        <div className="four column centered row">
-                            <div className="column">
-                                <button className="ui primary button" onClick={()=>gotoTrade()}>
-                                    BUY
-                 </button>
-                            </div>
-                            <div className="column">
-                                
-                            </div>
-                        </div>
-                    </div>
            
+     <AppLayout>
+            
+          {items.type}
 
-               
-                
-            </AppLayout>
 
-        </>
+        </AppLayout>
+
+     </>
     )
 }
 
