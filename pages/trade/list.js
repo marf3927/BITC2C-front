@@ -4,9 +4,10 @@ import AppLayout from '../../components/AppLayout'
 import { useSelector} from "react-redux";
 import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 import axios from 'axios'
+import Router from 'next/router'
 
 
-const TradeBoard = () => {
+const List = () => {
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
     const [selected, setSelected] = useState("All")
@@ -16,32 +17,35 @@ const TradeBoard = () => {
         getItems()
     }, [, page, selected])
 
-    function getDetail(){
-        return 
-    }
-
     function getItems() {
         if (selected === "All") {
-            axios.get(baseURL + '/tradeboards/index/' + page)
+            axios.get(baseURL + '/trade/index/' + page)
                 .then((response) => {
                     const data = response.data
                     setItems(data)
                 })
         } else if (selected === "Buy") {
-            axios.get(baseURL + '/tradeboards/sell/' + page)
+            axios.get(baseURL + '/trade/sell/' + page)
                 .then((response) => {
                     const data = response.data
                     setItems(data)
                 })
         } else if (selected === "Sell") {
-            axios.get(baseURL + '/tradeboards/buy/' + page)
+            axios.get(baseURL + '/trade/buy/' + page)
                 .then((response) => {
                     const data = response.data
                     setItems(data)
                 })
         }
     }
-
+    function gotoDetail(item,status){
+        const itemID=item;
+        const statusCode=status
+        if(status === 0){
+            Router.push('/trade/Detail?id='+itemID)
+        }
+        
+    }
 
     function tabClick(e) {
         setSelected(e)
@@ -57,10 +61,12 @@ const TradeBoard = () => {
             setPage(page - 1)
         }
     }
-
+    
     function WritingBoard() {
-       console.log("writing");
+        console.log("writing");
+        Router.push('/trade/Writing');
     }
+
 
     return (
         <>
@@ -94,7 +100,7 @@ const TradeBoard = () => {
                         <Table.Body>
                             {items.map((item) => {
 
-                                return   <Link href={{ pathname :"/trade/TBdetail", query : {id: item.id}}}  key={item.id} ><Table.Row >
+                                return   <Link href={{ pathname :"/trade/detail", query : {id: item.id}}}  key={item.id} ><Table.Row >
                                     <Table.Cell>{item.method}</Table.Cell>
                                     <Table.Cell>{item.status}</Table.Cell>
                                     <Table.Cell>{item.type}</Table.Cell>
@@ -120,7 +126,7 @@ const TradeBoard = () => {
                             }
                         }}></i>
                     </span>
-                    <span id="type1_right"><Button id="WritingBoard" onClick={() => WritingBoard()}>Writing</Button></span>
+                    <span className="type_right"><Button id="WritingBoard" onClick={() => WritingBoard()}>Writing</Button></span>
                 </div>
             </AppLayout>
        </>
@@ -128,4 +134,4 @@ const TradeBoard = () => {
 }
 
 
-export default TradeBoard;
+export default List;

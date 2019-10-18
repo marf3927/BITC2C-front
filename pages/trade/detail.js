@@ -10,8 +10,8 @@ import Cookies from 'js-cookie';
 import { Button, Table, Input, Icon, Tab } from 'semantic-ui-react'
 
 
-const TBdetail= ({id})=>{
-    console.log("2222: ", id);
+
+const Detail = ({ id }) => {
     const baseURL = useSelector(state => state.auth.baseURL, [])
 
     const router = useRouter();
@@ -25,11 +25,11 @@ const TBdetail= ({id})=>{
     }, [])
 
     // console.log(props.location.query);
-    function getItems(){
-        const {id} = router.query
-        console.log('!!!!!: ', router.query);
-        axios.get(baseURL+'/tradeboards/detail?id='+id).then((response)=>{
-           console.log("start")
+    function getItems() {
+        const { id } = router.query
+        
+        axios.get(baseURL + '/trade/detail?id=' + id).then((response) => {
+            
             const data = response.data
             setItems(data)
 
@@ -43,12 +43,14 @@ const TBdetail= ({id})=>{
        // const token = Cookies.get('logintoken');
         //console.log('token = ',token);
         axios.get(baseURL +'/users/someAPI',{
-            params: {
-                token: token
+            params:{
+                token:token
             }
-    }).then((data)=>{
-            console.log(data);
-            Router.push('/trade/TBtrade')
+        }).then((data)=>{
+            console.log(data.data.email);
+            Router.push('/trade/Exchange')
+        }).catch((e)=>{
+            console.log(e);
         })
 
     }
@@ -71,10 +73,10 @@ const TBdetail= ({id})=>{
     )
 }
 
-TBdetail.getInitialProps = async ({ req }) => {
-    const res = await fetch('http://localhost:3000/trade/tradeBoard')
+Detail.getInitialProps = async ({ req }) => {
+    const res = await fetch('http://localhost:3000/trade/list')
     console.log("??????: ", res);
     return { id: res }
 }
 
-export default TBdetail;
+export default Detail;

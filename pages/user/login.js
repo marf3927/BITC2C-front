@@ -12,8 +12,7 @@ const Login = () => {
     const cookies = new Cookies();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [alert, setAlert] = useState('')
-
+    const [alert, setAlert] = useState('aaa')
     const baseURL = useSelector(state => state.auth.baseURL, [])
 
     //regiser 보내기
@@ -35,13 +34,7 @@ const Login = () => {
 
     return (
         <>
-            <Head>
-                <title>BITC2C</title>
-                <link
-                    rel="stylesheet"
-                    href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.css"
-                />
-            </Head>
+
             <AppLayout>
                 <div>
                     <h1>Login</h1>
