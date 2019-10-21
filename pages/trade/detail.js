@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Link from 'next/link'
-import { useSelector } from "react-redux";
 import { useRouter } from 'next/router'
 import AppLayout from '../../components/AppLayout'
 import axios from 'axios'
 import fetch from 'isomorphic-unfetch'
 import Router from 'next/router'
 import Cookies from 'js-cookie';
+import {AuthStoreContext} from "../../store/AuthStroe"
 
 
 
 const Detail = ({ id }) => {
-    const baseURL = useSelector(state => state.auth.baseURL, [])
+    const AuthStore = useContext(AuthStoreContext)
+
+    const baseURL = AuthStore.baseURL
 
     const router = useRouter();
 
@@ -38,9 +40,9 @@ const Detail = ({ id }) => {
     }
     // console.log(props.key);
     function gotoTrade(){
-        const token = Cookies.get("logintoken");
+        const token = Cookies.get("authToken");
         console.log(token);
-       // const token = Cookies.get('logintoken');
+       // const token = Cookies.get('authToken');
         //console.log('token = ',token);
         axios.get(baseURL +'/users/someAPI',{
             params:{

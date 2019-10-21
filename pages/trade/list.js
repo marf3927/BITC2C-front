@@ -1,16 +1,19 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
-import { useSelector} from "react-redux";
 import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 import axios from 'axios'
 import Router from "next/router"
+import {AuthStoreContext} from "../../store/AuthStroe"
 
 const List = () => {
+    const AuthStore = useContext(AuthStoreContext)
+    const baseURL = AuthStore.baseURL
+
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
     const [selected, setSelected] = useState("All")
-    const baseURL = useSelector(state => state.auth.baseURL, [])
+
 
     useEffect(() => {
         getItems()
