@@ -37,14 +37,17 @@ const List = () => {
                 })
         }
     }
-    function gotoDetail(item,status){
-        const itemID=item;
+    function gotoDetail(itemiD,status,method){
+        const itemID=itemiD;
         const statusCode=status
+       // const method = method
         //진행상황이 0 이면 detail 페이지로 1이면 excahnge 페이지로
         if(statusCode === 0){
             Router.push('/trade/detail?id='+itemID)
         }else if(statusCode ===1){
             Router.push('/trade/exchange?id='+itemID)
+        }else{
+
         }
         
     }
@@ -100,7 +103,7 @@ const List = () => {
                         <Table.Body>
                             {items.map((item) => {
 
-                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status)}>
+                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status,item.method)}>
                                     <Table.Cell>{item.method}</Table.Cell>
                                     <Table.Cell>{statusConfirm(item.status)}</Table.Cell>
                                     <Table.Cell>{item.type}</Table.Cell>

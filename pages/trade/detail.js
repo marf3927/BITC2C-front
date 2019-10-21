@@ -16,12 +16,14 @@ const Detail = ({ id }) => {
     const router = useRouter();
 
     const [items, setItems] = useState([])
-
+    const [userId,setUserId] = useState();
 
     //console.log('asdasd',id);
     useEffect(() => {
 
-        getItems()
+        getItems(),
+        getUser()
+        
     }, [])
 
     // console.log(props.location.query);
@@ -36,6 +38,34 @@ const Detail = ({ id }) => {
         })
 
     }
+    //토큰을 이용해서 USER 정보 가져오는 함수
+    function getUser(){
+
+        const token = Cookies.get("logintoken");
+        axios.get(baseURL + '/users/getuser',{
+            params: {
+                token:token
+            }
+
+        }).then((data)=>{
+            setUserId(data.data.id);
+            console.log('item = ',data.data.id);
+        })
+    }
+    
+    
+    //글쓴이가 아닌 사람이 글을 눌렀을때 버튼이 활성화 할지 확인하는 함수
+    function usermatch(){
+        console.log('usermatch//')
+        console.log(items);
+        if(userId === items.sellerId||items.buyerId){
+            return false;
+        }
+
+        return true;
+    }
+
+
     // console.log(props.key);
     function gotoTrade() {
         const { id } = router.query
@@ -62,12 +92,15 @@ const Detail = ({ id }) => {
                 <AppLayout>
                     <div className="ui two column centered grid">
                         {JSON.stringify(items)}
-
+                        userId ={userId}
                         <div className="four column centered row">
                             <div className="column">
-                                <button className="ui primary button" onClick={() => gotoTrade()}>
+                                {usermatch()  ? <h1>
+                                    거래현황
+                                </h1>: <button className="ui primary button" onClick={() => gotoTrade()}>
                                     BUY
-                 </button>
+                                </button>}
+                                
                             </div>
                             <div className="column">
 
