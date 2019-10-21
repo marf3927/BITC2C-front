@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect} from 'react'
 import Link from 'next/link'
-import { useSelector } from "react-redux";
-import { useRouter } from 'next/router'
+import { useSelector} from "react-redux";
+import {useRouter} from 'next/router'
 import AppLayout from '../../components/AppLayout'
 import axios from 'axios'
 import fetch from 'isomorphic-unfetch'
 import Router from 'next/router'
 import Cookies from 'js-cookie';
+import { Button, Table, Input, Icon, Tab } from 'semantic-ui-react'
 
 
 
@@ -21,9 +22,11 @@ const Detail = ({ id }) => {
     //console.log('asdasd',id);
     useEffect(() => {
 
+
         getItems(),
         getUser()
         
+
     }, [])
 
     // console.log(props.location.query);
