@@ -43,9 +43,18 @@ const List = () => {
        // const method = method
         //진행상황이 0 이면 detail 페이지로 1이면 excahnge 페이지로
         if(statusCode === 0){
-            Router.push('/trade/detail?id='+itemID)
+            Router.push({
+            pathname : '/trade/detail',
+            query : {id : itemID}
+        },'/detail'
+        )
         }else if(statusCode ===1){
-            Router.push('/trade/exchange?id='+itemID)
+            Router.push({
+                pathname: '/trade/exchange',
+                query: { name: method }
+            }
+            ,'/exchange'
+            )
         }else{
 
         }

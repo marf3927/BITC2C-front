@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import axios from 'axios';
-import { withRouter } from 'next/router'
+
+import Router,{ useRouter } from 'next/router'
 
 //구매와 판매 판별하는 함수
 const Purchasedecide = ()=>{
@@ -11,12 +12,12 @@ const Purchasedecide = ()=>{
 
 const Exchange = ()=>{
     const baseURL = useSelector(state => state.auth.baseURL, [])
-
+    const router = useRouter();
     useEffect(()=>{
 
     },[])
-    
-    return <div>Trade</div>
+    console.log(router.query.name)
+    return <div><h1>Hello</h1></div>
 
 }
 

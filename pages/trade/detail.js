@@ -28,8 +28,9 @@ const Detail = ({ id }) => {
 
     // console.log(props.location.query);
     function getItems() {
-        const { id } = router.query
-
+        
+        const id  = router.query.id
+        console.log('console getitems',id)
         axios.get(baseURL + '/trade/detail?id=' + id).then((response) => {
 
             const data = response.data
@@ -81,7 +82,9 @@ const Detail = ({ id }) => {
             Router.push({
                 pathname: '/trade/exchange',
                 query: { name: data.data }
-            })
+            }
+            ,'/exchange'
+            )
         })
 
         }
