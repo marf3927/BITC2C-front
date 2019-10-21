@@ -40,11 +40,26 @@ const List = () => {
                 })
         }
     }
-    function gotoDetail(item,status){
-        const itemID=item;
+    function gotoDetail(itemiD,status,method){
+        const itemID=itemiD;
         const statusCode=status
-        if(status === 0){
-            Router.push('/trade/Detail?id='+itemID)
+       // const method = method
+        //진행상황이 0 이면 detail 페이지로 1이면 excahnge 페이지로
+        if(statusCode === 0){
+            Router.push({
+            pathname : '/trade/detail',
+            query : {id : itemID}
+        },'/detail'
+        )
+        }else if(statusCode ===1){
+            Router.push({
+                pathname: '/trade/exchange',
+                query: { name: method }
+            }
+            ,'/exchange'
+            )
+        }else{
+
         }
         
     }
@@ -63,21 +78,32 @@ const List = () => {
             setPage(page - 1)
         }
     }
-
-    function statusConfirm(number){
-        console.log(number)
-        if(number ===0){
+    
+    function WritingBoard() {
+        console.log("writing");
+        Router.push('/trade/Writing');
+    }
+    
+    //상태값에 따라서 화면렌더링 변환
+    function statusdecide(status){
+        if(status ===0){
             return "Standby"
-        }else if(number === 1){
+        }else if(status ===1){
             return "Progress"
-        }else {
-            return "completed"
+        }else{
+            return "Complete"
         }
     }
     return (
         <>
-            
+
             <AppLayout>
+                <style jsx>{`
+                    .type_right {
+                        float: right;
+                        color: rgb(92, 5, 80);
+                    }
+                `}</style>
                 <div>
                     <div className="ui pointing secondary menu">
                         <a id="All" className={`item ${selected ==="All" ? "active" : ""}`} onClick={() => tabClick("All")}>All</a>
@@ -100,15 +126,15 @@ const List = () => {
                         <Table.Body>
                             {items.map((item) => {
 
-                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status)}>
+                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status,item.method)}>
                                     <Table.Cell>{item.method}</Table.Cell>
-                                    <Table.Cell>{statusConfirm(item.status)}</Table.Cell>
+                                    <Table.Cell>{statusdecide(item.status)}</Table.Cell>
                                     <Table.Cell>{item.type}</Table.Cell>
                                     <Table.Cell>{item.price}</Table.Cell>
                                     <Table.Cell>{item.amount}</Table.Cell>
                                     <Table.Cell>{item.updatedAt}</Table.Cell>
                                 </Table.Row>
-                                
+                               
                             })}
                         </Table.Body>
                     </Table>
@@ -126,6 +152,7 @@ const List = () => {
                             }
                         }}></i>
                     </span>
+                    <span className="type_right"><Button id="WritingBoard" onClick={() => WritingBoard()}>Writing</Button></span>
                 </div>
             </AppLayout>
        </>
