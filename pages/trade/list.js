@@ -81,8 +81,16 @@ const List = () => {
         console.log("writing");
         Router.push('/trade/Writing');
     }
-
-
+    //상태값에 따라서 화면렌더링 변환
+    function statusdecide(status){
+        if(status ===0){
+            return "Standby"
+        }else if(status ===1){
+            return "Progress"
+        }else{
+            return "Complete"
+        }
+    }
     return (
         <>
 
@@ -117,7 +125,7 @@ const List = () => {
 
                                 return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status,item.method)}>
                                     <Table.Cell>{item.method}</Table.Cell>
-                                    <Table.Cell>{item.status}</Table.Cell>
+                                    <Table.Cell>{statusdecide(item.status)}</Table.Cell>
                                     <Table.Cell>{item.type}</Table.Cell>
                                     <Table.Cell>{item.price}</Table.Cell>
                                     <Table.Cell>{item.amount}</Table.Cell>
