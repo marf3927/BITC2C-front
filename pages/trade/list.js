@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect, useContext, useRef} from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
 import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
@@ -13,11 +13,11 @@ const List = () => {
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
     const [selected, setSelected] = useState("All")
-
+    const [Sortbool, setSortbool] = useState(false);
 
     useEffect(() => {
         getItems()
-    }, [, page, selected])
+    }, [, page, selected,setSortbool])
 
     function getItems() {
         if (selected === "All") {
@@ -94,6 +94,38 @@ const List = () => {
             return "Complete"
         }
     }
+    //정렬기능중 오름차순,내림차순에 따라 true false 값 반환
+    function Sortdecide(flag){
+        if(flag){
+            return true;
+        }
+        return false;
+    }
+
+    const useClick =(onClick) =>{
+        const element = useRef();
+        console.log(element)
+        useEffect(()=>{
+            if(element.current){
+                element.current.addEventListener("click",onClick)
+            }
+            
+            return  () =>{
+                if(element.current){
+                    element.current.removeEventListener("click",onClick)
+                }
+            }
+        },[])
+        
+        return element;
+    }
+    const onclickEvent = ()=>{
+       
+            console.log(Sortbool);
+            setSortbool(!Sortbool)
+          
+    }
+    
     return (
         <>
 
@@ -115,10 +147,10 @@ const List = () => {
                     <Table singleLine>
                         <Table.Header>
                             <Table.Row>
-                                <Table.HeaderCell>method</Table.HeaderCell>
+                                <Table.HeaderCell>method<i className="caret down icon" id="1" ref={useClick(onclickEvent)}></i></Table.HeaderCell>
                                 <Table.HeaderCell>status</Table.HeaderCell>
                                 <Table.HeaderCell>type</Table.HeaderCell>
-                                <Table.HeaderCell>price</Table.HeaderCell>
+                                <Table.HeaderCell>price<i className="caret down icon" ref={useClick(onclickEvent)}></i></Table.HeaderCell>
                                 <Table.HeaderCell>amount</Table.HeaderCell>
                                 <Table.HeaderCell>updated</Table.HeaderCell>
                             </Table.Row>
