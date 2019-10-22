@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad39d735-5009-4cba-8402-d5f54727677a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/trade/chart.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/Chart.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/trade/detail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/detail.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/trade/list.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/list.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/trade/writing.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/writing.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -97,7 +91,7 @@
       <workItem from="1571472152144" duration="683000" />
       <workItem from="1571475287171" duration="661000" />
       <workItem from="1571628932401" duration="3359000" />
-      <workItem from="1571653627157" duration="5213000" />
+      <workItem from="1571653627157" duration="7012000" />
     </task>
     <servers />
   </component>
