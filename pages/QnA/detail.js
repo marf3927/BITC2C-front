@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
-import { useSelector } from "react-redux";
 import { Button, Table, Input, Icon, Tab } from 'semantic-ui-react'
 import axios from 'axios'
 import Router from 'next/router'

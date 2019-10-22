@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useSelector } from "react-redux";
 import Head from 'next/head';
 import { Cookies } from 'react-cookie';
 import AppLayout from '../../components/AppLayout';
