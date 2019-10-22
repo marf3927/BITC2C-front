@@ -40,7 +40,7 @@ const List = () => {
                 })
         }
     }
-    function gotoDetail(itemiD,status,method){
+    function gotoDetail(itemiD, status, method){
         const itemID=itemiD;
         const statusCode=status
        // const method = method
@@ -81,7 +81,7 @@ const List = () => {
     
     function WritingBoard() {
         console.log("writing");
-        Router.push('/trade/Writing');
+        Router.push('/trade/writing');
     }
     
     //상태값에 따라서 화면렌더링 변환
@@ -125,7 +125,6 @@ const List = () => {
                         </Table.Header>
                         <Table.Body>
                             {items.map((item) => {
-
                                 return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status,item.method)}>
                                     <Table.Cell>{item.method}</Table.Cell>
                                     <Table.Cell>{statusdecide(item.status)}</Table.Cell>

@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad39d735-5009-4cba-8402-d5f54727677a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/pages/trade/chart.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/Chart.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/actions/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/actions/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/user/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/reducers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/trade/detail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/detail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/trade/list.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/trade/writing.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/writing.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,6 +21,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -40,7 +44,8 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../back" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../세차장/eagontech-admin-frontend" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -92,6 +97,7 @@
       <workItem from="1571472152144" duration="683000" />
       <workItem from="1571475287171" duration="661000" />
       <workItem from="1571628932401" duration="3359000" />
+      <workItem from="1571653627157" duration="5213000" />
     </task>
     <servers />
   </component>
