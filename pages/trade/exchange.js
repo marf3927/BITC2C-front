@@ -1,18 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from "react-redux";
+import React, {useState, useEffect, useContext} from 'react'
 import axios from 'axios';
-import { withRouter } from 'next/router'
+import {AuthStoreContext} from "../../store/AuthStroe"
 
+import Router,{ useRouter } from 'next/router'
+
+//구매와 판매 판별하는 함수
+const Purchasedecide = ()=>{
+
+}
 
 
 const Exchange = ()=>{
-    const baseURL = useSelector(state => state.auth.baseURL, [])
-
+    const AuthStore = useContext(AuthStoreContext)
+    const baseURL = AuthStore.baseURL
+    const router = useRouter();
+    
     useEffect(()=>{
 
     },[])
-
-    return <div>{Router.query}</div>
+    console.log(router.query.name)
+    return <div><h1>Hello</h1></div>
 
 }
 

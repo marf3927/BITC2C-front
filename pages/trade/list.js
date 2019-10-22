@@ -1,21 +1,23 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext, useRef} from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
-import { useSelector} from "react-redux";
 import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 import axios from 'axios'
-import Router from 'next/router'
-
+import Router from "next/router"
+import {AuthStoreContext} from "../../store/AuthStroe"
 
 const List = () => {
+    const AuthStore = useContext(AuthStoreContext)
+    const baseURL = AuthStore.baseURL
+
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
     const [selected, setSelected] = useState("All")
-    const baseURL = useSelector(state => state.auth.baseURL, [])
+    const [Sortbool, setSortbool] = useState(false);
 
     useEffect(() => {
         getItems()
-    }, [, page, selected])
+    }, [, page, selected,setSortbool])
 
     function getItems() {
         if (selected === "All") {
@@ -38,14 +40,26 @@ const List = () => {
                 })
         }
     }
-    function gotoDetail(item,status){
-        const itemID=item;
+    function gotoDetail(itemiD,status,method){
+        const itemID=itemiD;
         const statusCode=status
+       // const method = method
         //진행상황이 0 이면 detail 페이지로 1이면 excahnge 페이지로
         if(statusCode === 0){
-            Router.push('/trade/detail?id='+itemID)
+            Router.push({
+            pathname : '/trade/detail',
+            query : {id : itemID}
+        },'/detail'
+        )
         }else if(statusCode ===1){
-            Router.push('/trade/exchange?id='+itemID)
+            Router.push({
+                pathname: '/trade/exchange',
+                query: { name: method }
+            }
+            ,'/exchange'
+            )
+        }else{
+
         }
         
     }
@@ -69,8 +83,49 @@ const List = () => {
         console.log("writing");
         Router.push('/trade/Writing');
     }
+    
+    //상태값에 따라서 화면렌더링 변환
+    function statusdecide(status){
+        if(status ===0){
+            return "Standby"
+        }else if(status ===1){
+            return "Progress"
+        }else{
+            return "Complete"
+        }
+    }
+    //정렬기능중 오름차순,내림차순에 따라 true false 값 반환
+    function Sortdecide(flag){
+        if(flag){
+            return true;
+        }
+        return false;
+    }
 
-
+    const useClick =(onClick) =>{
+        const element = useRef();
+        console.log(element)
+        useEffect(()=>{
+            if(element.current){
+                element.current.addEventListener("click",onClick)
+            }
+            
+            return  () =>{
+                if(element.current){
+                    element.current.removeEventListener("click",onClick)
+                }
+            }
+        },[])
+        
+        return element;
+    }
+    const onclickEvent = ()=>{
+       
+            console.log(Sortbool);
+            setSortbool(!Sortbool)
+          
+    }
+    
     return (
         <>
 
@@ -92,10 +147,10 @@ const List = () => {
                     <Table singleLine>
                         <Table.Header>
                             <Table.Row>
-                                <Table.HeaderCell>method</Table.HeaderCell>
+                                <Table.HeaderCell>method<i className="caret down icon" id="1" ref={useClick(onclickEvent)}></i></Table.HeaderCell>
                                 <Table.HeaderCell>status</Table.HeaderCell>
                                 <Table.HeaderCell>type</Table.HeaderCell>
-                                <Table.HeaderCell>price</Table.HeaderCell>
+                                <Table.HeaderCell>price<i className="caret down icon" ref={useClick(onclickEvent)}></i></Table.HeaderCell>
                                 <Table.HeaderCell>amount</Table.HeaderCell>
                                 <Table.HeaderCell>updated</Table.HeaderCell>
                             </Table.Row>
@@ -103,15 +158,15 @@ const List = () => {
                         <Table.Body>
                             {items.map((item) => {
 
-                                return   <Link href={{ pathname :"/trade/detail", query : {id: item.id}}}  key={item.id} ><Table.Row >
+                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status,item.method)}>
                                     <Table.Cell>{item.method}</Table.Cell>
-                                    <Table.Cell>{item.status}</Table.Cell>
+                                    <Table.Cell>{statusdecide(item.status)}</Table.Cell>
                                     <Table.Cell>{item.type}</Table.Cell>
                                     <Table.Cell>{item.price}</Table.Cell>
                                     <Table.Cell>{item.amount}</Table.Cell>
                                     <Table.Cell>{item.updatedAt}</Table.Cell>
                                 </Table.Row>
-                                </Link>
+                               
                             })}
                         </Table.Body>
                     </Table>

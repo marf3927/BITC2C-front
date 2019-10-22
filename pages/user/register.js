@@ -1,13 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Router from 'next/router'
-import {useSelector } from "react-redux";
-import Head from 'next/head';
 import {Button, Input} from 'semantic-ui-react'
 import axios from 'axios'
 import AppLayout from '../../components/AppLayout';
+import {AuthStoreContext} from "../../store/AuthStroe"
+
 
 
 const Register = () =>{
+    const AuthStore = useContext(AuthStoreContext)
+    const baseURL = AuthStore.baseURL
 
     const [name, setName] = useState('') //유저 이름 변수
     const [email, setEmail] = useState('') //유저 이메일 변수
@@ -89,7 +91,7 @@ const Register = () =>{
     },[setEmailValid, passwordValid, passwordCheckValid, name]);
 
 
-    const baseURL = useSelector(state => state.auth.baseURL, [])
+
     //regiser 보내기
     function onRegisterClick(name, email, password){
         return axios.post((baseURL+'/users/create/'),
