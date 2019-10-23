@@ -204,6 +204,10 @@ const Mypage = () => {
                             </Table.Body>
                         </Table>
                     </div>
+                    <div>
+                        <br></br>
+                        <Link href="/user/changepwd"><a>비밀번호 변경</a></Link>
+                    </div>
                 </div>
             </AppLayout>
         </>

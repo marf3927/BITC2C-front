@@ -17,7 +17,7 @@ class AuthStore{
 
     deleteToken() {
         console.log("logout클릭!")
-        cookies.remove('authToken', { expires: 'Thu, 01 Jan 1970 00:00:01 GMT' })
+        cookies.remove('authToken', {path:'' })
     }
 
     get isLoggedIn() {
