@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ad39d735-5009-4cba-8402-d5f54727677a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/trade/list.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/trade/detail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/detail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/user/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/user/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user/register.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,7 +40,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../세차장/eagontech-admin-frontend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../back/BITC2C_BACKEND" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -92,6 +94,9 @@
       <workItem from="1571475287171" duration="661000" />
       <workItem from="1571628932401" duration="3359000" />
       <workItem from="1571653627157" duration="7012000" />
+      <workItem from="1571719328950" duration="1337000" />
+      <workItem from="1571754042462" duration="3761000" />
+      <workItem from="1571797243505" duration="5600000" />
     </task>
     <servers />
   </component>

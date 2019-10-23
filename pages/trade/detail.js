@@ -23,24 +23,18 @@ const Detail = ({id}) => {
 
     //console.log('asdasd',id);
     useEffect(() => {
-
-
-        getItems(),
-            getUser()
-
-
+        getItems()
+        getUser()
+        console.log(id)
     }, [])
 
     // console.log(props.location.query);
     function getItems() {
-
         const id = router.query.id
         console.log('console getitems', id)
         axios.get(baseURL + '/trade/detail?id=' + id).then((response) => {
-
             const data = response.data
             setItems(data)
-
         })
 
     }

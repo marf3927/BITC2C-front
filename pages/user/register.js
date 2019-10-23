@@ -102,7 +102,10 @@ const Register = () =>{
         })
         .then((response) => {
             Router.push('/user/login/');
-        })
+        }).catch((e)=>{
+            console.log(e)
+                alert(e.response.data)
+            })
     }
 
     return (
