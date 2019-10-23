@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ad39d735-5009-4cba-8402-d5f54727677a" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/trade/detail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/detail.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/user/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/user/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user/register.js" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/components/header.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/trade/detail.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/detail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/trade/list.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/trade/list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/AuthStroe.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/AuthStroe.js" afterDir="false" />
+>>>>>>> 68e9ba587d113bba6ede6c428043f6256813ea89
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,10 +100,14 @@
       <workItem from="1571472152144" duration="683000" />
       <workItem from="1571475287171" duration="661000" />
       <workItem from="1571628932401" duration="3359000" />
+<<<<<<< HEAD
       <workItem from="1571653627157" duration="7012000" />
       <workItem from="1571719328950" duration="1337000" />
       <workItem from="1571754042462" duration="3761000" />
       <workItem from="1571797243505" duration="5600000" />
+=======
+      <workItem from="1571818902788" duration="6000" />
+>>>>>>> 68e9ba587d113bba6ede6c428043f6256813ea89
     </task>
     <servers />
   </component>

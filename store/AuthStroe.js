@@ -16,7 +16,7 @@ class AuthStore{
     }
 
     deleteToken() {
-        cookies.remove('authToken', { path: '/' })
+        cookies.remove('authToken', { path: '' })
     }
 
     get isLoggedIn() {

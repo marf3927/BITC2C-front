@@ -17,11 +17,7 @@ const Writing = () => {
     const [price, setPrice] = useState('')
     const [amount, setAmount] = useState('')
 
-    const userid =
 
-        useEffect(() => {
-
-        }, [, selected, coin])
 
 
     const options = [

@@ -70,9 +70,9 @@ const Detail = ({id}) => {
     // console.log(props.key);
     function gotoTrade() {
         const {id} = router.query
+        const token = Cookies.get("authToken");
+        console.log(token);
 
-        const token = Cookies.get("logintoken")
-        console.log(token)
         // const token = Cookies.get('logintoken');
         //console.log('token = ',token);
         axios.post(baseURL + '/trade/exchange', {
