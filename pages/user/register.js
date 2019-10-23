@@ -101,7 +101,7 @@ const Register = () =>{
             password
         })
         .then((response) => {
-            Router.push('/user/login/');
+            Router.push('/user/emailcheck/');
         })
     }
 

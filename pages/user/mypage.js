@@ -19,6 +19,11 @@ const Mypage = () => {
 
     const token = Cookies.get("authToken");
 
+
+    useEffect(() => {
+        getId()
+    }, [])
+    
     function getId(){
         axios.get(baseURL + '/users/getuser', {
         params: {
@@ -29,13 +34,11 @@ const Mypage = () => {
         console.log('id: ', data)
         setUser(data);
     }).catch((err) => {
-        console.log("?????  ", err);
+        Router.push('/user/login');
     });
     }
 
-    useEffect(() => {
-        getId()
-    }, [ ])
+
 
     useEffect(() => {
         if (user) {
@@ -62,7 +65,7 @@ const Mypage = () => {
                     id: data.data.id
                 }
             }).then((wdata) => {
-                console.log("walletdata: ", wdata.data);
+                console.log("walletdata: ", wdata);
 
                 // 거래게시판 이용내역 가져오기
                 axios.get(baseURL + '/mypage/tboard', {
@@ -71,7 +74,9 @@ const Mypage = () => {
                     }
                 }).then((board) => {
                     console.log("boards: ", board.data);
-                    setBoards(board.data);
+                   
+                        setBoards(board.data);
+                    
                 });
 
                 setWallets(wdata.data);

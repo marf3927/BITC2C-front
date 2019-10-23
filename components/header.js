@@ -9,6 +9,7 @@ const Header = () => {
     const AuthStore = useContext(AuthStoreContext)
 
     const logout = () => {
+
         AuthStore.deleteToken()
     }
 

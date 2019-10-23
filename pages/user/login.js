@@ -63,7 +63,7 @@ const Login = () => {
                         <span>
                             Forgot
                         </span>
-                            <Link href="#"><a>Username / Password?</a></Link>
+                            <Link href="/user/forgot"><a>Username / Password?</a></Link>
                         </div>
 
                         <div>
