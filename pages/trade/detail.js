@@ -80,7 +80,7 @@ const Detail = ({ id }) => {
     function gotoTrade() {
         const { id } = router.query
 
-        const token = Cookies.get("logintoken");
+        const token = Cookies.get("authToken");
         console.log(token);
         // const token = Cookies.get('logintoken');
         //console.log('token = ',token);
