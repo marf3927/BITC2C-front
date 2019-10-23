@@ -167,8 +167,7 @@ const List = () => {
     function Sortlist(clicked){
         setSortname(clicked)
         setIconbool(!Iconbool);
-     console.log('Sortlist = ',Iconbool);
-
+    
     }
     
     return (
