@@ -17,11 +17,7 @@ const Writing = () => {
     const [price, setPrice] = useState('')
     const [amount, setAmount] = useState('')
 
-    const userid =
 
-        useEffect(() => {
-
-        }, [, selected, coin])
 
 
     const options = [
@@ -30,9 +26,9 @@ const Writing = () => {
     ]
 
     const Coptions = [
-        { key: 1, text: 'bitcoin', value: 1 },
-        { key: 2, text: 'ethereum', value: 2 },
-        { key: 3, text: 'ripple', value: 3 },
+        { key: 1, text: 'bitcoin', value: 'bitcoin' },
+        { key: 2, text: 'ethereum', value: 'ethereum' },
+        { key: 3, text: 'ripple', value: 'ripple' },
     ]
 
 
@@ -52,7 +48,7 @@ const Writing = () => {
     //글쓰기 등록
     function onRegisterClick(method) {
 
-        const token = Cookies.get("logintoken");
+        const token = Cookies.get("authToken");
         console.log(token);
 
         axios.get(baseURL + '/users/getuser', {
@@ -68,7 +64,7 @@ const Writing = () => {
                     console.log("판매테이블 생성");
                     return axios.post((baseURL + '/trade/create/'),
                         {
-                            type: coin.text,
+                            type: coin,
                             amount: amount,
                             price: price,
                             method: "buy",
@@ -83,7 +79,7 @@ const Writing = () => {
                     console.log("구매테이블 생성");
                     return axios.post((baseURL + '/trade/create/'),
                         {
-                            type: coin.text,
+                            type: coin,
                             amount: amount,
                             price: price,
                             method: "sell",
@@ -120,7 +116,7 @@ const Writing = () => {
                                 </div>
                                 <div >
                                     coin: <Menu compact>
-                                        <Dropdown text={coin.text} options={Coptions} onChange={onCoinChange} simple item />
+                                        <Dropdown text={coin} options={Coptions} onChange={onCoinChange} simple item />
                                     </Menu>
                                 </div>
                                 <div>
