@@ -16,10 +16,7 @@ const Mypage = () => {
     const [wallets, setWallets] = useState([]);
     const [boards, setBoards] = useState([]);
 
-
     const token = Cookies.get("authToken");
-
-
     useEffect(() => {
         getId()
     }, [])
@@ -33,10 +30,18 @@ const Mypage = () => {
         // data = JSON.parse(JSON.stringify(data))
         console.log('id: ', data)
         setUser(data);
-    }).catch((err) => {
-        console.log("@@@@@@@@@@@@@@@@ ", err);
-        Router.push('/user/login');
-    });
+    }).catch((e) => {
+        console.log(e.response.data.message)
+            if(e.response.data.message ==="jwt expired"){
+                AuthStore.deleteToken()
+                const expired = confirm("로그인 세션이 완료되었습니다. \n로그인 하시겠습니까?")
+                if (expired === true) {
+                    Router.push('/user/login');
+                } else{
+                    Router.push('/');
+                }
+            }
+    })
     }
 
 
