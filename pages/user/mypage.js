@@ -20,31 +20,29 @@ const Mypage = () => {
     useEffect(() => {
         getId()
     }, [])
-    
-    function getId(){
+
+    function getId() {
         axios.get(baseURL + '/users/getuser', {
-        params: {
-            token: token
-        }
-    }).then((data) => {
-        // data = JSON.parse(JSON.stringify(data))
-        console.log('id: ', data)
-        setUser(data);
-    }).catch((e) => {
-        console.log(e.response.data.message)
-            if(e.response.data.message ==="jwt expired"){
+            params: {
+                token: token
+            }
+        }).then((data) => {
+            // data = JSON.parse(JSON.stringify(data))
+            console.log('id: ', data)
+            setUser(data);
+        }).catch((e) => {
+            console.log(e.response.data.message)
+            if (e.response.data.message === "jwt expired") {
                 AuthStore.deleteToken()
                 const expired = confirm("로그인 세션이 완료되었습니다. \n로그인 하시겠습니까?")
                 if (expired === true) {
                     Router.push('/user/login');
-                } else{
+                } else {
                     Router.push('/');
                 }
             }
-    })
+        })
     }
-
-
 
     useEffect(() => {
         if (user) {
@@ -52,9 +50,11 @@ const Mypage = () => {
         }
     }, [user])
 
+
     useEffect(() => {
         console.log("userData: ", userData)
     }, [userData])
+
 
     function getItems() {
         // user정보 가져오기
@@ -80,15 +80,14 @@ const Mypage = () => {
                     }
                 }).then((board) => {
                     console.log("boards: ", board.data);
-                   
-                        setBoards(board.data);
-                    
+
+                    setBoards(board.data);
+
+                    setWallets(wdata.data);
+
+                    setUserData(data);
                 });
-
-                setWallets(wdata.data);
             });
-
-            setUserData(data);
         });
 
     }
@@ -119,10 +118,11 @@ const Mypage = () => {
     }
 
     return (
+
         <>
 
             <AppLayout>
-                
+                {console.log("확인")}
                 <div>
                     <h1>MyPage</h1>
                     {
@@ -147,69 +147,67 @@ const Mypage = () => {
                                         <div>
                                             계정생성일: {userData.data.createdAt}
                                         </div>
-                                        
+                                        <div>
+                                            <br></br>
+                                            <h2>지갑</h2>
+                                            <Table singleLine>
+                                                <Table.Header>
+                                                    <Table.Row>
+                                                        <Table.HeaderCell>Type</Table.HeaderCell>
+                                                        <Table.HeaderCell>Address</Table.HeaderCell>
+                                                        <Table.HeaderCell>Amount</Table.HeaderCell>
+
+                                                    </Table.Row>
+                                                </Table.Header>
+                                                <Table.Body>
+                                                    {wallets.map((data) => {
+                                                        console.log("??? ", wallets);
+                                                        return <Table.Row key={data.id}>
+                                                            <Table.Cell>{data.type}</Table.Cell>
+                                                            <Table.Cell>{data.address}</Table.Cell>
+                                                            <Table.Cell>{data.amount}</Table.Cell>
+                                                        </Table.Row>
+
+                                                    })}
+                                                </Table.Body>
+                                            </Table>
+                                        </div>
+                                        <div>
+                                            <br></br>
+                                            <h2>거래내역</h2>
+                                            <Table singleLine>
+                                                <Table.Header>
+                                                    <Table.Row>
+                                                        <Table.HeaderCell>method</Table.HeaderCell>
+                                                        <Table.HeaderCell>status</Table.HeaderCell>
+                                                        <Table.HeaderCell>type</Table.HeaderCell>
+                                                        <Table.HeaderCell>price</Table.HeaderCell>
+                                                        <Table.HeaderCell>amount</Table.HeaderCell>
+                                                        <Table.HeaderCell>updated</Table.HeaderCell>
+                                                    </Table.Row>
+                                                </Table.Header>
+                                                <Table.Body>
+                                                    {boards.map((item) => {
+
+                                                        return <Table.Row key={item.id} onClick={() => gotoDetail(item.id, item.status, item.method)}>
+                                                            <Table.Cell>{item.method}</Table.Cell>
+                                                            <Table.Cell>{item.status}</Table.Cell>
+                                                            <Table.Cell>{item.type}</Table.Cell>
+                                                            <Table.Cell>{item.price}</Table.Cell>
+                                                            <Table.Cell>{item.amount}</Table.Cell>
+                                                            <Table.Cell>{item.updatedAt}</Table.Cell>
+                                                        </Table.Row>
+
+                                                    })}
+                                                </Table.Body>
+                                            </Table>
+                                        </div>
                                     </div>
-                                    
-                                );
+                                    );
                             }
-                            
                         })()
                     }
-                    <div>
-                        <br></br>
-                        <h2>지갑</h2>
-                        <Table singleLine>
-                            <Table.Header>
-                                <Table.Row>
-                                    <Table.HeaderCell>Type</Table.HeaderCell>
-                                    <Table.HeaderCell>Address</Table.HeaderCell>
-                                    <Table.HeaderCell>Amount</Table.HeaderCell>
 
-                                </Table.Row>
-                            </Table.Header>
-                            <Table.Body>
-                                {wallets.map((data) => {
-                                    console.log("??? ", wallets);
-                                    return <Table.Row key={data.id}>
-                                        <Table.Cell>{data.type}</Table.Cell>
-                                        <Table.Cell>{data.address}</Table.Cell>
-                                        <Table.Cell>{data.amount}</Table.Cell>
-                                    </Table.Row>
-
-                                })}
-                            </Table.Body>
-                        </Table>
-                    </div>
-                    <div>
-                        <br></br>
-                        <h2>거래내역</h2>
-                        <Table singleLine>
-                            <Table.Header>
-                                <Table.Row>
-                                    <Table.HeaderCell>method</Table.HeaderCell>
-                                    <Table.HeaderCell>status</Table.HeaderCell>
-                                    <Table.HeaderCell>type</Table.HeaderCell>
-                                    <Table.HeaderCell>price</Table.HeaderCell>
-                                    <Table.HeaderCell>amount</Table.HeaderCell>
-                                    <Table.HeaderCell>updated</Table.HeaderCell>
-                                </Table.Row>
-                            </Table.Header>
-                            <Table.Body>
-                                {boards.map((item) => {
-
-                                    return <Table.Row key={item.id} onClick={() => gotoDetail(item.id, item.status, item.method)}>
-                                        <Table.Cell>{item.method}</Table.Cell>
-                                        <Table.Cell>{item.status}</Table.Cell>
-                                        <Table.Cell>{item.type}</Table.Cell>
-                                        <Table.Cell>{item.price}</Table.Cell>
-                                        <Table.Cell>{item.amount}</Table.Cell>
-                                        <Table.Cell>{item.updatedAt}</Table.Cell>
-                                    </Table.Row>
-
-                                })}
-                            </Table.Body>
-                        </Table>
-                    </div>
                     <div>
                         <br></br>
                         <Link href="/user/changepwd"><a>비밀번호 변경</a></Link>
