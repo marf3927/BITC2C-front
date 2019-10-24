@@ -34,6 +34,7 @@ const Mypage = () => {
         console.log('id: ', data)
         setUser(data);
     }).catch((err) => {
+        console.log("@@@@@@@@@@@@@@@@ ", err);
         Router.push('/user/login');
     });
     }
