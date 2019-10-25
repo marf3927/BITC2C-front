@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
+import {Button, Table, Input, Icon,Menu, Dropdown,Tab} from 'semantic-ui-react'
 import axios from 'axios'
 import Router from "next/router"
 import {AuthStoreContext} from "../../store/AuthStroe"
@@ -18,9 +18,36 @@ const List = () => {
     const [page, setPage] = useState(1)
     const [selected, setSelected] = useState("All")
 
-    const [Sortname, setSortname] = useState("")
-    const [Iconbool, setIconbool] = useState(true)
-    const idReference = useRef()
+    const [Sortname, setSortname] = useState("");
+    const [Iconbool,setIconbool] =useState(true);
+    const idReference = useRef();
+
+    const buyoption = [
+        { key: 1, text: 'ETH', value: 'ETH' },
+        { key: 2, text: 'Atoken', value: 'Atoken' },
+        { key: 3, text: 'Btoken', value: 'Btoken' },
+        { key: 4, text: 'Ctoken', value: 'Ctoken' },
+
+    ]
+
+    const selloption = [
+        { key: 1, text: 'ETH', value: 'ETH' },
+        { key: 2, text: 'Atoken', value: 'Atoken' },
+        { key: 3, text: 'Btoken', value: 'Btoken' },
+        { key: 4, text: 'Ctoken', value: 'Ctoken' },
+    ]
+
+    const onSellSelectChange = (e, result) => {
+        const { text, value } = result;
+
+        setSellselcted(value);
+    }
+
+    const onBuySelectChange = (e, result) => {
+        const { text, value } = result;
+
+        setBuyselcted(value);
+    }
 
     useEffect(() => {
         getItems()
@@ -38,7 +65,66 @@ const List = () => {
         })
     }
 
+
+    }, [, page, Sellselected,Buyselected,Iconbool,Sortname,selectedtoken])
+    function sortItems(level,method){
+
+
+            axios.get(baseURL + '/trade/'+method+'/'+page,{
+                params: {
+                    method:Sortname,
+                    order:level,
+                    type:selectedtoken
+                }
+            })
+                .then((response) => {
+                    const data = response.data
+                    setItems(data)
+
+
+                })
+
+    }
+
+
     function getItems() {
+
+        if(Sellselected==="판매"||Buyselected==="구매"){
+
+            return;
+        }
+
+
+        if(Sortname!==""){
+
+            axios.get(baseURL + '/trade/index/' + page,{
+                params: {
+                    sellcoin:Sellselected,
+                    buycoin:Buyselected,
+                    method:Sortname,
+                    order:Iconbool
+                }
+            })
+                .then((response) => {
+                    const data = response.data
+
+                    setItems(data)
+                })
+
+        }else{
+
+            axios.get(baseURL + '/trade/index/' + page,{
+                params: {
+                    sellcoin:Sellselected,
+                    buycoin:Buyselected,
+
+                }
+            })
+                .then((response) => {
+                    const data = response.data
+
+                    setItems(data)
+                })
         if (selected === "All") {
             if (!(Sortname === "") && Iconbool) {
                 sortItems(Iconbool, "index")
@@ -98,9 +184,16 @@ const List = () => {
             )
         } else {
         }
+        
     }
+    function tabClicktoken(e){
+        setSelectedtoken(e)
 
+        return true;
+    }
     function tabClick(e) {
+
+
         setSelected(e)
         setPage(1)
     }
@@ -116,7 +209,8 @@ const List = () => {
     }
 
     function WritingBoard() {
-        console.log("writing")
+
+        Router.push('/trade/writing');
         Router.push('/trade/writing')
     }
 
@@ -172,51 +266,42 @@ const List = () => {
                     }
                 `}</style>
                 <div>
-                    <div className="ui pointing secondary menu">
-                        <a id="All" className={`item ${selected === "All" ? "active" : ""}`}
-                           onClick={() => tabClick("All")}>All</a>
-                        <a id="Buy" className={`item ${selected === "Buy" ? "active" : ""}`}
-                           onClick={() => tabClick("Buy")}>Buy</a>
-                        <a id="Sell" className={`item ${selected === "Sell" ? "active" : ""}`}
-                           onClick={() => tabClick("Sell")}>Sell</a>
 
-                    </div>
+                <Menu compact>
+                <Dropdown text={Sellselected} options={selloption} onChange={onSellSelectChange} simple item />
+                <Dropdown text={Buyselected} options={buyoption} onChange={onBuySelectChange} simple item />
+                 </Menu>
+
                     <div className="ui segment active tab">
                         <Table singleLine>
                             <Table.Header>
                                 <Table.Row>
 
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("method")}>method{decideSort("method")}</Table.HeaderCell>
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("type")}>type{decideSort("type")}</Table.HeaderCell>
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("price")}>price{decideSort("price")}</Table.HeaderCell>
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("amount")}>amount{decideSort("amount")}</Table.HeaderCell>
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
-                                    >>>>>>> 68e9ba587d113bba6ede6c428043f6256813ea89
+                                <Table.HeaderCell >SELL</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("selltokenamount")}>sellamount{decideSort("sellamount")}</Table.HeaderCell>
+                                <Table.HeaderCell >BUY</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("buytokenamount")}>buyamount{decideSort("buymount")}</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("Expirydate")}>Expiry date{decideSort("Expirydate")}</Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                            {items.map((item) => {
+                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status)}>
+                                     <Table.Cell>{item.selltoken}</Table.Cell>
+                                    <Table.Cell>{item.selltokenamount}</Table.Cell>
+                                    <Table.Cell>{item.buytoken}</Table.Cell>
+                                    <Table.Cell>{item.buytokenamount}</Table.Cell>
+                                    <Table.Cell>{statusdecide(item.status)}</Table.Cell>
+                                    <Table.Cell>{item.updatedAt}</Table.Cell>
+                                    <Table.Cell>{item.Expirydate}</Table.Cell>
                                 </Table.Row>
-                            </Table.Header>
-                            <Table.Body>
-                                {items.map((item) => {
-                                    return <Table.Row key={item.id}
-                                                      onClick={() => gotoDetail(item.id, item.status, item.method)}>
-                                        <Table.Cell>{item.method}</Table.Cell>
-                                        <Table.Cell>{statusdecide(item.status)}</Table.Cell>
-                                        <Table.Cell>{item.type}</Table.Cell>
-                                        <Table.Cell>{item.price}</Table.Cell>
-                                        <Table.Cell>{item.amount}</Table.Cell>
-                                        <Table.Cell>{item.updatedAt}</Table.Cell>
-                                    </Table.Row>
-
-                                })}
-                            </Table.Body>
-                        </Table>
-                    </div>
+                               
+                            })}
+                        </Table.Body>
+                    </Table>
+                </div>
                 </div>
                 <div>
                     <span><Button onClick={() => PreviousPageClick()}><Icon name="caret left"/></Button></span>
