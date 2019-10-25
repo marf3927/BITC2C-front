@@ -14,7 +14,7 @@ const List = () => {
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
     const [selected, setSelected] = useState("All")
-
+    const [selectedtoken, setSelectedtoken] = useState("ETH")
     const [Sortname, setSortname] = useState("");
     const [Iconbool,setIconbool] =useState(true);
     const idReference = useRef();
@@ -22,14 +22,15 @@ const List = () => {
     useEffect(() => {
         getItems()
         
-    }, [, page, selected,Iconbool,Sortname])
+    }, [, page, selected,Iconbool,Sortname,selectedtoken])
     function sortItems(level,method){
         
             console.log("level=",level)
             axios.get(baseURL + '/trade/'+method+'/'+page,{
                 params: {
                     method:Sortname,
-                    order:level
+                    order:level,
+                    type:selectedtoken
                 }
             })
                 .then((response) => {
@@ -52,7 +53,11 @@ const List = () => {
                
                 sortItems(Iconbool,"index")
            }else{
-            axios.get(baseURL + '/trade/index/' + page)
+            axios.get(baseURL + '/trade/index/' + page,{
+                params: {
+                    type:selectedtoken
+                }
+            })
                 .then((response) => {
                     const data = response.data
                 
@@ -68,7 +73,11 @@ const List = () => {
                 
                  sortItems(Iconbool,"buy")
             }else{
-            axios.get(baseURL + '/trade/buy/' + page)
+            axios.get(baseURL + '/trade/buy/' + page,{
+                params: {
+                    type:selectedtoken
+                }
+            })
                 .then((response) => {
                     const data = response.data
                     setItems(data)
@@ -82,7 +91,11 @@ const List = () => {
                 
                  sortItems(Iconbool,"sell")
             }else{
-            axios.get(baseURL + '/trade/sell/' + page)
+            axios.get(baseURL + '/trade/sell/' + page,{
+                params: {
+                    type:selectedtoken
+                }
+            })
                 .then((response) => {
                     const data = response.data
                     setItems(data)
@@ -113,8 +126,14 @@ const List = () => {
         }
         
     }
+    function tabClicktoken(e){
+        setSelectedtoken(e)
 
+        return true;
+    }
     function tabClick(e) {
+        
+
         setSelected(e)
         setPage(1)
     }
@@ -184,6 +203,13 @@ const List = () => {
                     }
                 `}</style>
                 <div>
+                     <div className="ui pointing secondary menu">
+                        <a id="ETH" className={`item ${selectedtoken ==="ETH" ? "active" : ""}` } onClick={() => tabClicktoken("ETH")}>ETH</a>
+                        <a id="Atoken" className={`item ${selectedtoken ==="Atoken" ? "active" : ""}`}onClick={() => tabClicktoken("Atoken")}>Atoken</a>
+                        <a id="Btoken" className={`item ${selectedtoken ==="Btoken" ? "active" : ""}`}onClick={() => tabClicktoken("Btoken")}>Btoken</a>
+                        <a id="Ctoken" className={`item ${selectedtoken ==="Ctoken" ? "active" : ""}`}onClick={() => tabClicktoken("Ctoken")}>Ctoken</a>
+
+                    </div>
                     <div className="ui pointing secondary menu">
                         <a id="All" className={`item ${selected ==="All" ? "active" : ""}`} onClick={() => tabClick("All")}>All</a>
                         <a id="Buy" className={`item ${selected ==="Buy" ? "active" : ""}`} onClick={() => tabClick("Buy")}>Buy</a>
@@ -195,7 +221,7 @@ const List = () => {
                         <Table.Header>
                             <Table.Row>
 
-                                <Table.HeaderCell onClick={()=>Sortlist("method")}>method{decideSort("method")}</Table.HeaderCell>
+                              
                                 <Table.HeaderCell onClick={()=>Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("type")}>type{decideSort("type")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("price")}>price{decideSort("price")}</Table.HeaderCell>
@@ -207,8 +233,7 @@ const List = () => {
                         <Table.Body>
                             {items.map((item) => {
                                 return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status,item.method)}>
-                                    <Table.Cell>{item.method}</Table.Cell>
-                                    <Table.Cell>{statusdecide(item.status)}</Table.Cell>
+                                     <Table.Cell>{statusdecide(item.status)}</Table.Cell>
                                     <Table.Cell>{item.type}</Table.Cell>
                                     <Table.Cell>{item.price}</Table.Cell>
                                     <Table.Cell>{item.amount}</Table.Cell>
