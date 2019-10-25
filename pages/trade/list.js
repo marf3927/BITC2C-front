@@ -37,13 +37,13 @@ const List = () => {
 
     const onSellSelectChange = (e, result) => {
         const { text, value } = result;
-        console.log(value);
+
         setSellselcted(value);
     }
 
     const onBuySelectChange = (e, result) => {
         const { text, value } = result;
-        console.log(value);
+    
         setBuyselcted(value);
     }
 
@@ -53,7 +53,7 @@ const List = () => {
     }, [, page, Sellselected,Buyselected,Iconbool,Sortname,selectedtoken])
     function sortItems(level,method){
         
-            console.log("level=",level)
+            
             axios.get(baseURL + '/trade/'+method+'/'+page,{
                 params: {
                     method:Sortname,
@@ -64,8 +64,7 @@ const List = () => {
                 .then((response) => {
                     const data = response.data
                     setItems(data)
-                    console.log(data)
-                    console.log(items)
+
                     
                 })
         
@@ -75,14 +74,13 @@ const List = () => {
     function getItems() {
 
         if(Sellselected==="판매"||Buyselected==="구매"){
-            console.log("클릭안됨");
+        
             return;
         }
 
-        console.log('sortname =',Sortname);
-        console.log('level = ',Iconbool)
+
         if(Sortname!==""){
-            console.log('null???')
+  
             axios.get(baseURL + '/trade/index/' + page,{
                 params: {
                     sellcoin:Sellselected,
@@ -93,12 +91,12 @@ const List = () => {
             })
                 .then((response) => {
                     const data = response.data
-                    console.log(data);
+               
                     setItems(data)
                 })
            
         }else{
-            console.log('null아님')
+       
             axios.get(baseURL + '/trade/index/' + page,{
                 params: {
                     sellcoin:Sellselected,
@@ -108,7 +106,7 @@ const List = () => {
             })
                 .then((response) => {
                     const data = response.data
-                    console.log(data);
+            
                     setItems(data)
                 })
         }
@@ -222,7 +220,7 @@ const List = () => {
     }
     
     function WritingBoard() {
-        console.log("writing");
+       
         Router.push('/trade/writing');
     }
     

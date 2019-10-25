@@ -117,17 +117,22 @@ const Detail = ({id}) => {
             
                         </div>
                         <div className="field">
-                        <label>TYPE : {items.type}</label>
+                        <label>selltoken : {items.selltoken}</label>
+            
+                        </div>
+                        <div className="ui divider"></div>
+                        <div className="field">
+                        <label>sellamount : {items.selltokenamount}</label>
             
                         </div>
                         <div className="ui divider"></div>
                         <div className="field" placeholder="Last Name">
                          
-                            <label>PRICE : {items.price}</label>
+                            <label>buytoken : {items.buytoken}</label>
                         </div>
                         <div className="ui divider"></div>
                         <div className="inline field">
-                            <label>amount : {items.amount}</label>
+                            <label>buyamount : {items.buytokenamount}</label>
                             </div>
                         <div className="inline field">
                             
