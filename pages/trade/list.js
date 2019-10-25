@@ -77,13 +77,18 @@ const List = () => {
         if(Sellselected==="판매"||Buyselected==="구매"){
             console.log("클릭안됨");
             return;
-        }else if(false){
+        }
 
-        }else{
+        console.log('sortname =',Sortname);
+        console.log('level = ',Iconbool)
+        if(Sortname!==""){
+            console.log('null???')
             axios.get(baseURL + '/trade/index/' + page,{
                 params: {
                     sellcoin:Sellselected,
-                    buycoin:Buyselected
+                    buycoin:Buyselected,
+                    method:Sortname,
+                    order:Iconbool
                 }
             })
                 .then((response) => {
@@ -92,7 +97,23 @@ const List = () => {
                     setItems(data)
                 })
            
+        }else{
+            console.log('null아님')
+            axios.get(baseURL + '/trade/index/' + page,{
+                params: {
+                    sellcoin:Sellselected,
+                    buycoin:Buyselected,
+                
+                }
+            })
+                .then((response) => {
+                    const data = response.data
+                    console.log(data);
+                    setItems(data)
+                })
         }
+            
+        
 
        
     //    if (selected === "All") {
@@ -267,12 +288,12 @@ const List = () => {
                             <Table.Row>
 
                                 <Table.HeaderCell >SELL</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("sellamount")}>sellamount{decideSort("sellamount")}</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("selltokenamount")}>sellamount{decideSort("sellamount")}</Table.HeaderCell>
                                 <Table.HeaderCell >BUY</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("buymount")}>buyamount{decideSort("buymount")}</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("buytokenamount")}>buyamount{decideSort("buymount")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("updated")}>Expiry date{decideSort("updated")}</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("Expirydate")}>Expiry date{decideSort("Expirydate")}</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
