@@ -108,10 +108,49 @@ const Detail = ({id}) => {
 
 
             <AppLayout>
+           
                 <div className="ui two column centered grid">
-                    {JSON.stringify(items)}
-                    userId ={userId}
-                    <div className="four column centered row">
+                
+                    <form className="ui fluid form">
+                    <div className="field">
+                    <img className="ui medium circular image" src="http://localhost:3000/images/eth.png"/>
+            
+                        </div>
+                        <div className="field">
+                        <label>TYPE : {items.type}</label>
+            
+                        </div>
+                        <div className="ui divider"></div>
+                        <div className="field" placeholder="Last Name">
+                         
+                            <label>PRICE : {items.price}</label>
+                        </div>
+                        <div className="ui divider"></div>
+                        <div className="inline field">
+                            <label>amount : {items.amount}</label>
+                            </div>
+                        <div className="inline field">
+                            
+                            <input type="text" placeholder="amount" />
+                            <div className="ui left pointing label">
+                                구매할 수량
+    </div>
+                        </div>
+                        <div className="ui divider"></div>
+                        <div className="inline field">
+                            <div className="ui right pointing label">
+                                
+    </div>
+                            <input type="password" />
+                        </div>
+                        <div className="ui divider"></div>
+                        <div className="inline field">
+                            <div className="ui right pointing label">
+                                
+    </div>
+                            <input type="password" />
+                        </div>
+                        <div className="four column centered row">
                         <div className="column">
                             {usermatch() ? <h1>
                                 거래현황
@@ -120,10 +159,10 @@ const Detail = ({id}) => {
                             </button>}
 
                         </div>
-                        <div className="column">
-
-                        </div>
+                        
                     </div>
+                    </form>
+                   
                 </div>
 
 

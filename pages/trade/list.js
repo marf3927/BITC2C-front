@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
+import {Button, Table, Input, Icon,Menu, Dropdown,Tab} from 'semantic-ui-react'
 import axios from 'axios'
 import Router from "next/router"
 import {AuthStoreContext} from "../../store/AuthStroe"
@@ -13,16 +13,44 @@ const List = () => {
 
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
-    const [selected, setSelected] = useState("All")
+    const [Sellselected, setSellselcted] = useState("판매")
+    const [Buyselected, setBuyselcted] = useState("구매")
     const [selectedtoken, setSelectedtoken] = useState("ETH")
     const [Sortname, setSortname] = useState("");
     const [Iconbool,setIconbool] =useState(true);
     const idReference = useRef();
 
+    const buyoption = [
+        { key: 1, text: 'ETH', value: 'ETH' },
+        { key: 2, text: 'Atoken', value: 'Atoken' },
+        { key: 3, text: 'Btoken', value: 'Btoken' },
+        { key: 4, text: 'Ctoken', value: 'Ctoken' },
+
+    ]
+
+    const selloption = [
+        { key: 1, text: 'ETH', value: 'ETH' },
+        { key: 2, text: 'Atoken', value: 'Atoken' },
+        { key: 3, text: 'Btoken', value: 'Btoken' },
+        { key: 4, text: 'Ctoken', value: 'Ctoken' },
+    ]
+
+    const onSellSelectChange = (e, result) => {
+        const { text, value } = result;
+        console.log(value);
+        setSellselcted(value);
+    }
+
+    const onBuySelectChange = (e, result) => {
+        const { text, value } = result;
+        console.log(value);
+        setBuyselcted(value);
+    }
+
     useEffect(() => {
         getItems()
         
-    }, [, page, selected,Iconbool,Sortname,selectedtoken])
+    }, [, page, Sellselected,Buyselected,Iconbool,Sortname,selectedtoken])
     function sortItems(level,method){
         
             console.log("level=",level)
@@ -42,66 +70,90 @@ const List = () => {
                 })
         
     }
-    function getItems() {
-       if (selected === "All") {
 
-        
-           if(!(Sortname==="")&&Iconbool){
-            
-               sortItems(Iconbool,"index")
-           }else if(!(Sortname==="")&&!(Iconbool)){
-               
-                sortItems(Iconbool,"index")
-           }else{
+   
+    function getItems() {
+
+        if(Sellselected==="판매"||Buyselected==="구매"){
+            console.log("클릭안됨");
+            return;
+        }else if(false){
+
+        }else{
             axios.get(baseURL + '/trade/index/' + page,{
                 params: {
-                    type:selectedtoken
+                    sellcoin:Sellselected,
+                    buycoin:Buyselected
                 }
             })
                 .then((response) => {
                     const data = response.data
-                
+                    console.log(data);
                     setItems(data)
                 })
-           }
-            
-        } else if (selected === "Buy") {
-            if(!(Sortname==="")&&Iconbool){
-            
-                sortItems(Iconbool,"buy")
-            }else if(!(Sortname==="")&&!(Iconbool)){
-                
-                 sortItems(Iconbool,"buy")
-            }else{
-            axios.get(baseURL + '/trade/buy/' + page,{
-                params: {
-                    type:selectedtoken
-                }
-            })
-                .then((response) => {
-                    const data = response.data
-                    setItems(data)
-                })
-            }
-        } else if (selected === "Sell") {
-            if(!(Sortname==="")&&Iconbool){
-            
-                sortItems(Iconbool,"sell")
-            }else if(!(Sortname==="")&&!(Iconbool)){
-                
-                 sortItems(Iconbool,"sell")
-            }else{
-            axios.get(baseURL + '/trade/sell/' + page,{
-                params: {
-                    type:selectedtoken
-                }
-            })
-                .then((response) => {
-                    const data = response.data
-                    setItems(data)
-                })
-            }
+           
         }
+
+       
+    //    if (selected === "All") {
+
+        
+    //        if(!(Sortname==="")&&Iconbool){
+            
+    //            sortItems(Iconbool,"index")
+    //        }else if(!(Sortname==="")&&!(Iconbool)){
+               
+    //             sortItems(Iconbool,"index")
+    //        }else{
+    //         axios.get(baseURL + '/trade/index/' + page,{
+    //             params: {
+    //                 type:selectedtoken
+    //             }
+    //         })
+    //             .then((response) => {
+    //                 const data = response.data
+                
+    //                 setItems(data)
+    //             })
+    //        }
+            
+    //     } else if (selected === "Buy") {
+    //         if(!(Sortname==="")&&Iconbool){
+            
+    //             sortItems(Iconbool,"buy")
+    //         }else if(!(Sortname==="")&&!(Iconbool)){
+                
+    //              sortItems(Iconbool,"buy")
+    //         }else{
+    //         axios.get(baseURL + '/trade/buy/' + page,{
+    //             params: {
+    //                 type:selectedtoken
+    //             }
+    //         })
+    //             .then((response) => {
+    //                 const data = response.data
+    //                 setItems(data)
+    //             })
+    //         }
+    //     } else if (selected === "Sell") {
+    //         if(!(Sortname==="")&&Iconbool){
+            
+    //             sortItems(Iconbool,"sell")
+    //         }else if(!(Sortname==="")&&!(Iconbool)){
+                
+    //              sortItems(Iconbool,"sell")
+    //         }else{
+    //         axios.get(baseURL + '/trade/sell/' + page,{
+    //             params: {
+    //                 type:selectedtoken
+    //             }
+    //         })
+    //             .then((response) => {
+    //                 const data = response.data
+    //                 setItems(data)
+    //             })
+    //         }
+    //     }
     }
     function gotoDetail(itemiD, status, method){
         const itemID=itemiD;
@@ -203,41 +255,36 @@ const List = () => {
                     }
                 `}</style>
                 <div>
-                     <div className="ui pointing secondary menu">
-                        <a id="ETH" className={`item ${selectedtoken ==="ETH" ? "active" : ""}` } onClick={() => tabClicktoken("ETH")}>ETH</a>
-                        <a id="Atoken" className={`item ${selectedtoken ==="Atoken" ? "active" : ""}`}onClick={() => tabClicktoken("Atoken")}>Atoken</a>
-                        <a id="Btoken" className={`item ${selectedtoken ==="Btoken" ? "active" : ""}`}onClick={() => tabClicktoken("Btoken")}>Btoken</a>
-                        <a id="Ctoken" className={`item ${selectedtoken ==="Ctoken" ? "active" : ""}`}onClick={() => tabClicktoken("Ctoken")}>Ctoken</a>
 
-                    </div>
-                    <div className="ui pointing secondary menu">
-                        <a id="All" className={`item ${selected ==="All" ? "active" : ""}`} onClick={() => tabClick("All")}>All</a>
-                        <a id="Buy" className={`item ${selected ==="Buy" ? "active" : ""}`} onClick={() => tabClick("Buy")}>Buy</a>
-                        <a id="Sell" className={`item ${selected ==="Sell" ? "active" : ""}`} onClick={() => tabClick("Sell")}>Sell</a>
-
-                    </div>
+                <Menu compact>
+                <Dropdown text={Sellselected} options={selloption} onChange={onSellSelectChange} simple item />
+                <Dropdown text={Buyselected} options={buyoption} onChange={onBuySelectChange} simple item />
+                 </Menu>
+                 
                     <div className="ui segment active tab">
                     <Table singleLine>
                         <Table.Header>
                             <Table.Row>
 
-                              
+                                <Table.HeaderCell >SELL</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("sellamount")}>sellamount{decideSort("sellamount")}</Table.HeaderCell>
+                                <Table.HeaderCell >BUY</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("buymount")}>buyamount{decideSort("buymount")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("type")}>type{decideSort("type")}</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("price")}>price{decideSort("price")}</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("amount")}>amount{decideSort("amount")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
-
+                                <Table.HeaderCell onClick={()=>Sortlist("updated")}>Expiry date{decideSort("updated")}</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
                             {items.map((item) => {
-                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status,item.method)}>
-                                     <Table.Cell>{statusdecide(item.status)}</Table.Cell>
-                                    <Table.Cell>{item.type}</Table.Cell>
-                                    <Table.Cell>{item.price}</Table.Cell>
-                                    <Table.Cell>{item.amount}</Table.Cell>
+                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status)}>
+                                     <Table.Cell>{item.selltoken}</Table.Cell>
+                                    <Table.Cell>{item.selltokenamount}</Table.Cell>
+                                    <Table.Cell>{item.buytoken}</Table.Cell>
+                                    <Table.Cell>{item.buytokenamount}</Table.Cell>
+                                    <Table.Cell>{statusdecide(item.status)}</Table.Cell>
                                     <Table.Cell>{item.updatedAt}</Table.Cell>
+                                    <Table.Cell>{item.Expirydate}</Table.Cell>
                                 </Table.Row>
                                
                             })}
