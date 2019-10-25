@@ -201,7 +201,7 @@ const List = () => {
                                 <Table.HeaderCell onClick={()=>Sortlist("price")}>price{decideSort("price")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("amount")}>amount{decideSort("amount")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
->>>>>>> 68e9ba587d113bba6ede6c428043f6256813ea89
+
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>

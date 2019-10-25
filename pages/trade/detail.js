@@ -27,7 +27,21 @@ const Detail = ({id}) => {
         getUser()
         console.log(id)
     }, [])
+    const useConfirm = (message="",callback,rejection)=>{
+        if(typeof callback !=="function"){
+            return;
+        }
 
+        const confirmAction =() =>{
+            if(confirm(message)){
+                callback();
+            }else{
+                rejection();
+            }
+        }
+
+        return confirmAction;
+    }
     // console.log(props.location.query);
     function getItems() {
         const id = router.query.id
@@ -38,7 +52,7 @@ const Detail = ({id}) => {
         })
 
     }
-
+    
     //토큰을 이용해서 USER 정보 가져오는 함수
     function getUser() {
 
@@ -65,7 +79,7 @@ const Detail = ({id}) => {
 
         return true
     }
-
+    const rejection = () => console.log("fail");
 
     // console.log(props.key);
     function gotoTrade() {
@@ -101,7 +115,7 @@ const Detail = ({id}) => {
                         <div className="column">
                             {usermatch() ? <h1>
                                 거래현황
-                            </h1> : <button className="ui primary button" onClick={() => gotoTrade()}>
+                            </h1> : <button className="ui primary button" onClick={useConfirm("거래를 진행하시겠습니까?",()=>gotoTrade(),rejection)}>
                                 BUY
                             </button>}
 
@@ -125,4 +139,4 @@ Detail.getInitialProps = async ({req}) => {
     return {id: res}
 }
 
-export default Detail
+export default Detail;
