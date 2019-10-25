@@ -14,6 +14,7 @@ const List = () => {
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
     const [selected, setSelected] = useState("All")
+
     const [Sortname, setSortname] = useState("");
     const [Iconbool,setIconbool] =useState(true);
     const idReference = useRef();
@@ -89,7 +90,7 @@ const List = () => {
             }
         }
     }
-    function gotoDetail(itemiD,status,method){
+    function gotoDetail(itemiD, status, method){
         const itemID=itemiD;
         const statusCode=status
        // const method = method
@@ -130,7 +131,7 @@ const List = () => {
     
     function WritingBoard() {
         console.log("writing");
-        Router.push('/trade/Writing');
+        Router.push('/trade/writing');
     }
     
     //상태값에 따라서 화면렌더링 변환
@@ -153,6 +154,8 @@ const List = () => {
             return <i className="caret up icon"></i>
         }
     }
+    const element = useRef();
+
 
     function decideSort(methodname){
     
@@ -191,17 +194,18 @@ const List = () => {
                     <Table singleLine>
                         <Table.Header>
                             <Table.Row>
+
                                 <Table.HeaderCell onClick={()=>Sortlist("method")}>method{decideSort("method")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("type")}>type{decideSort("type")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("price")}>price{decideSort("price")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("amount")}>amount{decideSort("amount")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
+>>>>>>> 68e9ba587d113bba6ede6c428043f6256813ea89
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
                             {items.map((item) => {
-
                                 return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status,item.method)}>
                                     <Table.Cell>{item.method}</Table.Cell>
                                     <Table.Cell>{statusdecide(item.status)}</Table.Cell>

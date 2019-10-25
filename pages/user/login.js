@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react'
 import Link from 'next/link'
-import Head from 'next/head'
 import {Cookies} from 'react-cookie'
 import AppLayout from '../../components/AppLayout'
 import {Button, Input} from 'semantic-ui-react'
@@ -63,7 +62,7 @@ const Login = () => {
                         <span>
                             Forgot
                         </span>
-                            <Link href="#"><a>Username / Password?</a></Link>
+                            <Link href="/user/forgot"><a>Username / Password?</a></Link>
                         </div>
 
                         <div>

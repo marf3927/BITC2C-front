@@ -11,6 +11,7 @@ const Header = () => {
     const [isLoggedIn, setIslogedIn] = useState(AuthStore.isLoggedIn)
    
     const logout = () => {
+
         AuthStore.deleteToken()
         setIslogedIn(AuthStore.isLoggedIn)
     }
@@ -22,9 +23,16 @@ const Header = () => {
                 <Menu.Item key="QnA"><Link href="/QnA/detail"><a>Q&A</a></Link></Menu.Item>
                 {
                     !AuthStore.isLoggedIn ?
-                     <Menu.Item key="login"><Link href="/user/login"><a>Login</a></Link></Menu.Item>:<Menu.Item key="logout" onClick = {() => logout()}><Link href="/"><a>Logout</a></Link></Menu.Item>
-                }   
-                <Menu.Item key="My Page"><Link href="/user/mypage"><a>My Page</a></Link></Menu.Item>
+                     <Menu.Item key="login"><Link href="/user/login"><a>Login</a></Link></Menu.Item>
+                        :<Menu.Item key="logout" onClick = {() => logout()}><Link href="/"><a>Logout</a></Link></Menu.Item>
+                }
+                {
+                    AuthStore.isLoggedIn ?
+                        <Menu.Item key="My Page"><Link href="/user/mypage"><a>My Page</a></Link></Menu.Item>
+                        :<></>
+                }
+
+
             </Menu>
         )
 
