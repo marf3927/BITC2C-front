@@ -38,10 +38,10 @@ const Login = () => {
                 console.log('socket = ',socket)
                 socket.once('connect', () =>{
                     console.log("connection socket server!!!");
-
                     socket.on('alarm', (msg) => {
                         console.log('alarm callback!!!: ', msg);
-                        AuthStoreContext.soalarm = "거래";
+                        AuthStore.setSoalarm("거래");
+                        console.log('11',AuthStore.getSoalarm)
                     });
 
                 })

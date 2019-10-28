@@ -90,9 +90,7 @@ const Detail = ({id}) => {
     }
 
     function alarm() {
-
         axios.get(baseURL + '/alarm', {})
-
     }
 
     

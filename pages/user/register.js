@@ -101,16 +101,8 @@ const Register = () =>{
             password
         })
         .then((response) => {
-<<<<<<< HEAD
-            Router.push('/user/login/');
-        }).catch((e)=>{
-            console.log(e)
-                alert(e.response.data)
-            })
-=======
             Router.push('/user/emailcheck/');
         })
->>>>>>> 68e9ba587d113bba6ede6c428043f6256813ea89
     }
 
     return (

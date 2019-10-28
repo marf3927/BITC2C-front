@@ -29,17 +29,19 @@ class AuthStore{
         return cookies.get('refreshToken')
     }
 
-    setSoalarm(){
-
+    setSoalarm(data){
+        this.soalarm = data;
     }
 
-    get soalarm() {
-        return  soalarm;
+    get getSoalarm() {
+        return this.soalarm;
     }
 
 }
 decorate(AuthStore, {
     soalarm : observable,
+    setSoalarm : action,
+    getSoalarm : computed,
     authToken : observable,
     setToken : action,
     deleteToken : action,
