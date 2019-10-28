@@ -18,7 +18,7 @@ const Login = () => {
 
     //regiser 보내기
     function onLoginClick(email, password) {
-        HttpService.login()
+        HttpService.login(email, password)
             .then((response) => {
                 console.log('front_login_', response.data)
                 const token = response.data.token
