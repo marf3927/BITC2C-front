@@ -94,16 +94,9 @@ const List = () => {
 
                     setItems(data)
                 })
-<<<<<<< HEAD
            
         }else{ 
             axios.get(baseURL + '/trade/index/' + page,{
-=======
-
-        } else {
-
-            axios.get(baseURL + '/trade/index/' + page, {
->>>>>>> master
                 params: {
                     sellcoin: Sellselected,
                     buycoin: Buyselected,
@@ -116,9 +109,7 @@ const List = () => {
                     setItems(data)
                 })
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-            
+
 
     //    if (selected === "All") {
 
@@ -179,11 +170,7 @@ const List = () => {
     //             })
     //         }
     //     }
-=======
->>>>>>> master
-    }
-=======
->>>>>>> origin/master
+
 
 
 

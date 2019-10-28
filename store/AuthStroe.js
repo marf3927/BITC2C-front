@@ -1,20 +1,23 @@
 import {observable, computed, action, decorate} from 'mobx'
 import {createContext} from "react"
+import axios from 'axios'
 import {Cookies} from "react-cookie"
+
 const cookies = new Cookies()
 
-export default class AuthStore {
+class AuthStore{
 
     baseURL = "http://localhost:5555"
 
-    authToken = cookies.get('authToken')
+    authToken = cookies.get('authToken');
 
     setToken(token) {
         this.authToken = token
     }
 
     deleteToken() {
-        cookies.remove('authToken', {expires: 'Thu, 01 Jan 1970 00:00:01 GMT'})
+        console.log("logout클릭!")
+        cookies.remove('authToken', { expires:'Thu, 01 Jan 1970 00:00:01 GMT' })
     }
 
     get isLoggedIn() {
@@ -25,24 +28,16 @@ export default class AuthStore {
         return cookies.get('refreshToken')
     }
 
-    setSoalarm(){
-
-    }
-
-    get soalarm() {
-        return  soalarm;
-    }
 
 }
 
 
+
 decorate(AuthStore, {
-    soalarm : observable,
     authToken : observable,
     setToken : action,
     deleteToken : action,
     isLoggedIn : computed,
-    isExpired : observable
 })
 
 export const AuthStoreContext = createContext(new AuthStore())
