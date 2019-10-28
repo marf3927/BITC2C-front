@@ -7,19 +7,23 @@ const cookies = new Cookies()
 
 class AuthStore{
 
+    @observable
     baseURL = "http://localhost:5555"
 
     authToken = cookies.get('authToken');
 
+    @action
     setToken(token) {
         this.authToken = token
     }
 
+    @action
     deleteToken() {
         console.log("logout클릭!")
         cookies.remove('authToken', { expires:'Thu, 01 Jan 1970 00:00:01 GMT' })
     }
 
+    @computed
     get isLoggedIn() {
         return cookies.get('authToken') != null;
     }
@@ -27,17 +31,6 @@ class AuthStore{
     get refresh_token() {
         return cookies.get('refreshToken')
     }
-
-
 }
-
-
-
-decorate(AuthStore, {
-    authToken : observable,
-    setToken : action,
-    deleteToken : action,
-    isLoggedIn : computed,
-})
 
 export const AuthStoreContext = createContext(new AuthStore())
