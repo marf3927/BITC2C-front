@@ -1,4 +1,4 @@
-import React, {useContext,useState} from 'react'
+import React, {useContext,useState,useEffect} from 'react'
 import {Menu} from 'semantic-ui-react'
 import Link from 'next/link'
 import {AuthStoreContext} from "../store/AuthStroe"
@@ -6,15 +6,11 @@ import Router from "next/router"
 
 
 const Header = () => {
-    
     const AuthStore = useContext(AuthStoreContext)
-    const [isLoggedIn, setIslogedIn] = useState(AuthStore.isLoggedIn)
-    const [socketalarm, setSocketalarm] = useState(AuthStore.isLoggedIn)
    
+ const [socketalarm, setSocketalarm] = useState(AuthStore.isLoggedIn)
     const logout = () => {
-
         AuthStore.deleteToken()
-        setIslogedIn(AuthStore.isLoggedIn)
     }
    
         return (

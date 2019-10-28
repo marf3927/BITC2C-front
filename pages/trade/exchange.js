@@ -5,8 +5,13 @@ import {AuthStoreContext} from "../../store/AuthStroe"
 import Router,{ useRouter } from 'next/router'
 
 //구매와 판매 판별하는 함수
-const Purchasedecide = ()=>{
+const Purchasedecide = (method)=>{
+    if(method ==="sell"){
 
+        return <div>구매</div>
+    }else{
+
+    }
 }
 
 
