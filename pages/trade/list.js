@@ -95,8 +95,7 @@ const List = () => {
                     setItems(data)
                 })
            
-        }else{
-       
+        }else{ 
             axios.get(baseURL + '/trade/index/' + page,{
                 params: {
                     sellcoin:Sellselected,
@@ -111,9 +110,7 @@ const List = () => {
                 })
         }
             
-        
 
-       
     //    if (selected === "All") {
 
         
