@@ -113,66 +113,6 @@ const List = () => {
             
         
 
-       
-    //    if (selected === "All") {
-
-        
-    //        if(!(Sortname==="")&&Iconbool){
-            
-    //            sortItems(Iconbool,"index")
-    //        }else if(!(Sortname==="")&&!(Iconbool)){
-               
-    //             sortItems(Iconbool,"index")
-    //        }else{
-    //         axios.get(baseURL + '/trade/index/' + page,{
-    //             params: {
-    //                 type:selectedtoken
-    //             }
-    //         })
-    //             .then((response) => {
-    //                 const data = response.data
-                
-    //                 setItems(data)
-    //             })
-    //        }
-            
-    //     } else if (selected === "Buy") {
-    //         if(!(Sortname==="")&&Iconbool){
-            
-    //             sortItems(Iconbool,"buy")
-    //         }else if(!(Sortname==="")&&!(Iconbool)){
-                
-    //              sortItems(Iconbool,"buy")
-    //         }else{
-    //         axios.get(baseURL + '/trade/buy/' + page,{
-    //             params: {
-    //                 type:selectedtoken
-    //             }
-    //         })
-    //             .then((response) => {
-    //                 const data = response.data
-    //                 setItems(data)
-    //             })
-    //         }
-    //     } else if (selected === "Sell") {
-    //         if(!(Sortname==="")&&Iconbool){
-            
-    //             sortItems(Iconbool,"sell")
-    //         }else if(!(Sortname==="")&&!(Iconbool)){
-                
-    //              sortItems(Iconbool,"sell")
-    //         }else{
-    //         axios.get(baseURL + '/trade/sell/' + page,{
-    //             params: {
-    //                 type:selectedtoken
-    //             }
-    //         })
-    //             .then((response) => {
-    //                 const data = response.data
-    //                 setItems(data)
-    //             })
-    //         }
-    //     }
     }
     function gotoDetail(itemiD, status, method){
         const itemID=itemiD;
