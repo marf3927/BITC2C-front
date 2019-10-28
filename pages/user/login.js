@@ -30,20 +30,19 @@ const Login = () => {
                 const token = response.data.token
                 cookies.set('authToken', token)
 
-                var socket = io.connect(baseURL, { 'reconnect': true, 'resourse': 'socket.io' })
+                var socket = io.connect(baseURL,{ 'reconnect': true, 'resourse': 'socket.io' })
                 console.log('socket = ',socket)
                 socket.once('connect', () =>{
                     console.log("connection socket server!!!");
-
                     socket.on('alarm', (msg) => {
                         console.log('alarm callback!!!: ', msg);
-                        AuthStoreContext.soalarm = "거래";
+                        AuthStore.soalarm = "거래";
                     });
-
                 })
 
                 Router.push('/')
             }).catch((e) => {
+                console.log('aa')
                 setLogAlert("아이디 또는 비밀번호를 다시 확인하세요.\n 등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.")
             })
     }
