@@ -3,13 +3,13 @@ import Link from 'next/link'
 import {Cookies} from 'react-cookie'
 import AppLayout from '../../components/AppLayout'
 import {Button, Input} from 'semantic-ui-react'
-import axios from "axios"
 import Router from "next/router"
 import {AuthStoreContext} from "../../store/AuthStroe"
+import {HttpServiceContext} from "../../store/HttpService"
 
 const Login = () => {
     const AuthStore = useContext(AuthStoreContext)
-    const baseURL = AuthStore.baseURL
+    const HttpService = useContext(HttpServiceContext)
 
     const cookies = new Cookies()
     const [email, setEmail] = useState('')
@@ -18,11 +18,7 @@ const Login = () => {
 
     //regiser 보내기
     function onLoginClick(email, password) {
-        return axios.post((baseURL + '/users/login/'),
-            {
-                email,
-                password
-            })
+        HttpService.login()
             .then((response) => {
                 console.log('front_login_', response.data)
                 const token = response.data.token
