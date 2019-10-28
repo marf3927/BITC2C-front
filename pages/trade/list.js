@@ -16,8 +16,8 @@ const List = () => {
 
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
-    const [selected, setSelected] = useState("All")
-
+    const [Sellselected, setSellselected] = useState("구매");
+    const [Buyselected, setBuyselected] = useState("판매")
     const [Sortname, setSortname] = useState("");
     const [Iconbool,setIconbool] =useState(true);
     const idReference = useRef();
@@ -40,51 +40,21 @@ const List = () => {
     const onSellSelectChange = (e, result) => {
         const { text, value } = result;
 
-        setSellselcted(value);
+        setSellselected(value);
     }
 
     const onBuySelectChange = (e, result) => {
         const { text, value } = result;
 
-        setBuyselcted(value);
+        setBuyselected(value);
     }
 
     useEffect(() => {
         getItems()
 
-    }, [, page, selected, Iconbool, Sortname])
+    }, [, page, Sellselected,Buyselected,Iconbool,Sortname])
 
-    function sortItems(level, method) {
-
-        console.log("level=", level)
-        HttpService.sortItems(level, method).then((response) => {
-            const data = response.data
-            setItems(data)
-            console.log(data)
-            console.log(items)
-        })
-    }
-
-
-    }, [, page, Sellselected,Buyselected,Iconbool,Sortname,selectedtoken])
-    function sortItems(level,method){
-
-
-            axios.get(baseURL + '/trade/'+method+'/'+page,{
-                params: {
-                    method:Sortname,
-                    order:level,
-                    type:selectedtoken
-                }
-            })
-                .then((response) => {
-                    const data = response.data
-                    setItems(data)
-
-
-                })
-
-    }
+    
 
 
     function getItems() {
@@ -156,12 +126,8 @@ const List = () => {
 
         return true;
     }
-    function tabClick(e) {
-
-
-        setSelected(e)
-        setPage(1)
-    }
+    
+    
 
     function NextPageClick() {
         setPage(page + 1)
@@ -243,9 +209,9 @@ const List = () => {
                                 <Table.Row>
 
                                 <Table.HeaderCell >SELL</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("selltokenamount")}>sellamount{decideSort("sellamount")}</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("selltokenamount")}>sellamount{decideSort("selltokenamount")}</Table.HeaderCell>
                                 <Table.HeaderCell >BUY</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("buytokenamount")}>buyamount{decideSort("buymount")}</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("buytokenamount")}>buyamount{decideSort("buytokenamount")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
                                 <Table.HeaderCell onClick={()=>Sortlist("Expirydate")}>Expiry date{decideSort("Expirydate")}</Table.HeaderCell>
