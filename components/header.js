@@ -9,6 +9,7 @@ const Header = () => {
     
     const AuthStore = useContext(AuthStoreContext)
     const [isLoggedIn, setIslogedIn] = useState(AuthStore.isLoggedIn)
+    const [socketalarm, setSocketalarm] = useState(AuthStore.isLoggedIn)
    
     const logout = () => {
 
@@ -30,6 +31,17 @@ const Header = () => {
                     AuthStore.isLoggedIn ?
                         <Menu.Item key="My Page"><Link href="/user/mypage"><a>My Page</a></Link></Menu.Item>
                         :<></>
+                }
+                {
+                    (function () {
+                        if (AuthStoreContext.soalarm) {
+                            console.log('알람옴')
+                            setSocketalarm(AuthStoreContext.soalarm)
+                            AuthStoreContext.soalarm = '';
+                            alert('알람')
+                        }
+
+                    })()
                 }
 
 

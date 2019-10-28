@@ -10,7 +10,6 @@ import Cookies from 'js-cookie'
 import {AuthStoreContext} from "../../store/AuthStroe"
 import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 
-
 const Detail = ({id}) => {
     const AuthStore = useContext(AuthStoreContext)
 
@@ -20,6 +19,7 @@ const Detail = ({id}) => {
 
     const [items, setItems] = useState([])
     const [userId, setUserId] = useState()
+
 
     //console.log('asdasd',id);
     useEffect(() => {
@@ -89,6 +89,14 @@ const Detail = ({id}) => {
 
     }
 
+    function alarm() {
+
+        axios.get(baseURL + '/alarm', {})
+
+    }
+
+    
+
     return (
         <>
 
@@ -110,6 +118,9 @@ const Detail = ({id}) => {
 
                         </div>
                     </div>
+                </div>
+                <div>
+                    <span><Button onClick={() => alarm()}></Button></span>
                 </div>
 
 

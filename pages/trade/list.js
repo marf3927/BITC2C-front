@@ -6,6 +6,7 @@ import axios from 'axios'
 import Router from "next/router"
 import {AuthStoreContext} from "../../store/AuthStroe"
 import { id } from 'postcss-selector-parser'
+import Login from '../user/login'
 
 const List = () => {
     const AuthStore = useContext(AuthStoreContext)

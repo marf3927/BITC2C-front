@@ -9,6 +9,7 @@ class AuthStore{
 
     baseURL = "http://localhost:5555"
 
+    soalarm = '';
     authToken = cookies.get('authToken');
 
     setToken(token) {
@@ -28,9 +29,18 @@ class AuthStore{
         return cookies.get('refreshToken')
     }
 
+    setSoalarm(){
+
+    }
+
+    get soalarm() {
+        return  soalarm;
+    }
+
 }
 decorate(AuthStore, {
-    Token : observable,
+    soalarm : observable,
+    authToken : observable,
     setToken : action,
     deleteToken : action,
     isLoggedIn : computed,
