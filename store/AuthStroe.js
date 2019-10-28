@@ -7,6 +7,7 @@ export default class AuthStore {
 
     @observable
     baseURL = "http://localhost:5555"
+    soalarm = ''
 
     authToken = cookies.get('authToken')
 
@@ -28,28 +29,17 @@ export default class AuthStore {
     get refresh_token() {
         return cookies.get('refreshToken')
     }
-<<<<<<< HEAD
 
-    setSoalarm(data){
-        this.soalarm = data;
+    @action
+    setSoalarm(date) {
+        this.soalarm = date
     }
-
+    
+    @computed
     get getSoalarm() {
         return this.soalarm;
     }
 
 }
-decorate(AuthStore, {
-    soalarm : observable,
-    setSoalarm : action,
-    getSoalarm : computed,
-    authToken : observable,
-    setToken : action,
-    deleteToken : action,
-    isLoggedIn : computed,
-})
-=======
-}
->>>>>>> origin/master
 
 export const AuthStoreContext = createContext(new AuthStore())

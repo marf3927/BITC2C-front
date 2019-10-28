@@ -30,18 +30,14 @@ const Login = () => {
                 const token = response.data.token
                 cookies.set('authToken', token)
 
-                var socket = io.connect(baseURL,{ 'reconnect': true, 'resourse': 'socket.io' })
+                var socket = io.connect(AuthStore.baseURL,{ 'reconnect': true, 'resourse': 'socket.io' })
                 console.log('socket = ',socket)
                 socket.once('connect', () =>{
                     console.log("connection socket server!!!");
                     socket.on('alarm', (msg) => {
                         console.log('alarm callback!!!: ', msg);
-<<<<<<< HEAD
                         AuthStore.setSoalarm("거래");
                         console.log('11',AuthStore.getSoalarm)
-=======
-                        AuthStore.soalarm = "거래";
->>>>>>> origin/master
                     });
                 })
 

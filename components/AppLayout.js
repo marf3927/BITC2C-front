@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { useContext, useState, useEffect } from 'react'
-=======
 import React, {useEffect} from 'react';
->>>>>>> origin/master
 import Header from './header'
 import Head from 'next/head'
 import { AuthStoreContext } from "../store/AuthStroe"

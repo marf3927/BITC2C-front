@@ -103,15 +103,14 @@ const Detail = ({id}) => {
 
     }
 
-<<<<<<< HEAD
     function alarm() {
         axios.get(baseURL + '/alarm', {})
+        console.log('alarm() 클릭');
+        
     }
 
     
 
-=======
->>>>>>> origin/master
     return (
         <>
 
@@ -173,10 +172,10 @@ const Detail = ({id}) => {
                             </button>}
 
                         </div>
-                        
+
                     </div>
                     </form>
-                   
+                                       <button onClick={() => alarm()}></button>    
                 </div>
 
 

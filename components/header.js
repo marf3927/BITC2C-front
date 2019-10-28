@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, {useContext,useState, useEffect} from 'react'
-=======
-import React, {useContext,useState,useEffect} from 'react'
->>>>>>> origin/master
 import {Menu} from 'semantic-ui-react'
 import Link from 'next/link'
 import {AuthStoreContext} from "../store/AuthStroe"
@@ -11,10 +7,9 @@ import Router from "next/router"
 
 const Header = () => {
     const AuthStore = useContext(AuthStoreContext)
-<<<<<<< HEAD
 
     const [isLoggedIn, setIslogedIn] = useState(AuthStore.isLoggedIn)
-    const [socketalarm, setSocketalarm] = useState(AuthStore.getSoalarm)
+    const [socketalarm, setSocketalarm] = useState(AuthStore.soalarm)
 
     // console.log(socketalarm);
     // function alarm () {
@@ -24,17 +19,11 @@ const Header = () => {
     //         alert('알람')
     //     }
     // }
-   
     useEffect(() => {
-        setSocketalarm(AuthStore.getSoalarm)
         console.log('22', socketalarm)
-    }, [socketalarm]);
+    }, [AuthStore.soalarm]);
     
 
-=======
-   
- const [socketalarm, setSocketalarm] = useState(AuthStore.isLoggedIn)
->>>>>>> origin/master
     const logout = () => {
         AuthStore.deleteToken()
     }
@@ -55,7 +44,7 @@ const Header = () => {
                         :<></>
                 }
                 {
-                    <p>You clicked {AuthStore.soalarm} times</p>
+                    <p>알람 {AuthStore.soalarm}</p>
                 }
                 
                 

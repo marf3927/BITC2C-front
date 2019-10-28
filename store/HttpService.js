@@ -41,9 +41,7 @@ class HttpService {
             {
                 email,
                 password
-            }).then((response) =>{
-                return response
-        })
+            })
     }
 
     getUser() {
