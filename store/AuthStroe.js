@@ -9,6 +9,7 @@ class AuthStore{
 
     @observable
     baseURL = "http://localhost:5555"
+    soalarm = ''
 
     authToken = cookies.get('authToken');
 
@@ -31,6 +32,17 @@ class AuthStore{
     get refresh_token() {
         return cookies.get('refreshToken')
     }
+
+    @action
+    setSoalarm(date) {
+        this.soalarm = date
+    }
+    
+    @computed
+    get getSoalarm() {
+        return this.soalarm;
+    }
+
 }
 
 export const AuthStoreContext = createContext(new AuthStore())
