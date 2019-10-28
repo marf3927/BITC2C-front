@@ -1,95 +1,47 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
+import { Button, Table, Input, Icon, Tab } from 'semantic-ui-react'
 import axios from 'axios'
 import Router from "next/router"
-import Cookies from 'js-cookie'
-import {AuthStoreContext} from "../../store/AuthStroe"
-import {HttpServiceContext} from "../../store/HttpService"
+import Cookies from 'js-cookie';
+import { AuthStoreContext } from "../../store/AuthStroe"
 
 const Mypage = () => {
     const AuthStore = useContext(AuthStoreContext)
-    const HttpService = useContext(HttpServiceContext)
     const baseURL = AuthStore.baseURL
 
-    const [user, setUser] = useState()
-    const [userData, setUserData] = useState()
-    const [wallets, setWallets] = useState([])
-    const [boards, setBoards] = useState([])
+    const [user, setUser] = useState();
+    const [userData, setUserData] = useState();
+    const [wallets, setWallets] = useState([]);
+    const [boards, setBoards] = useState([]);
 
-    const token = Cookies.get("authToken")
+    const token = Cookies.get("authToken");
     useEffect(() => {
         getId()
     }, [])
 
     function getId() {
-        HttpService.getUser()
-            .then((response) => {
-                console.log(response)
-                // data = JSON.parse(JSON.stringify(data))
-                setUser(response)
-            })
-    }
-
-    function getMyItems() {
-        // user정보 가져오기
-        axios.get(baseURL + '/mypage/user', {
+        axios.get(baseURL + '/users/getuser', {
             params: {
-                id: user.id
+                token: token
             }
         }).then((data) => {
-            console.log('ID ', data.data.id)
-            // wallet 정보 가져오기
-            axios.get(baseURL + '/mypage/wallet', {
-                params: {
-                    id: data.data.id
+            // data = JSON.parse(JSON.stringify(data))
+            console.log('id: ', data)
+            setUser(data);
+        }).catch((e) => {
+            console.log(e.response.data.message)
+            if (e.response.data.message === "jwt expired") {
+                AuthStore.deleteToken()
+                const expired = confirm("로그인 세션이 완료되었습니다. \n로그인 하시겠습니까?")
+                if (expired === true) {
+                    Router.push('/user/login');
+                } else {
+                    Router.push('/');
                 }
-            }).then((wdata) => {
-                console.log("walletdata: ", wdata)
-
-                // 거래게시판 이용내역 가져오기
-                axios.get(baseURL + '/mypage/tboard', {
-                    params: {
-                        id: data.data.id
-                    }
-                }).then((board) => {
-                    console.log("boards: ", board.data)
-
-                    setBoards(board.data)
-
-                    setWallets(wdata.data)
-
-                    setUserData(data)
-                })
-            })
+            }
         })
-
-    }
-
-
-    function gotoDetail(itemiD, status, method) {
-        const itemID = itemiD
-        const statusCode = status
-        // const method = method
-        //진행상황이 0 이면 detail 페이지로 1이면 excahnge 페이지로
-        if (statusCode === 0) {
-            Router.push({
-                    pathname: '/trade/detail',
-                    query: {id: itemID}
-                }, '/detail'
-            )
-        } else if (statusCode === 1) {
-            Router.push({
-                    pathname: '/trade/exchange',
-                    query: {name: method}
-                }
-                , '/exchange'
-            )
-        } else {
-
-        }
-
     }
 
     useEffect(() => {
@@ -103,6 +55,67 @@ const Mypage = () => {
         console.log("userData: ", userData)
     }, [userData])
 
+
+    function getItems() {
+        // user정보 가져오기
+        axios.get(baseURL + '/mypage/user', {
+            params: {
+                id: user.data.id
+            }
+        }).then((data) => {
+            console.log('ID ', data.data.id)
+
+            // wallet 정보 가져오기
+            axios.get(baseURL + '/mypage/wallet', {
+                params: {
+                    id: data.data.id
+                }
+            }).then((wdata) => {
+                console.log("walletdata: ", wdata);
+
+                // 거래게시판 이용내역 가져오기
+                axios.get(baseURL + '/mypage/tboard', {
+                    params: {
+                        id: data.data.id
+                    }
+                }).then((board) => {
+                    console.log("boards: ", board.data);
+
+                    setBoards(board.data);
+
+                    setWallets(wdata.data);
+
+                    setUserData(data);
+                });
+            });
+        });
+
+    }
+
+
+    function gotoDetail(itemiD, status, method) {
+        const itemID = itemiD;
+        const statusCode = status
+        // const method = method
+        //진행상황이 0 이면 detail 페이지로 1이면 excahnge 페이지로
+        if (statusCode === 0) {
+            Router.push({
+                pathname: '/trade/detail',
+                query: { id: itemID }
+            }, '/detail'
+            )
+        } else if (statusCode === 1) {
+            Router.push({
+                pathname: '/trade/exchange',
+                query: { name: method }
+            }
+                , '/exchange'
+            )
+        } else {
+
+        }
+
+    }
 
     return (
 
@@ -148,7 +161,7 @@ const Mypage = () => {
                                                 </Table.Header>
                                                 <Table.Body>
                                                     {wallets.map((data) => {
-                                                        console.log("??? ", wallets)
+                                                        console.log("??? ", wallets);
                                                         return <Table.Row key={data.id}>
                                                             <Table.Cell>{data.type}</Table.Cell>
                                                             <Table.Cell>{data.address}</Table.Cell>
@@ -176,8 +189,7 @@ const Mypage = () => {
                                                 <Table.Body>
                                                     {boards.map((item) => {
 
-                                                        return <Table.Row key={item.id}
-                                                                          onClick={() => gotoDetail(item.id, item.status, item.method)}>
+                                                        return <Table.Row key={item.id} onClick={() => gotoDetail(item.id, item.status, item.method)}>
                                                             <Table.Cell>{item.method}</Table.Cell>
                                                             <Table.Cell>{item.status}</Table.Cell>
                                                             <Table.Cell>{item.type}</Table.Cell>
@@ -191,7 +203,7 @@ const Mypage = () => {
                                             </Table>
                                         </div>
                                     </div>
-                                )
+                                );
                             }
                         })()
                     }
@@ -207,4 +219,4 @@ const Mypage = () => {
 }
 
 
-export default Mypage
+export default Mypage;
