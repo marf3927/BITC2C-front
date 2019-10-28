@@ -1,4 +1,4 @@
-import React, {useContext,useState} from 'react'
+import React, {useContext,useState,useEffect} from 'react'
 import {Menu} from 'semantic-ui-react'
 import Link from 'next/link'
 import {AuthStoreContext} from "../store/AuthStroe"
@@ -6,14 +6,11 @@ import Router from "next/router"
 
 
 const Header = () => {
-    
     const AuthStore = useContext(AuthStoreContext)
-    const [isLoggedIn, setIslogedIn] = useState(AuthStore.isLoggedIn)
    
+ const [socketalarm, setSocketalarm] = useState(AuthStore.isLoggedIn)
     const logout = () => {
-
         AuthStore.deleteToken()
-        setIslogedIn(AuthStore.isLoggedIn)
     }
    
         return (
@@ -30,6 +27,17 @@ const Header = () => {
                     AuthStore.isLoggedIn ?
                         <Menu.Item key="My Page"><Link href="/user/mypage"><a>My Page</a></Link></Menu.Item>
                         :<></>
+                }
+                {
+                    (function () {
+                        if (AuthStoreContext.soalarm) {
+                            console.log('알람옴')
+                            setSocketalarm(AuthStoreContext.soalarm)
+                            AuthStoreContext.soalarm = '';
+                            alert('알람')
+                        }
+
+                    })()
                 }
 
 

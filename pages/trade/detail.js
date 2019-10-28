@@ -3,23 +3,23 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 
 import AppLayout from '../../components/AppLayout'
-import axios from 'axios'
 import fetch from 'isomorphic-unfetch'
 import Router from 'next/router'
 import Cookies from 'js-cookie'
 import {AuthStoreContext} from "../../store/AuthStroe"
-import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
+import {HttpServiceContext} from "../../store/HttpService"
 
+import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 
 const Detail = ({id}) => {
     const AuthStore = useContext(AuthStoreContext)
-
+    const HttpService = useContext(HttpServiceContext)
     const baseURL = AuthStore.baseURL
-
     const router = useRouter()
 
     const [items, setItems] = useState([])
     const [userId, setUserId] = useState()
+
 
     //console.log('asdasd',id);
     useEffect(() => {
@@ -45,26 +45,15 @@ const Detail = ({id}) => {
     // console.log(props.location.query);
     function getItems() {
         const id = router.query.id
-        console.log('console getitems', id)
-        axios.get(baseURL + '/trade/detail?id=' + id).then((response) => {
-            const data = response.data
-            setItems(data)
+        HttpService.getTradeItem(id).then((itemData) => {
+            setItems(itemData)
         })
-
     }
     
     //토큰을 이용해서 USER 정보 가져오는 함수
     function getUser() {
-
-        const token = Cookies.get("authToken")
-        axios.get(baseURL + '/users/getuser', {
-            params: {
-                token: token
-            }
-
-        }).then((data) => {
-            setUserId(data.data.id)
-            console.log('item = ', data.data.id)
+        HttpService.getUser(id).then((userId) => {
+            setUserId(userId)
         })
     }
 
@@ -76,7 +65,6 @@ const Detail = ({id}) => {
         if (userId === items.sellerId || items.buyerId) {
             return false
         }
-
         return true
     }
     const rejection = () => console.log("fail");
@@ -84,14 +72,12 @@ const Detail = ({id}) => {
     // console.log(props.key);
     function gotoTrade() {
         const {id} = router.query
-        const token = Cookies.get("authToken");
-        console.log(token);
+        const token = Cookies.get("authToken")
+        console.log(token)
 
         // const token = Cookies.get('logintoken');
         //console.log('token = ',token);
-        axios.post(baseURL + '/trade/exchange', {
-            token, id
-        }).then((data) => {
+        HttpService.goToTrade().then((data) => {
             console.log('goto tarde', data.data)
             Router.push({
                     pathname: '/trade/exchange',
@@ -102,6 +88,14 @@ const Detail = ({id}) => {
         })
 
     }
+
+    function alarm() {
+
+        axios.get(baseURL + '/alarm', {})
+
+    }
+
+    
 
     return (
         <>
@@ -168,6 +162,9 @@ const Detail = ({id}) => {
                     </div>
                     </form>
                    
+                </div>
+                <div>
+                    <span><Button onClick={() => alarm()}></Button></span>
                 </div>
 
 
