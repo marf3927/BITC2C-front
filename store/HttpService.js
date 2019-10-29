@@ -16,7 +16,7 @@ class HttpService {
 
         axios.defaults.baseURL = 'http://localhost:5555'
 
-        axios.defaults.headers.common['authorization'] = 'JWT ' + this.authToken
+        axios.defaults.headers.common['authorization'] = this.authToken
         reaction(() => this.authToken, () => {
             axios.defaults.headers.common['token'] = this.authToken
         })
