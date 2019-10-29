@@ -1,17 +1,14 @@
 import React, {useState, useEffect, useContext, useRef} from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon,Menu, Dropdown,Tab} from 'semantic-ui-react'
+import {Button, Table, Input, Icon, Menu, Dropdown, Tab} from 'semantic-ui-react'
 import axios from 'axios'
 import Router from "next/router"
 import {AuthStoreContext} from "../../store/AuthStroe"
-import {HttpServiceContext} from "../../store/HttpService"
-
-import {id} from 'postcss-selector-parser'
+// import {id} from 'postcss-selector-parser'
 
 const List = () => {
     const AuthStore = useContext(AuthStoreContext)
-    const HttpService = useContext(HttpServiceContext)
     const baseURL = AuthStore.baseURL
 
     const [items, setItems] = useState([])
@@ -23,28 +20,28 @@ const List = () => {
     const idReference = useRef();
 
     const buyoption = [
-        { key: 1, text: 'ETH', value: 'ETH' },
-        { key: 2, text: 'Atoken', value: 'Atoken' },
-        { key: 3, text: 'Btoken', value: 'Btoken' },
-        { key: 4, text: 'Ctoken', value: 'Ctoken' },
+        {key: 1, text: 'ETH', value: 'ETH'},
+        {key: 2, text: 'Atoken', value: 'Atoken'},
+        {key: 3, text: 'Btoken', value: 'Btoken'},
+        {key: 4, text: 'Ctoken', value: 'Ctoken'},
 
     ]
 
     const selloption = [
-        { key: 1, text: 'ETH', value: 'ETH' },
-        { key: 2, text: 'Atoken', value: 'Atoken' },
-        { key: 3, text: 'Btoken', value: 'Btoken' },
-        { key: 4, text: 'Ctoken', value: 'Ctoken' },
+        {key: 1, text: 'ETH', value: 'ETH'},
+        {key: 2, text: 'Atoken', value: 'Atoken'},
+        {key: 3, text: 'Btoken', value: 'Btoken'},
+        {key: 4, text: 'Ctoken', value: 'Ctoken'},
     ]
 
     const onSellSelectChange = (e, result) => {
-        const { text, value } = result;
+        const {text, value} = result
 
         setSellselected(value);
     }
 
     const onBuySelectChange = (e, result) => {
-        const { text, value } = result;
+        const {text, value} = result
 
         setBuyselected(value);
     }
@@ -56,23 +53,22 @@ const List = () => {
 
     
 
-
     function getItems() {
 
-        if(Sellselected==="판매"||Buyselected==="구매"){
+        if (Sellselected === "판매" || Buyselected === "구매") {
 
-            return;
+            return
         }
 
 
-        if(Sortname!==""){
+        if (Sortname !== "") {
 
-            axios.get(baseURL + '/trade/index/' + page,{
+            axios.get(baseURL + '/trade/index/' + page, {
                 params: {
-                    sellcoin:Sellselected,
-                    buycoin:Buyselected,
-                    method:Sortname,
-                    order:Iconbool
+                    sellcoin: Sellselected,
+                    buycoin: Buyselected,
+                    method: Sortname,
+                    order: Iconbool
                 }
             })
                 .then((response) => {
@@ -80,14 +76,12 @@ const List = () => {
 
                     setItems(data)
                 })
-
-        }else{
-
+           
+        }else{ 
             axios.get(baseURL + '/trade/index/' + page,{
                 params: {
-                    sellcoin:Sellselected,
-                    buycoin:Buyselected,
-
+                    sellcoin: Sellselected,
+                    buycoin: Buyselected,
                 }
             })
                 .then((response) => {
@@ -97,8 +91,10 @@ const List = () => {
                 })
       
         }
-    }
+    
 
+    
+    }
     function gotoDetail(itemiD, status, method) {
         const itemID = itemiD
         const statusCode = status
@@ -118,13 +114,15 @@ const List = () => {
                 , '/exchange'
             )
         } else {
+
         }
-        
+
     }
-    function tabClicktoken(e){
+
+    function tabClicktoken(e) {
         setSelectedtoken(e)
 
-        return true;
+        return true
     }
     
     
@@ -141,11 +139,10 @@ const List = () => {
 
     function WritingBoard() {
 
-        Router.push('/trade/writing');
         Router.push('/trade/writing')
     }
 
-    //상태값에 따라서 화면렌더링 변환
+//상태값에 따라서 화면렌더링 변환
     function statusdecide(status) {
         if (status === 0) {
             return "Standby"
@@ -156,7 +153,7 @@ const List = () => {
         }
     }
 
-    //정렬기능중 오름차순,내림차순에 따라 true false 값 반환
+//정렬기능중 오름차순,내림차순에 따라 true false 값 반환
 
     function iconlist() {
         if (!Iconbool) {
@@ -198,10 +195,10 @@ const List = () => {
                 `}</style>
                 <div>
 
-                <Menu compact>
-                <Dropdown text={Sellselected} options={selloption} onChange={onSellSelectChange} simple item />
-                <Dropdown text={Buyselected} options={buyoption} onChange={onBuySelectChange} simple item />
-                 </Menu>
+                    <Menu compact>
+                        <Dropdown text={Sellselected} options={selloption} onChange={onSellSelectChange} simple item/>
+                        <Dropdown text={Buyselected} options={buyoption} onChange={onBuySelectChange} simple item/>
+                    </Menu>
 
                     <div className="ui segment active tab">
                         <Table singleLine>
@@ -217,22 +214,23 @@ const List = () => {
                                 <Table.HeaderCell onClick={()=>Sortlist("Expirydate")}>Expiry date{decideSort("Expirydate")}</Table.HeaderCell>
                             </Table.Row>
                         </Table.Header>
-                        <Table.Body>
-                            {items.map((item) => {
-                                return  <Table.Row key={item.id} onClick={()=>gotoDetail(item.id,item.status)}>
-                                     <Table.Cell>{item.selltoken}</Table.Cell>
-                                    <Table.Cell>{item.selltokenamount}</Table.Cell>
-                                    <Table.Cell>{item.buytoken}</Table.Cell>
-                                    <Table.Cell>{item.buytokenamount}</Table.Cell>
-                                    <Table.Cell>{statusdecide(item.status)}</Table.Cell>
-                                    <Table.Cell>{item.updatedAt}</Table.Cell>
-                                    <Table.Cell>{item.Expirydate}</Table.Cell>
-                                </Table.Row>
-                               
-                            })}
-                        </Table.Body>
-                    </Table>
-                </div>
+                      
+                            <Table.Body>
+                                {items.map((item) => {
+                                    return <Table.Row key={item.id} onClick={() => gotoDetail(item.id, item.status)}>
+                                        <Table.Cell>{item.selltoken}</Table.Cell>
+                                        <Table.Cell>{item.selltokenamount}</Table.Cell>
+                                        <Table.Cell>{item.buytoken}</Table.Cell>
+                                        <Table.Cell>{item.buytokenamount}</Table.Cell>
+                                        <Table.Cell>{statusdecide(item.status)}</Table.Cell>
+                                        <Table.Cell>{item.updatedAt}</Table.Cell>
+                                        <Table.Cell>{item.Expirydate}</Table.Cell>
+                                    </Table.Row>
+
+                                })}
+                            </Table.Body>
+                        </Table>
+                    </div>
                 </div>
                 <div>
                     <span><Button onClick={() => PreviousPageClick()}><Icon name="caret left"/></Button></span>

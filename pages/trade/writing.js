@@ -13,7 +13,8 @@ const Writing = () => {
     const [selected, setSelected] = useState("")
 
 
-    const [coin, setCoin] = useState('')
+    const [sellcoinselectd, setsellcoinselectd] = useState('')
+    const [buycoinselectd, setbuycoinselectd] = useState('')
     const [price, setPrice] = useState('')
     const [amount, setAmount] = useState('')
 
@@ -25,10 +26,18 @@ const Writing = () => {
         { key: 2, text: 'SELL', value: 2 },
     ]
 
-    const Coptions = [
-        { key: 1, text: 'bitcoin', value: 'bitcoin' },
-        { key: 2, text: 'ethereum', value: 'ethereum' },
-        { key: 3, text: 'ripple', value: 'ripple' },
+    const buycoinoption = [
+        { key: 1, text: 'ETH', value: 'ETH' },
+        { key: 2, text: 'Atoken', value: 'Atoken' },
+        { key: 3, text: 'Btoken', value: 'Btoken' },
+        { key: 4, text: 'Ctoken', value: 'Ctoken' },
+    ]
+
+    const sellcoinoption = [
+        { key: 1, text: 'ETH', value: 'ETH' },
+        { key: 2, text: 'Atoken', value: 'Atoken' },
+        { key: 3, text: 'Btoken', value: 'Btoken' },
+        { key: 4, text: 'Ctoken', value: 'Ctoken' },
     ]
 
 
@@ -38,10 +47,16 @@ const Writing = () => {
         setSelected(value);
     }
 
-    const onCoinChange = (e, result) => {
+    const onSellCoinChange = (e, result) => {
         const { text, value } = result;
         console.log(value);
-        setCoin(value);
+        setsellcoinselectd(value);
+    }
+
+    const onBuyCoinChange = (e, result) => {
+        const { text, value } = result;
+        console.log(value);
+        setbuycoinselectd(value);
     }
 
 
@@ -115,8 +130,13 @@ const Writing = () => {
                                     status: 0
                                 </div>
                                 <div >
-                                    coin: <Menu compact>
-                                        <Dropdown text={coin} options={Coptions} onChange={onCoinChange} simple item />
+                                    buycoin: <Menu compact>
+                                        <Dropdown text={sellcoinoption.text} options={sellcoinoption} onChange={onBuyCoinChange} simple item />
+                                    </Menu>
+                                </div>
+                                <div >
+                                    sellcoin: <Menu compact>
+                                        <Dropdown text={buycoinoption.text} options={buycoinoption} onChange={onSellCoinChange} simple item />
                                     </Menu>
                                 </div>
                                 <div>
@@ -143,8 +163,13 @@ const Writing = () => {
                                     status: 0
                                 </div>
                                 <div >
-                                    coin: <Menu compact>
-                                        <Dropdown text={coin.text} options={Coptions} onChange={onCoinChange} simple item />
+                                    sellcoin: <Menu compact>
+                                        <Dropdown text={sellcoinoption.text} options={sellcoinoption} onChange={onSellCoinChange} simple item />
+                                    </Menu>
+                                </div>
+                                <div >
+                                    buycoin: <Menu compact>
+                                        <Dropdown text={buycoinoption.text} options={buycoinoption} onChange={onBuyCoinChange} simple item />
                                     </Menu>
                                 </div>
                                 <div>

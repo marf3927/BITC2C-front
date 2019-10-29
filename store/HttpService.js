@@ -6,7 +6,7 @@ import {Cookies} from "react-cookie"
 
 const cookies = new Cookies()
 
-export default class HttpService {
+class HttpService {
     constructor() {
         this.state = {
             res : ''
@@ -37,13 +37,11 @@ export default class HttpService {
     }
 
     login(email, password){
-        return axios.post((baseURL + '/users/login/'),
+        return axios.post(('/users/login/'),
             {
                 email,
                 password
-            }).then((response) =>{
-                return response
-        })
+            })
     }
 
     getUser() {
@@ -64,7 +62,7 @@ export default class HttpService {
 
 
     sortItems(level, method){
-        return axios.get(baseURL + '/trade/' + method + '/' + page, {
+        return axios.get('/trade/' + method + '/' + page, {
             params: {
                 method: Sortname,
                 order: level
@@ -73,7 +71,7 @@ export default class HttpService {
     }
 
     goToTrade() {
-        return axios.post(baseURL + '/trade/exchange', {
+        return axios.post('/trade/exchange', {
             token, id
         }).then((data) => {
             console.log('goto tarde', data.data)
