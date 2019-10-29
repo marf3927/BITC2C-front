@@ -7,9 +7,11 @@ import Router from 'next/router'
 import Cookies from 'js-cookie';
 import {AuthStoreContext} from '../../store/AuthStroe'
 import { stringify } from 'querystring'
+import {HttpServiceContext} from "../../store/HttpService"
 
 const Writing = () => {
     const AuthStore = useContext(AuthStoreContext)
+    const HttpService = useContext(HttpServiceContext)
     const baseURL = AuthStore.baseURL
     const [selected, setSelected] = useState("")
 
@@ -79,31 +81,16 @@ const Writing = () => {
         const token = Cookies.get("authToken");
         console.log(token);
 
-        axios.get(baseURL + '/users/getuser', {
-            params: {
-                token: token
-            }
-        }).then((data) => {
-            var id = data.data.id;
+        HttpService.getUser().then((userId) => {
+            var id = userId
             console.log('id', id);
 
             if (id) {
-              
                     console.log("판매테이블 생성");
-                    return axios.post((baseURL + '/trade/create/'),
-                        {
-                            selltoken: sellcoinselectd,
-                            buytoken:buycoinselectd,
-                            selltokenamount: selltokenamount,
-                            buytokenamount: buytokenamount,                        
-                            status: "0",
-                            sellerId: id
-                        })
+                    HttpService.createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id)
                         .then((response) => {
                             Router.push('/trade/list');
                         })
-                
-                
             }
             else{
                 Router.push('/user/login/');
