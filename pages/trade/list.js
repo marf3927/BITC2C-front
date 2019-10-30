@@ -230,7 +230,7 @@ const List = () => {
         //             })
         //         }
         //     }
-    }z
+    }
     function gotoDetail(itemiD, status, method) {
         const itemID = itemiD
         const statusCode = status

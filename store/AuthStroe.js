@@ -1,7 +1,8 @@
 import {observable, computed, action, decorate} from 'mobx'
 import {createContext} from "react"
+import Router from "next/router"
 import axios from 'axios'
-import {Cookies} from "react-cookie"
+import { Cookies, removeCookie} from "react-cookie"
 
 const cookies = new Cookies()
 
@@ -9,6 +10,8 @@ class AuthStore{
 
     @observable
     baseURL = "http://localhost:5555"
+
+    @observable
     soalarm = ''
 
     authToken = cookies.get('authToken');
@@ -21,7 +24,9 @@ class AuthStore{
     @action
     deleteToken() {
         console.log("logout클릭!")
-        cookies.remove('authToken', { expires:'Thu, 01 Jan 1970 00:00:01 GMT' })
+        cookies.remove('authToken')
+        console.log(this.authToken)
+        Router.push('/')
     }
 
     @computed

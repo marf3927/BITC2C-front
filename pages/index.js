@@ -5,9 +5,8 @@ import AppLayout from '../components/AppLayout';
 import {AuthStoreContext} from "../store/AuthStroe"
 
 
-const Home = () => {
-    const AuthStore = useContext(AuthStoreContext)
 
+const Home = () => {
     return (
         <>
             <AppLayout>

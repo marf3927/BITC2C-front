@@ -117,6 +117,15 @@ const Mypage = () => {
 
     }
 
+
+    function alarm() {
+        axios.get(baseURL + '/alarm', {})
+        console.log('alarm() 클릭');
+
+    }
+
+
+
     return (
 
         <>
@@ -211,6 +220,9 @@ const Mypage = () => {
                     <div>
                         <br></br>
                         <Link href="/user/changepwd"><a>비밀번호 변경</a></Link>
+                    </div>
+                    <div>
+                        <button onClick={() => alarm()}></button>    
                     </div>
                 </div>
             </AppLayout>
