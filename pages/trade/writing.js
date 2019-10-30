@@ -6,42 +6,72 @@ import axios from 'axios'
 import Router from 'next/router'
 import Cookies from 'js-cookie';
 import {AuthStoreContext} from '../../store/AuthStroe'
+import { stringify } from 'querystring'
+import {HttpServiceContext} from "../../store/HttpService"
 
 const Writing = () => {
     const AuthStore = useContext(AuthStoreContext)
+    const HttpService = useContext(HttpServiceContext)
     const baseURL = AuthStore.baseURL
     const [selected, setSelected] = useState("")
 
 
-    const [coin, setCoin] = useState('')
-    const [price, setPrice] = useState('')
-    const [amount, setAmount] = useState('')
+    const [sellcoinselectd, setsellcoinselectd] = useState('')
+    const [buycoinselectd, setbuycoinselectd] = useState('')
+    const [selltokenamount, setselltokenamount] = useState(0)
+    const [buytokenamount, setbuytokenamount] = useState(0)
+    const [ratio,setratio] = useState("");
 
+    useEffect(() => {
+        ratiocal()
 
+    }, [, selltokenamount,buytokenamount])
 
+    function ratiocal() {
+      
+        if((selltokenamount!==0||selltokenamount!==null||selltokenamount!==undefined)&&(buytokenamount!==0||buytokenamount!==undefined||buytokenamount!==null) ){
+            console.log("asd")
+            const ratio = selltokenamount/buytokenamount
+            const result = ratio.toString() +"  :   1"
+            setratio(result)
+        }
+       
 
-    const options = [
-        { key: 1, text: 'BUY', value: 1 },
-        { key: 2, text: 'SELL', value: 2 },
+    }
+
+    
+
+    const buycoinoption = [
+        { key: 1, text: 'ETH', value: 'ETH' },
+        { key: 2, text: 'Atoken', value: 'Atoken' },
+        { key: 3, text: 'Btoken', value: 'Btoken' },
+        { key: 4, text: 'Ctoken', value: 'Ctoken' },
     ]
 
-    const Coptions = [
-        { key: 1, text: 'bitcoin', value: 'bitcoin' },
-        { key: 2, text: 'ethereum', value: 'ethereum' },
-        { key: 3, text: 'ripple', value: 'ripple' },
+    const sellcoinoption = [
+        { key: 1, text: 'ETH', value: 'ETH' },
+        { key: 2, text: 'Atoken', value: 'Atoken' },
+        { key: 3, text: 'Btoken', value: 'Btoken' },
+        { key: 4, text: 'Ctoken', value: 'Ctoken' },
     ]
 
-
+    
     const onSelectChange = (e, result) => {
         const { text, value } = result;
         console.log(value);
         setSelected(value);
     }
 
-    const onCoinChange = (e, result) => {
+    const onSellCoinChange = (e, result) => {
         const { text, value } = result;
         console.log(value);
-        setCoin(value);
+        setsellcoinselectd(value);
+    }
+
+    const onBuyCoinChange = (e, result) => {
+        const { text, value } = result;
+        console.log(value);
+        setbuycoinselectd(value);
     }
 
 
@@ -51,45 +81,16 @@ const Writing = () => {
         const token = Cookies.get("authToken");
         console.log(token);
 
-        axios.get(baseURL + '/users/getuser', {
-            params: {
-                token: token
-            }
-        }).then((data) => {
-            var id = data.data.id;
+        HttpService.getUser().then((userId) => {
+            var id = userId
             console.log('id', id);
 
             if (id) {
-                if (method == "1") {
                     console.log("판매테이블 생성");
-                    return axios.post((baseURL + '/trade/create/'),
-                        {
-                            type: coin,
-                            amount: amount,
-                            price: price,
-                            method: "buy",
-                            status: "0",
-                            buyerId: id
-                        })
+                    HttpService.createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id)
                         .then((response) => {
                             Router.push('/trade/list');
                         })
-                }
-                else if (method == "2") {
-                    console.log("구매테이블 생성");
-                    return axios.post((baseURL + '/trade/create/'),
-                        {
-                            type: coin,
-                            amount: amount,
-                            price: price,
-                            method: "sell",
-                            status: "0",
-                            sellerId: id
-                        })
-                        .then((response) => {
-                            Router.push('/trade/list');
-                        })
-                }
             }
             else{
                 Router.push('/user/login/');
@@ -99,59 +100,35 @@ const Writing = () => {
 
     return (
         <AppLayout>
-            <Menu compact>
-                <Dropdown text='종류 선택' options={options} onChange={onSelectChange} simple item />
-            </Menu>
+           
             <div>
-                {
-                    (function () {
-                        if (selected == '1') return (
-                            <div>
-                                <h1>구매</h1>
+            <div>
+                                <h1>교환</h1>
                                 <div>
-                                    method: buy
+                                    method: exchange
                                 </div>
                                 <div>
                                     status: 0
                                 </div>
                                 <div >
-                                    coin: <Menu compact>
-                                        <Dropdown text={coin} options={Coptions} onChange={onCoinChange} simple item />
+                                    sellcoin: <Menu compact>
+                                        <Dropdown text={sellcoinoption.text} options={sellcoinoption} onChange={onSellCoinChange} simple item />
+                                    </Menu>
+                                </div>
+                              
+                                <div>
+                                    amount: <Input type="number" onChange={e => setselltokenamount(e.target.value)} name="amount1" placeholder="거래량" />
+                                </div>
+                                <div >
+                                    buycoin: <Menu compact>
+                                        <Dropdown text={buycoinoption.text} options={buycoinoption} onChange={onBuyCoinChange} simple item />
                                     </Menu>
                                 </div>
                                 <div>
-                                    price: <Input type="number" onChange={e => setPrice(e.target.value)} name="price" placeholder="가격" />
+                                    amount: <Input type="number" onChange={e => setbuytokenamount(e.target.value)} name="amount2" placeholder="거래량" />
                                 </div>
                                 <div>
-                                    amount: <Input type="number" onChange={e => setAmount(e.target.value)} name="amount" placeholder="거래량" />
-                                </div>
-                                <div >
-                                    <Button id='writeTrade' onClick={() => onRegisterClick(1)}>
-                                        거래 등록
-                                    </Button>
-                                </div>
-
-                            </div>
-                        );
-                        else if (selected == '2') return (
-                            <div>
-                                <h1>판매</h1>
-                                <div>
-                                    method: sell
-                                </div>
-                                <div>
-                                    status: 0
-                                </div>
-                                <div >
-                                    coin: <Menu compact>
-                                        <Dropdown text={coin.text} options={Coptions} onChange={onCoinChange} simple item />
-                                    </Menu>
-                                </div>
-                                <div>
-                                    price: <Input type="number" onChange={e => setPrice(e.target.value)} name="price" placeholder="가격" />
-                                </div>
-                                <div>
-                                    amount: <Input type="number" onChange={e => setAmount(e.target.value)} name="amount" placeholder="거래량" />
+                                     ratio : {ratio}
                                 </div>
                                 <div >
                                     <Button id='writeTrade' onClick={() => onRegisterClick(2)}>
@@ -160,10 +137,7 @@ const Writing = () => {
                                 </div>
 
                             </div>
-                        );
-                        else return (<div>x</div>);
-                    })()
-                }
+             
 
             </div>
 

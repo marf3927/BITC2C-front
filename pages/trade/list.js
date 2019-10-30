@@ -13,12 +13,11 @@ const List = () => {
 
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
-    const [Sellselected, setSellselcted] = useState("판매")
-    const [Buyselected, setBuyselcted] = useState("구매")
-    const [selectedtoken, setSelectedtoken] = useState("ETH")
-    const [Sortname, setSortname] = useState("")
-    const [Iconbool, setIconbool] = useState(true)
-    const idReference = useRef()
+    const [Sellselected, setSellselected] = useState("구매");
+    const [Buyselected, setBuyselected] = useState("판매")
+    const [Sortname, setSortname] = useState("");
+    const [Iconbool,setIconbool] =useState(true);
+    const idReference = useRef();
 
     const buyoption = [
         {key: 1, text: 'ETH', value: 'ETH'},
@@ -38,35 +37,21 @@ const List = () => {
     const onSellSelectChange = (e, result) => {
         const {text, value} = result
 
-        setSellselcted(value)
+        setSellselected(value);
     }
 
     const onBuySelectChange = (e, result) => {
         const {text, value} = result
 
-        setBuyselcted(value)
+        setBuyselected(value);
     }
 
     useEffect(() => {
         getItems()
 
-    }, [, page, Sellselected, Buyselected, Iconbool, Sortname, selectedtoken])
+    }, [, page, Sellselected,Buyselected,Iconbool,Sortname])
 
-    function sortItems(level, method) {
-
-
-        axios.get(baseURL + '/trade/' + method + '/' + page, {
-            params: {
-                method: Sortname,
-                order: level,
-                type: selectedtoken
-            }
-        })
-            .then((response) => {
-                const data = response.data
-                setItems(data)
-            })
-    }
+    
 
     function getItems() {
 
@@ -104,132 +89,11 @@ const List = () => {
 
                     setItems(data)
                 })
+      
         }
     
 
-    //    if (selected === "All") {
-
-
-    //        if(!(Sortname==="")&&Iconbool){
-
-    //            sortItems(Iconbool,"index")
-    //        }else if(!(Sortname==="")&&!(Iconbool)){
-
-    //             sortItems(Iconbool,"index")
-    //        }else{
-    //         axios.get(baseURL + '/trade/index/' + page,{
-    //             params: {
-    //                 type:selectedtoken
-    //             }
-    //         })
-    //             .then((response) => {
-    //                 const data = response.data
-
-    //                 setItems(data)
-    //             })
-    //        }
-
-    //     } else if (selected === "Buy") {
-    //         if(!(Sortname==="")&&Iconbool){
-
-    //             sortItems(Iconbool,"buy")
-    //         }else if(!(Sortname==="")&&!(Iconbool)){
-
-    //              sortItems(Iconbool,"buy")
-    //         }else{
-    //         axios.get(baseURL + '/trade/buy/' + page,{
-    //             params: {
-    //                 type:selectedtoken
-    //             }
-    //         })
-    //             .then((response) => {
-    //                 const data = response.data
-    //                 setItems(data)
-    //             })
-    //         }
-    //     } else if (selected === "Sell") {
-    //         if(!(Sortname==="")&&Iconbool){
-
-    //             sortItems(Iconbool,"sell")
-    //         }else if(!(Sortname==="")&&!(Iconbool)){
-
-    //              sortItems(Iconbool,"sell")
-    //         }else{
-    //         axios.get(baseURL + '/trade/sell/' + page,{
-    //             params: {
-    //                 type:selectedtoken
-    //             }
-    //         })
-    //             .then((response) => {
-    //                 const data = response.data
-    //                 setItems(data)
-    //             })
-    //         }
-    //     }
-
-
-
-
-
-        //    if (selected === "All") {
-
-
-        //        if(!(Sortname==="")&&Iconbool){
-
-        //            sortItems(Iconbool,"index")
-        //        }else if(!(Sortname==="")&&!(Iconbool)){
-
-        //             sortItems(Iconbool,"index")
-        //        }else{
-        //         axios.get(baseURL + '/trade/index/' + page,{
-        //             params: {
-        //                 type:selectedtoken
-        //             }
-        //         })
-        //             .then((response) => {
-        //                 const data = response.data
-
-        //                 setItems(data)
-        //             })
-        //        }
-
-        //     } else if (selected === "Buy") {
-        //         if(!(Sortname==="")&&Iconbool){
-
-        //             sortItems(Iconbool,"buy")
-        //         }else if(!(Sortname==="")&&!(Iconbool)){
-
-        //              sortItems(Iconbool,"buy")
-        //         }else{
-        //         axios.get(baseURL + '/trade/buy/' + page,{
-        //             params: {
-        //                 type:selectedtoken
-        //             }
-        //         })
-        //             .then((response) => {
-        //                 const data = response.data
-        //                 setItems(data)
-        //             })
-        //         }
-        //     } else if (selected === "Sell") {
-        //         if(!(Sortname==="")&&Iconbool){
-
-        //             sortItems(Iconbool,"sell")
-        //         }else if(!(Sortname==="")&&!(Iconbool)){
-
-        //              sortItems(Iconbool,"sell")
-        //         }else{
-        //         axios.get(baseURL + '/trade/sell/' + page,{
-        //             params: {
-        //                 type:selectedtoken
-        //             }
-        //         })
-        //             .then((response) => {
-        //                 const data = response.data
-        //                 setItems(data)
-        //             })
-        //         }
-        //     }
+    
     }
     function gotoDetail(itemiD, status, method) {
         const itemID = itemiD
@@ -260,13 +124,8 @@ const List = () => {
 
         return true
     }
-
-    function tabClick(e) {
-
-
-        setSelected(e)
-        setPage(1)
-    }
+    
+    
 
     function NextPageClick() {
         setPage(page + 1)
@@ -346,20 +205,16 @@ const List = () => {
                             <Table.Header>
                                 <Table.Row>
 
-                                    <Table.HeaderCell>SELL</Table.HeaderCell>
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("selltokenamount")}>sellamount{decideSort("sellamount")}</Table.HeaderCell>
-                                    <Table.HeaderCell>BUY</Table.HeaderCell>
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("buytokenamount")}>buyamount{decideSort("buymount")}</Table.HeaderCell>
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
-                                    <Table.HeaderCell onClick={() => Sortlist("Expirydate")}>Expiry
-                                        date{decideSort("Expirydate")}</Table.HeaderCell>
-                                </Table.Row>
-                            </Table.Header>
+                                <Table.HeaderCell >SELL</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("selltokenamount")}>sellamount{decideSort("selltokenamount")}</Table.HeaderCell>
+                                <Table.HeaderCell >BUY</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("buytokenamount")}>buyamount{decideSort("buytokenamount")}</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
+                                <Table.HeaderCell onClick={()=>Sortlist("Expirydate")}>Expiry date{decideSort("Expirydate")}</Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Header>
+                      
                             <Table.Body>
                                 {items.map((item) => {
                                     return <Table.Row key={item.id} onClick={() => gotoDetail(item.id, item.status)}>

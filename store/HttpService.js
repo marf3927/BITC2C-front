@@ -16,7 +16,7 @@ class HttpService {
 
         axios.defaults.baseURL = 'http://localhost:5555'
 
-        axios.defaults.headers.common['authorization'] = 'JWT ' + this.authToken
+        axios.defaults.headers.common['authorization'] = 'jwt ' +this.authToken
         reaction(() => this.authToken, () => {
             axios.defaults.headers.common['token'] = this.authToken
         })
@@ -57,7 +57,18 @@ class HttpService {
         return axios.get('/trade/detail?id=' + id).then((response)=>{
             return response.data
         })
+    }
 
+    createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id) {
+        return axios.post(('/trade/create/'),
+            {
+                selltoken: sellcoinselectd,
+                buytoken:buycoinselectd,
+                selltokenamount: selltokenamount,
+                buytokenamount: buytokenamount,
+                status: "0",
+                sellerId: id
+            })
     }
 
 
@@ -69,6 +80,7 @@ class HttpService {
             }
         })
     }
+
 
     goToTrade() {
         return axios.post('/trade/exchange', {
