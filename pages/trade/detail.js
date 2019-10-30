@@ -91,7 +91,7 @@ const Detail = ({id}) => {
             })
     }
 
-
+    
 
     return (
         <>
@@ -154,6 +154,7 @@ const Detail = ({id}) => {
 
                         </div>
                     </form>
+
                 </div>
 
 

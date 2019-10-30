@@ -8,18 +8,22 @@ import {AuthStoreContext} from "../../store/AuthStroe"
 import io from "socket.io-client";
 
 
+import { observer } from 'mobx-react-lite'
+import Header from "../../components/header"
 import {HttpServiceContext} from "../../store/HttpService"
+
+
+
 
 const Login = () => {
     const AuthStore = useContext(AuthStoreContext)
     const HttpService = useContext(HttpServiceContext)
 
+
     const cookies = new Cookies()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [logalert, setLogAlert] = useState('')
-
-
 
     //regiser 보내기
     
@@ -29,6 +33,7 @@ const Login = () => {
                 console.log('front_login_', response.data)
                 const token = response.data.token
                 cookies.set('authToken', token)
+
 
                 var socket = io.connect(AuthStore.baseURL,{ 'reconnect': true, 'resourse': 'socket.io' })
                 console.log('socket = ',socket)
@@ -40,6 +45,21 @@ const Login = () => {
                         console.log('11',AuthStore.getSoalarm)
                     });
                 })
+
+                // var socket = io.connect(AuthStore.baseURL, { 'reconnect': true, 'resourse': 'socket.io' })
+                // socket.once('connect', () => {
+                //     console.log("connection socket server!!!");
+                //     socket.on('alarm', (msg) => {
+                //         console.log('alarm callback!!!: ', msg);
+                //         if(socket.connected){
+                //             console.log("hi")
+                //             socket.disconnect();
+                //             if (socket.connected) {
+                //                 console.log("hi2")
+                //             }
+                //         }
+                //     });
+                // })
 
                 Router.push('/')
             }).catch((e) => {

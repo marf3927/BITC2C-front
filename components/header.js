@@ -3,15 +3,19 @@ import {Menu} from 'semantic-ui-react'
 import Link from 'next/link'
 import {AuthStoreContext} from "../store/AuthStroe"
 import Router from "next/router"
+import { observable, computed, action, decorate } from 'mobx'
+
 
 
 const Header = () => {
     const AuthStore = useContext(AuthStoreContext)
 
     const [isLoggedIn, setIslogedIn] = useState(AuthStore.isLoggedIn)
-    const [socketalarm, setSocketalarm] = useState(AuthStore.soalarm)
+    
 
-    // console.log(socketalarm);
+    
+
+    //  console.log('socket alarm=',socketalarm);
     // function alarm () {
     //     // setSocketalarm(AuthStore.getsoalarm)
     //     if (AuthStore.getsoalarm) {
@@ -19,10 +23,9 @@ const Header = () => {
     //         alert('알람')
     //     }
     // }
-    useEffect(() => {
-        console.log('22', socketalarm)
-    }, [AuthStore.soalarm]);
-    
+    function updatealarm(alarm){
+        seta(alarm)
+    }
 
     const logout = () => {
         AuthStore.deleteToken()
@@ -36,16 +39,14 @@ const Header = () => {
                 {
                     !AuthStore.isLoggedIn ?
                      <Menu.Item key="login"><Link href="/user/login"><a>Login</a></Link></Menu.Item>
-                        :<Menu.Item key="logout" onClick = {() => logout()}><Link href="/"><a>Logout</a></Link></Menu.Item>
+                        :<Menu.Item key="logout" onClick = {() => logout()}><a>Logout</a></Menu.Item>
                 }
                 {
                     AuthStore.isLoggedIn ?
                         <Menu.Item key="My Page"><Link href="/user/mypage"><a>My Page</a></Link></Menu.Item>
                         :<></>
                 }
-                {
-                    <p>알람 {AuthStore.soalarm}</p>
-                }
+               
                 
                 
             </Menu>
