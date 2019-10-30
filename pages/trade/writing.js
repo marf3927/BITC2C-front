@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react'
-import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
 import { Button, Table, Input, Icon, Tab, Dropdown, Menu, Label } from 'semantic-ui-react'
-import axios from 'axios'
 import Router from 'next/router'
 import Cookies from 'js-cookie';
 import {AuthStoreContext} from '../../store/AuthStroe'
-import { stringify } from 'querystring'
 import {HttpServiceContext} from "../../store/HttpService"
 
 const Writing = () => {
     const AuthStore = useContext(AuthStoreContext)
     const HttpService = useContext(HttpServiceContext)
-    const baseURL = AuthStore.baseURL
     const [selected, setSelected] = useState("")
 
 
@@ -29,7 +25,9 @@ const Writing = () => {
 
     function ratiocal() {
       
-        if((selltokenamount!==0||selltokenamount!==null||selltokenamount!==undefined)&&(buytokenamount!==0||buytokenamount!==undefined||buytokenamount!==null) ){
+        if((selltokenamount!==0||selltokenamount!==null
+            ||selltokenamount!==undefined)&&(buytokenamount!==0||
+            buytokenamount!==undefined||buytokenamount!==null) ){
             console.log("asd")
             const ratio = selltokenamount/buytokenamount
             const result = ratio.toString() +"  :   1"

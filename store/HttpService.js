@@ -9,14 +9,14 @@ const cookies = new Cookies()
 class HttpService {
     constructor() {
         this.state = {
-            res : ''
-        };
+            res: ''
+        }
         this.isExpiredToken = false
         this.authToken = cookies.get("authToken")
 
         axios.defaults.baseURL = 'http://localhost:5555'
 
-        axios.defaults.headers.common['authorization'] = 'jwt ' +this.authToken
+        axios.defaults.headers.common['authorization'] = 'jwt ' + this.authToken
         reaction(() => this.authToken, () => {
             axios.defaults.headers.common['token'] = this.authToken
         })
@@ -25,7 +25,6 @@ class HttpService {
             return response
         }, originalError => {
             const {config} = originalError
-            console.log(originalError.response.data)
             if (originalError.response.data === 'jwt expired') {
                 cookies.remove('authToken', {expires: 'Thu, 01 Jan 1970 00:00:01 GMT'})
                 alert('로그인 세션이 만료되었습니다. ')
@@ -36,7 +35,7 @@ class HttpService {
 
     }
 
-    login(email, password){
+    login(email, password) {
         return axios.post(('/users/login/'),
             {
                 email,
@@ -45,17 +44,16 @@ class HttpService {
     }
 
     getUser() {
-        return axios.get('/users/getuser', ).then((response) => {
+        return axios.get('/users/getuser',).then((response) => {
             return response.data.id
         }).catch((e) => {
-            console.log(e)
             return e
         })
     }
 
-    getTradeItem(id) {
-        return axios.get('/trade/detail?id=' + id).then((response)=>{
-            return response.data
+    getTradeDetail(id) {
+        return axios.get('/trade/detail?id=' + id).then((res) => {
+            return res
         })
     }
 
@@ -63,7 +61,7 @@ class HttpService {
         return axios.post(('/trade/create/'),
             {
                 selltoken: sellcoinselectd,
-                buytoken:buycoinselectd,
+                buytoken: buycoinselectd,
                 selltokenamount: selltokenamount,
                 buytokenamount: buytokenamount,
                 status: "0",
@@ -71,8 +69,39 @@ class HttpService {
             })
     }
 
+    goToTrade(id) {
+        return axios.post('/trade/exchange', {
+            id: id
+        }).then((res) => {
+            return res
+        })
+    }
 
-    sortItems(level, method){
+    getTradeList(page, Sellselected, Buyselected, Sortname, Iconbool) {
+        return axios.get('/trade/index/' + page, {
+            params: {
+                sellcoin: Sellselected,
+                buycoin: Buyselected,
+                method: Sortname,
+                order: Iconbool
+            }
+        }).then((res)=>{
+            return res
+        })
+    }
+
+    changePassword(email, password, newPassword){
+        return axios.post((baseURL + '/pwd/change'),
+            {
+                email,
+                password,
+                newPassword
+            }).then((res)=>{
+                return res
+        })
+    }
+
+    sortItems(level, method) {
         return axios.get('/trade/' + method + '/' + page, {
             params: {
                 method: Sortname,
@@ -82,19 +111,6 @@ class HttpService {
     }
 
 
-    goToTrade() {
-        return axios.post('/trade/exchange', {
-            token, id
-        }).then((data) => {
-            console.log('goto tarde', data.data)
-            Router.push({
-                    pathname: '/trade/exchange',
-                    query: {name: data.data}
-                }
-                , '/exchange'
-            )
-        })
-    }
 }
 
 export const HttpServiceContext = createContext(new HttpService())

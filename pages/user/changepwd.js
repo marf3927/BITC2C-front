@@ -1,28 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react'
-import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
 import { Button, Table, Input, Icon, Tab } from 'semantic-ui-react'
-import axios from 'axios'
 import Router from "next/router"
-import Cookies from 'js-cookie';
 import { AuthStoreContext } from "../../store/AuthStroe"
+import {HttpServiceContext} from "../../store/HttpService"
 
 const Changepwd = () => {
     const AuthStore = useContext(AuthStoreContext)
-    const baseURL = AuthStore.baseURL
+    const HttpService = useContext(HttpServiceContext)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [newpassword, setNewpassword] = useState('')
+    const [newPassword, setNewpassword] = useState('')
     const [alert, setAlert] = useState('')
 
-    function onChangeClick(email, password, newpassword) {
-        return axios.post((baseURL + '/pwd/change'),
-            {
-                email,
-                password,
-                newpassword
-            })
+    function onChangeClick() {
+        HttpService.changePassword(email, password, newPassword)
             .then((response) => {
                 console.log('change ', response.data)
                 AuthStore.deleteToken()
@@ -42,7 +35,6 @@ const Changepwd = () => {
                         <Input onChange={e => setEmail(e.target.value)} type="text" name="email"
                             placeholder="Email" />
                     </div>
-
                     <div>
                         <Input onChange={e => setPassword(e.target.value)} type="password" name="password"
                             placeholder="Password" />
@@ -55,7 +47,7 @@ const Changepwd = () => {
                         <a>{alert}</a>
                     </div>
                     <div>
-                        <Button onClick={() => onChangeClick(email, password, newpassword)}>
+                        <Button onClick={() => onChangeClick(email, password, newPassword)}>
                             submit
                             </Button>
                     </div>

@@ -6,7 +6,7 @@ import {Button, Input} from 'semantic-ui-react'
 import Router from "next/router"
 import {AuthStoreContext} from "../../store/AuthStroe"
 import io from "socket.io-client";
-import { observer } from 'mobx-react-lite'
+
 
 import {HttpServiceContext} from "../../store/HttpService"
 
