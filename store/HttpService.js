@@ -7,19 +7,19 @@ import {Cookies} from "react-cookie"
 const cookies = new Cookies()
 
 class HttpService {
+    authToken = ''
     constructor() {
         this.state = {
             res : ''
         };
-        this.isExpiredToken = false
+
         this.authToken = cookies.get("authToken")
 
-        axios.defaults.baseURL = 'http://localhost:5555'
+        console.log("http확인: ", this.authToken)
 
-        axios.defaults.headers.common['authorization'] = 'jwt ' +this.authToken
-        reaction(() => this.authToken, () => {
-            axios.defaults.headers.common['token'] = this.authToken
-        })
+        axios.defaults.baseURL = 'http://localhost:5555'    
+
+        
 
         axios.interceptors.response.use(response => {
             return response
@@ -27,7 +27,7 @@ class HttpService {
             const {config} = originalError
             console.log(originalError.response.data)
             if (originalError.response.data === 'jwt expired') {
-                cookies.remove('authToken', {expires: 'Thu, 01 Jan 1970 00:00:01 GMT'})
+                cookies.remove('authToken')
                 alert('로그인 세션이 만료되었습니다. ')
                 Router.push('/user/login')
             }
@@ -45,7 +45,12 @@ class HttpService {
     }
 
     getUser() {
-        return axios.get('/users/getuser', ).then((response) => {
+        axios.defaults.headers.common['authorization'] = 'jwt ' + cookies.get("authToken")
+        reaction(() => this.authToken, () => {
+            axios.defaults.headers.common['token'] = this.authToken
+        })
+        return axios.get('/users/getuser').then((response) => {
+            console.log("getUser: ", response)
             return response.data.id
         }).catch((e) => {
             console.log(e)
@@ -54,12 +59,20 @@ class HttpService {
     }
 
     getTradeItem(id) {
+        axios.defaults.headers.common['authorization'] = 'jwt ' + cookies.get("authToken")
+        reaction(() => this.authToken, () => {
+            axios.defaults.headers.common['token'] = this.authToken
+        })
         return axios.get('/trade/detail?id=' + id).then((response)=>{
             return response.data
         })
     }
 
     createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id) {
+        axios.defaults.headers.common['authorization'] = 'jwt ' + cookies.get("authToken")
+        reaction(() => this.authToken, () => {
+            axios.defaults.headers.common['token'] = this.authToken
+        })
         return axios.post(('/trade/create/'),
             {
                 selltoken: sellcoinselectd,
@@ -67,7 +80,8 @@ class HttpService {
                 selltokenamount: selltokenamount,
                 buytokenamount: buytokenamount,
                 status: "0",
-                sellerId: id
+                sellerId: id,
+                buyerId: ''
             })
     }
 
@@ -95,6 +109,31 @@ class HttpService {
             )
         })
     }
+
+    myPageGetUser(user){
+        return axios.get('/mypage/user', {
+            params: {
+                id: user
+            }
+        })
+    }
+
+    myPageGetWallet(data){
+        return axios.get('/mypage/wallet', {
+            params: {
+                id: data
+            }
+        })
+    }
+
+    myPageGetTboard(data) {
+        return axios.get('/mypage/tboard', {
+            params: {
+                id: data
+            }
+        })
+    }
+
 }
 
 export const HttpServiceContext = createContext(new HttpService())

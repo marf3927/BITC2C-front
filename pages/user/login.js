@@ -13,6 +13,7 @@ import io from "socket.io-client";
 
 
 const Login = () => {
+    console.log("login click!!")
     const AuthStore = useContext(AuthStoreContext)
     const HttpService = useContext(HttpServiceContext)
     

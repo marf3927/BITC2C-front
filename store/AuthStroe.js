@@ -2,7 +2,7 @@ import {observable, computed, action, decorate} from 'mobx'
 import {createContext} from "react"
 import Router from "next/router"
 import axios from 'axios'
-import { Cookies, removeCookie} from "react-cookie"
+import { Cookies } from "react-cookie"
 
 const cookies = new Cookies()
 
@@ -11,10 +11,7 @@ class AuthStore{
     @observable
     baseURL = "http://localhost:5555"
 
-    @observable
-    soalarm = ''
-
-    authToken = cookies.get('authToken');
+    authToken = cookies.get('authToken')
 
     @action
     setToken(token) {
@@ -36,16 +33,6 @@ class AuthStore{
 
     get refresh_token() {
         return cookies.get('refreshToken')
-    }
-
-    @action
-    setSoalarm(date) {
-        this.soalarm = date
-    }
-    
-    @computed
-    get getSoalarm() {
-        return this.soalarm;
     }
 
 }

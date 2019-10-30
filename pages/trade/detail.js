@@ -56,7 +56,7 @@ const Detail = ({id}) => {
     //토큰을 이용해서 USER 정보 가져오는 함수
     function getUser() {
 
-        const token = Cookies.get("authToken")
+        const token = cookies.getItem("authToken")
         axios.get(baseURL + '/users/getuser', {
             params: {
                 token: token
@@ -84,7 +84,7 @@ const Detail = ({id}) => {
     // console.log(props.key);
     function gotoTrade() {
         const {id} = router.query
-        const token = Cookies.get("authToken");
+        const token = cookies.getItem("authToken");
         console.log(token);
 
         // const token = Cookies.get('logintoken');

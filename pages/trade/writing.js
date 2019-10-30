@@ -78,8 +78,8 @@ const Writing = () => {
     //글쓰기 등록
     function onRegisterClick(method) {
 
-        const token = Cookies.get("authToken");
-        console.log(token);
+        // const token = cookies.get("authToken");
+        // console.log(token);
 
         HttpService.getUser().then((userId) => {
             var id = userId
