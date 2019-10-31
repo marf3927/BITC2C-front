@@ -1,8 +1,7 @@
-import {observable, computed, action, decorate} from 'mobx'
+import {observable, computed, action} from 'mobx'
 import {createContext} from "react"
 import Router from "next/router"
-import axios from 'axios'
-import { Cookies, removeCookie} from "react-cookie"
+import { Cookies} from "react-cookie"
 
 const cookies = new Cookies()
 

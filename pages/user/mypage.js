@@ -6,9 +6,11 @@ import axios from 'axios'
 import Router from "next/router"
 import Cookies from 'js-cookie';
 import { AuthStoreContext } from "../../store/AuthStroe"
+import {socketioContext} from "../../store/socketio"
 
 const Mypage = () => {
     const AuthStore = useContext(AuthStoreContext)
+    const SocketIo = useContext(socketioContext)
     const baseURL = AuthStore.baseURL
 
     const [user, setUser] = useState();
@@ -119,17 +121,13 @@ const Mypage = () => {
 
 
     function alarm() {
-        axios.get(baseURL + '/alarm', {})
-        console.log('alarm() 클릭');
-
+        SocketIo.setAlarm()
     }
 
 
 
     return (
-
         <>
-
             <AppLayout>
                 {console.log("확인")}
                 <div>

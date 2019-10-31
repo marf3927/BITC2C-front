@@ -1,18 +1,17 @@
-import React, { useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Link from 'next/link'
 import {Cookies} from 'react-cookie'
 import AppLayout from '../../components/AppLayout'
 import {Button, Input} from 'semantic-ui-react'
 import Router from "next/router"
 import {AuthStoreContext} from "../../store/AuthStroe"
-import io from "socket.io-client";
+import io from "socket.io-client"
 
 
-import { observer } from 'mobx-react-lite'
+import {observer} from 'mobx-react-lite'
 import Header from "../../components/header"
 import {HttpServiceContext} from "../../store/HttpService"
-
-
+import axios from "axios"
 
 
 const Login = () => {
@@ -26,46 +25,17 @@ const Login = () => {
     const [logalert, setLogAlert] = useState('')
 
     //regiser 보내기
-    
+
     function onLoginClick(email, password) {
         HttpService.login(email, password)
             .then((response) => {
-                console.log('front_login_', response.data)
                 const token = response.data.token
                 cookies.set('authToken', token)
-
-
-                var socket = io.connect(AuthStore.baseURL,{ 'reconnect': true, 'resourse': 'socket.io' })
-                console.log('socket = ',socket)
-                socket.once('connect', () =>{
-                    console.log("connection socket server!!!");
-                    socket.on('alarm', (msg) => {
-                        console.log('alarm callback!!!: ', msg);
-                        AuthStore.setSoalarm("거래");
-                        console.log('11',AuthStore.getSoalarm)
-                    });
-                })
-
-                // var socket = io.connect(AuthStore.baseURL, { 'reconnect': true, 'resourse': 'socket.io' })
-                // socket.once('connect', () => {
-                //     console.log("connection socket server!!!");
-                //     socket.on('alarm', (msg) => {
-                //         console.log('alarm callback!!!: ', msg);
-                //         if(socket.connected){
-                //             console.log("hi")
-                //             socket.disconnect();
-                //             if (socket.connected) {
-                //                 console.log("hi2")
-                //             }
-                //         }
-                //     });
-                // })
-
                 Router.push('/')
-            }).catch((e) => {
-                console.log('aa')
-                setLogAlert("아이디 또는 비밀번호를 다시 확인하세요.\n 등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.")
             })
+            .catch((e) => {
+            setLogAlert("아이디 또는 비밀번호를 다시 확인하세요.\n 등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.")
+        })
     }
 
     if (!AuthStore.isLoggedIn) {
@@ -103,7 +73,7 @@ const Login = () => {
                         <div>
                             <Link href="/user/register"><a>Create your Account</a></Link>
                         </div>
-                        
+
                     </div>
 
                 </AppLayout>

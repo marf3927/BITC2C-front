@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="218c0e37-c435-4cce-9dab-a701fe7f9f83" name="114.108.177.193" url="http://114.108.177.193">
-        <fileTransfer host="114.108.177.193" port="23000" rootFolder="/home/s10/erc20_test" accessType="SFTP">
+        <fileTransfer host="114.108.177.193" port="23000" rootFolder="/home/s10" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
@@ -11,7 +11,7 @@
         </fileTransfer>
       </webServer>
       <webServer id="7ec0e86f-f0ae-43d3-bac4-eba87d9d90c5" name="asd" url="http://114.108.177.193">
-        <fileTransfer host="114.108.177.193" port="23000" rootFolder="/home/abc/node/truffle/edu_demos/t6" accessType="SFTP">
+        <fileTransfer host="114.108.177.193" port="23000" rootFolder="/home/abc/node/truffle/edu_demos" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

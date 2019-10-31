@@ -7,7 +7,7 @@ import { observable, computed, action, decorate } from 'mobx'
 
 
 
-const Header = () => {
+const Header = ({alarm}) => {
     const AuthStore = useContext(AuthStoreContext)
 
     const [isLoggedIn, setIslogedIn] = useState(AuthStore.isLoggedIn)
@@ -40,15 +40,18 @@ const Header = () => {
                     !AuthStore.isLoggedIn ?
                      <Menu.Item key="login"><Link href="/user/login"><a>Login</a></Link></Menu.Item>
                         :<Menu.Item key="logout" onClick = {() => logout()}><a>Logout</a></Menu.Item>
+
                 }
                 {
                     AuthStore.isLoggedIn ?
                         <Menu.Item key="My Page"><Link href="/user/mypage"><a>My Page</a></Link></Menu.Item>
                         :<></>
                 }
-               
-                
-                
+                {
+                    AuthStore.isLoggedIn ?
+                        <Menu.Item key="alarm"><Link href="/alarm"><a>Alarm {alarm}</a></Link></Menu.Item>
+                        :<></>
+                }
             </Menu>
         )
 

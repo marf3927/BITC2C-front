@@ -1,24 +1,28 @@
 import {createContext, useContext} from "react"
 import axios from 'axios'
 import Router from "next/router"
-import {reaction} from 'mobx'
+import {observable, reaction} from 'mobx'
 import {Cookies} from "react-cookie"
+import {AuthStoreContext} from "./AuthStroe"
 
 const cookies = new Cookies()
 
 class HttpService {
+
+    @observable
+    authToken = cookies.get("authToken")
+
     constructor() {
         this.state = {
             res: ''
         }
+        console.log("Http Service")
         this.isExpiredToken = false
-        this.authToken = cookies.get("authToken")
-
         axios.defaults.baseURL = 'http://localhost:5555'
-
-        axios.defaults.headers.common['authorization'] = 'jwt ' + this.authToken
+        axios.defaults.headers.common['authorization'] ='jwt '+ this.authToken
         reaction(() => this.authToken, () => {
-            axios.defaults.headers.common['token'] = this.authToken
+            console.log("reaction!")
+            axios.defaults.headers.common['authorization'] = this.authToken
         })
 
         axios.interceptors.response.use(response => {
@@ -32,7 +36,6 @@ class HttpService {
             }
             return Promise.reject(originalError)
         })
-
     }
 
     login(email, password) {
@@ -109,8 +112,6 @@ class HttpService {
             }
         })
     }
-
-
 }
 
 export const HttpServiceContext = createContext(new HttpService())

@@ -75,14 +75,11 @@ const Writing = () => {
 
     //글쓰기 등록
     function onRegisterClick(method) {
-
         const token = Cookies.get("authToken");
         console.log(token);
-
         HttpService.getUser().then((userId) => {
             var id = userId
             console.log('id', id);
-
             if (id) {
                     console.log("판매테이블 생성");
                     HttpService.createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id)

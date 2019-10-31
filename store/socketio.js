@@ -1,14 +1,16 @@
 import io from "socket.io-client";
 import { createContext, useContext } from "react"
+import {observable, computed, action} from 'mobx'
+import axios from "axios"
 
 
 class socketio {
     baseURL = 'http://localhost:5555'
     socket = io.connect(this.baseURL, { 'reconnect': true, 'resourse': 'socket.io' })
-    salarm =''
+    @observable
+    salarm = []
 
     constructor(){
-        this.salarm = ''
         if(this.socket.connected){
             this.socket.disconnect();
             this.socket = io.connect(this.baseURL, { 'reconnect': true, 'resourse': 'socket.io' })
@@ -17,15 +19,20 @@ class socketio {
             this.socket = io.connect(this.baseURL, { 'reconnect': true, 'resourse': 'socket.io' })
             console.log("socket connected!!!")
         }
-
-        this.socket.on('alarm', (msg) => {
-            console.log('alarm callback!!!: ', msg);
-            this.salarm = "으아아아"
-        });
     }
 
-    getalarm(){
+    @action
+    setAlarm(){
+        axios.get("http://localhost:5555" + '/alarm', {})
+        this.socket.on('alarm', (msg) => {
+            console.log('alarm callback!!!: ', this.salarm);
+            this.salarm.push(msg)
+        })
+    }
+
+    get getalarm(){
         console.log(this.salarm);
+        return this.salarm
     }
 }
 

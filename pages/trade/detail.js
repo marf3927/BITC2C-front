@@ -91,15 +91,13 @@ const Detail = ({id}) => {
             })
     }
 
-    
-
     return (
         <>
             <AppLayout>
                 <div className="ui two column centered grid">
                     <form className="ui fluid form">
                         <div className="field">
-                            <img className="ui medium circular image" src="http://localhost:3000/images/eth.png"/>
+                            <img className="ui medium circular image" src="/images/eth.png"/>
 
                         </div>
                         <div className="field">
