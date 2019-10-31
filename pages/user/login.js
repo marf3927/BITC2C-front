@@ -6,8 +6,6 @@ import {Button, Input} from 'semantic-ui-react'
 import Router from "next/router"
 import {AuthStoreContext} from "../../store/AuthStroe"
 import io from "socket.io-client"
-
-
 import {observer} from 'mobx-react-lite'
 import Header from "../../components/header"
 import {HttpServiceContext} from "../../store/HttpService"
@@ -31,6 +29,7 @@ const Login = () => {
             .then((response) => {
                 const token = response.data.token
                 cookies.set('authToken', token)
+                HttpService.setting();
                 Router.push('/')
             })
             .catch((e) => {

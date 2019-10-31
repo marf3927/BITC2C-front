@@ -10,10 +10,7 @@ class AuthStore{
     @observable
     baseURL = "http://localhost:5555"
 
-    @observable
-    soalarm = ''
-
-    authToken = cookies.get('authToken');
+    authToken = cookies.get('authToken')
 
     @action
     setToken(token) {
@@ -35,16 +32,6 @@ class AuthStore{
 
     get refresh_token() {
         return cookies.get('refreshToken')
-    }
-
-    @action
-    setSoalarm(date) {
-        this.soalarm = date
-    }
-    
-    @computed
-    get getSoalarm() {
-        return this.soalarm;
     }
 
 }

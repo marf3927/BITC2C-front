@@ -1,44 +1,50 @@
 import {createContext, useContext} from "react"
 import axios from 'axios'
 import Router from "next/router"
-import {observable, reaction} from 'mobx'
+import {reaction} from 'mobx'
 import {Cookies} from "react-cookie"
-import {AuthStoreContext} from "./AuthStroe"
 
 const cookies = new Cookies()
 
 class HttpService {
 
-    @observable
-    authToken = cookies.get("authToken")
-
+    authToken = ''
     constructor() {
         this.state = {
-            res: ''
-        }
-        console.log("Http Service")
-        this.isExpiredToken = false
+            res : ''
+        };
+
+        this.authToken = cookies.get("authToken")
+
+        console.log("http확인: ", this.authToken)
+
         axios.defaults.baseURL = 'http://localhost:5555'
-        axios.defaults.headers.common['authorization'] ='jwt '+ this.authToken
-        reaction(() => this.authToken, () => {
-            console.log("reaction!")
-            axios.defaults.headers.common['authorization'] = this.authToken
-        })
+
+
 
         axios.interceptors.response.use(response => {
             return response
         }, originalError => {
             const {config} = originalError
+            console.log(originalError.response.data)
             if (originalError.response.data === 'jwt expired') {
-                cookies.remove('authToken', {expires: 'Thu, 01 Jan 1970 00:00:01 GMT'})
+                cookies.remove('authToken')
                 alert('로그인 세션이 만료되었습니다. ')
                 Router.push('/user/login')
             }
             return Promise.reject(originalError)
         })
+
     }
 
-    login(email, password) {
+    setting() {
+        axios.defaults.headers.common['authorization'] = 'jwt ' + cookies.get("authToken")
+        reaction(() => this.authToken, () => {
+            axios.defaults.headers.common['token'] = this.authToken
+        })
+    }
+
+    login(email, password){
         return axios.post(('/users/login/'),
             {
                 email,
@@ -47,20 +53,24 @@ class HttpService {
     }
 
     getUser() {
-        return axios.get('/users/getuser',).then((response) => {
+        return axios.get('/users/getuser').then((response) => {
+            console.log("getUser: ", response)
             return response.data.id
         }).catch((e) => {
+            console.log(e)
             return e
         })
     }
 
-    getTradeDetail(id) {
-        return axios.get('/trade/detail?id=' + id).then((res) => {
-            return res
+    getTradeItem(id) {
+
+        return axios.get('/trade/detail?id=' + id).then((response)=>{
+            return response.data
         })
     }
 
     createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id) {
+
         return axios.post(('/trade/create/'),
             {
                 selltoken: sellcoinselectd,
@@ -68,7 +78,8 @@ class HttpService {
                 selltokenamount: selltokenamount,
                 buytokenamount: buytokenamount,
                 status: "0",
-                sellerId: id
+                sellerId: id,
+                buyerId: ''
             })
     }
 
@@ -112,6 +123,46 @@ class HttpService {
             }
         })
     }
+
+
+    goToTrade() {
+        return axios.post('/trade/exchange', {
+            token, id
+        }).then((data) => {
+            console.log('goto tarde', data.data)
+            Router.push({
+                    pathname: '/trade/exchange',
+                    query: {name: data.data}
+                }
+                , '/exchange'
+            )
+        })
+    }
+
+    myPageGetUser(user){
+        return axios.get('/mypage/user', {
+            params: {
+                id: user
+            }
+        })
+    }
+
+    myPageGetWallet(data){
+        return axios.get('/mypage/wallet', {
+            params: {
+                id: data
+            }
+        })
+    }
+
+    myPageGetTboard(data) {
+        return axios.get('/mypage/tboard', {
+            params: {
+                id: data
+            }
+        })
+    }
+
 }
 
 export const HttpServiceContext = createContext(new HttpService())

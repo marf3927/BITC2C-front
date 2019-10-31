@@ -12,21 +12,6 @@ const Header = ({alarm}) => {
 
     const [isLoggedIn, setIslogedIn] = useState(AuthStore.isLoggedIn)
     
-
-    
-
-    //  console.log('socket alarm=',socketalarm);
-    // function alarm () {
-    //     // setSocketalarm(AuthStore.getsoalarm)
-    //     if (AuthStore.getsoalarm) {
-    //         console.log('알람옴')
-    //         alert('알람')
-    //     }
-    // }
-    function updatealarm(alarm){
-        seta(alarm)
-    }
-
     const logout = () => {
         AuthStore.deleteToken()
     }

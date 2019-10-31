@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import Header from './header'
 import Head from 'next/head'
 import {AuthStoreContext} from "../store/AuthStroe"
@@ -30,8 +30,8 @@ const AppLayout = ({children}) => {
     })
 
     useEffect(() => {
-        socketCheck()
-    }, [socketalarm])
+    }, [socketalarm]);
+
 
     return (
         <>
