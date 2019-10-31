@@ -7,6 +7,7 @@ import {Cookies} from "react-cookie"
 const cookies = new Cookies()
 
 class HttpService {
+
     authToken = ''
     constructor() {
         this.state = {
@@ -36,6 +37,13 @@ class HttpService {
 
     }
 
+    setting() {
+        axios.defaults.headers.common['authorization'] = 'jwt ' + cookies.get("authToken")
+        reaction(() => this.authToken, () => {
+            axios.defaults.headers.common['token'] = this.authToken
+        })
+    }
+
     login(email, password){
         return axios.post(('/users/login/'),
             {
@@ -45,10 +53,7 @@ class HttpService {
     }
 
     getUser() {
-        axios.defaults.headers.common['authorization'] = 'jwt ' + cookies.get("authToken")
-        reaction(() => this.authToken, () => {
-            axios.defaults.headers.common['token'] = this.authToken
-        })
+        
         return axios.get('/users/getuser').then((response) => {
             console.log("getUser: ", response)
             return response.data.id
@@ -59,20 +64,14 @@ class HttpService {
     }
 
     getTradeItem(id) {
-        axios.defaults.headers.common['authorization'] = 'jwt ' + cookies.get("authToken")
-        reaction(() => this.authToken, () => {
-            axios.defaults.headers.common['token'] = this.authToken
-        })
+        
         return axios.get('/trade/detail?id=' + id).then((response)=>{
             return response.data
         })
     }
 
     createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id) {
-        axios.defaults.headers.common['authorization'] = 'jwt ' + cookies.get("authToken")
-        reaction(() => this.authToken, () => {
-            axios.defaults.headers.common['token'] = this.authToken
-        })
+       
         return axios.post(('/trade/create/'),
             {
                 selltoken: sellcoinselectd,

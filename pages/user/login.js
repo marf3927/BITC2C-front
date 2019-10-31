@@ -31,6 +31,7 @@ const Login = () => {
                 console.log('front_login_', response.data)
                 const token = response.data.token
                 cookies.set('authToken', token)
+                HttpService.setting();
                 
 
 
