@@ -1,23 +1,21 @@
 import React, {useState, useEffect, useContext, useRef} from 'react'
-import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
 import {Button, Table, Input, Icon, Menu, Dropdown, Tab} from 'semantic-ui-react'
-import axios from 'axios'
 import Router from "next/router"
 import {AuthStoreContext} from "../../store/AuthStroe"
-// import {id} from 'postcss-selector-parser'
+import {HttpServiceContext} from "../../store/HttpService"
 
 const List = () => {
     const AuthStore = useContext(AuthStoreContext)
-    const baseURL = AuthStore.baseURL
+    const HttpService = useContext(HttpServiceContext)
 
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
-    const [Sellselected, setSellselected] = useState("구매");
+    const [Sellselected, setSellselected] = useState("구매")
     const [Buyselected, setBuyselected] = useState("판매")
-    const [Sortname, setSortname] = useState("");
-    const [Iconbool,setIconbool] =useState(true);
-    const idReference = useRef();
+    const [Sortname, setSortname] = useState("")
+    const [Iconbool, setIconbool] = useState(true)
+    const idReference = useRef()
 
     const buyoption = [
         {key: 1, text: 'ETH', value: 'ETH'},
@@ -36,65 +34,37 @@ const List = () => {
 
     const onSellSelectChange = (e, result) => {
         const {text, value} = result
-
-        setSellselected(value);
+        setSellselected(value)
     }
 
     const onBuySelectChange = (e, result) => {
         const {text, value} = result
-
-        setBuyselected(value);
+        setBuyselected(value)
     }
 
     useEffect(() => {
         getItems()
-
-    }, [, page, Sellselected,Buyselected,Iconbool,Sortname])
-
-    
+    }, [, page, Sellselected, Buyselected, Iconbool, Sortname])
 
     function getItems() {
-
         if (Sellselected === "판매" || Buyselected === "구매") {
-
             return
         }
-
-
         if (Sortname !== "") {
-
-            axios.get(baseURL + '/trade/index/' + page, {
-                params: {
-                    sellcoin: Sellselected,
-                    buycoin: Buyselected,
-                    method: Sortname,
-                    order: Iconbool
-                }
-            })
+            HttpService.getTradeList(page, Sellselected, Buyselected, Sortname, Iconbool)
                 .then((response) => {
                     const data = response.data
-
                     setItems(data)
                 })
-           
-        }else{ 
-            axios.get(baseURL + '/trade/index/' + page,{
-                params: {
-                    sellcoin: Sellselected,
-                    buycoin: Buyselected,
-                }
-            })
+        } else {
+            HttpService.getTradeList(page, Sellselected, Buyselected)
                 .then((response) => {
                     const data = response.data
-
                     setItems(data)
                 })
-      
         }
-    
-
-    
     }
+
     function gotoDetail(itemiD, status, method) {
         const itemID = itemiD
         const statusCode = status
@@ -104,7 +74,7 @@ const List = () => {
             Router.push({
                     pathname: '/trade/detail',
                     query: {id: itemID}
-                }, '/detail'
+                }, '/trade/detail'
             )
         } else if (statusCode === 1) {
             Router.push({
@@ -114,18 +84,15 @@ const List = () => {
                 , '/exchange'
             )
         } else {
-
         }
 
     }
 
     function tabClicktoken(e) {
         setSelectedtoken(e)
-
         return true
     }
-    
-    
+
 
     function NextPageClick() {
         setPage(page + 1)
@@ -138,7 +105,6 @@ const List = () => {
     }
 
     function WritingBoard() {
-
         Router.push('/trade/writing')
     }
 
@@ -159,33 +125,25 @@ const List = () => {
         if (!Iconbool) {
             return <i className="caret down icon"></i>
         } else {
-
             return <i className="caret up icon"></i>
         }
     }
 
     const element = useRef()
 
-
     function decideSort(methodname) {
-
-
         if (Sortname === methodname) {
-
             return iconlist()
-
         }
     }
 
     function Sortlist(clicked) {
         setSortname(clicked)
         setIconbool(!Iconbool)
-
     }
 
     return (
         <>
-
             <AppLayout>
                 <style jsx>{`
                     .type_right {
@@ -193,8 +151,8 @@ const List = () => {
                         color: rgb(92, 5, 80);
                     }
                 `}</style>
-                <div>
 
+                <div>
                     <Menu compact>
                         <Dropdown text={Sellselected} options={selloption} onChange={onSellSelectChange} simple item/>
                         <Dropdown text={Buyselected} options={buyoption} onChange={onBuySelectChange} simple item/>
@@ -205,16 +163,21 @@ const List = () => {
                             <Table.Header>
                                 <Table.Row>
 
-                                <Table.HeaderCell >SELL</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("selltokenamount")}>sellamount{decideSort("selltokenamount")}</Table.HeaderCell>
-                                <Table.HeaderCell >BUY</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("buytokenamount")}>buyamount{decideSort("buytokenamount")}</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
-                                <Table.HeaderCell onClick={()=>Sortlist("Expirydate")}>Expiry date{decideSort("Expirydate")}</Table.HeaderCell>
-                            </Table.Row>
-                        </Table.Header>
-                      
+                                    <Table.HeaderCell>SELL</Table.HeaderCell>
+                                    <Table.HeaderCell
+                                        onClick={() => Sortlist("selltokenamount")}>sellamount{decideSort("selltokenamount")}</Table.HeaderCell>
+                                    <Table.HeaderCell>BUY</Table.HeaderCell>
+                                    <Table.HeaderCell
+                                        onClick={() => Sortlist("buytokenamount")}>buyamount{decideSort("buytokenamount")}</Table.HeaderCell>
+                                    <Table.HeaderCell
+                                        onClick={() => Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
+                                    <Table.HeaderCell
+                                        onClick={() => Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
+                                    <Table.HeaderCell onClick={() => Sortlist("Expirydate")}>Expiry
+                                        date{decideSort("Expirydate")}</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+
                             <Table.Body>
                                 {items.map((item) => {
                                     return <Table.Row key={item.id} onClick={() => gotoDetail(item.id, item.status)}>
@@ -232,6 +195,7 @@ const List = () => {
                         </Table>
                     </div>
                 </div>
+
                 <div>
                     <span><Button onClick={() => PreviousPageClick()}><Icon name="caret left"/></Button></span>
                     <span><a>{page}</a></span>

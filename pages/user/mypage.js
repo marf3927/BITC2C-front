@@ -4,11 +4,13 @@ import AppLayout from '../../components/AppLayout'
 import { Button, Table, Input, Icon, Tab } from 'semantic-ui-react'
 import axios from 'axios'
 import Router from "next/router"
-import Cookies from 'js-cookie';
+import {Cookies} from 'react-cookie';
 import { AuthStoreContext } from "../../store/AuthStroe"
+import { HttpServiceContext } from "../../store/HttpService"
 
 const Mypage = () => {
     const AuthStore = useContext(AuthStoreContext)
+    const HttpService = useContext(HttpServiceContext)
     const baseURL = AuthStore.baseURL
 
     const [user, setUser] = useState();
@@ -16,30 +18,24 @@ const Mypage = () => {
     const [wallets, setWallets] = useState([]);
     const [boards, setBoards] = useState([]);
 
-    const token = Cookies.get("authToken");
+    const cookies = new Cookies()
+
+    const token = cookies.get("authToken");
     useEffect(() => {
         getId()
     }, [])
 
     function getId() {
-        axios.get(baseURL + '/users/getuser', {
-            params: {
-                token: token
+
+        HttpService.getUser().then((userId) => {
+            var id = userId
+            console.log('id', id);
+
+            if (id) {
+                setUser(id);
             }
-        }).then((data) => {
-            // data = JSON.parse(JSON.stringify(data))
-            console.log('id: ', data)
-            setUser(data);
-        }).catch((e) => {
-            console.log(e.response.data.message)
-            if (e.response.data.message === "jwt expired") {
-                AuthStore.deleteToken()
-                const expired = confirm("로그인 세션이 완료되었습니다. \n로그인 하시겠습니까?")
-                if (expired === true) {
-                    Router.push('/user/login');
-                } else {
-                    Router.push('/');
-                }
+            else {
+                Router.push('/user/login/');
             }
         })
     }
@@ -58,40 +54,24 @@ const Mypage = () => {
 
     function getItems() {
         // user정보 가져오기
-        axios.get(baseURL + '/mypage/user', {
-            params: {
-                id: user.data.id
-            }
-        }).then((data) => {
+        HttpService.myPageGetUser(user).then((data) => {
             console.log('ID ', data.data.id)
 
             // wallet 정보 가져오기
-            axios.get(baseURL + '/mypage/wallet', {
-                params: {
-                    id: data.data.id
-                }
-            }).then((wdata) => {
+            HttpService.myPageGetWallet(data.data.id).then((wdata) => {
                 console.log("walletdata: ", wdata);
 
                 // 거래게시판 이용내역 가져오기
-                axios.get(baseURL + '/mypage/tboard', {
-                    params: {
-                        id: data.data.id
-                    }
-                }).then((board) => {
+                HttpService.myPageGetTboard(data.data.id).then((board) => {
                     console.log("boards: ", board.data);
-
                     setBoards(board.data);
-
                     setWallets(wdata.data);
-
                     setUserData(data);
                 });
             });
         });
 
     }
-
 
     function gotoDetail(itemiD, status, method) {
         const itemID = itemiD;
@@ -118,9 +98,7 @@ const Mypage = () => {
     }
 
     return (
-
         <>
-
             <AppLayout>
                 {console.log("확인")}
                 <div>
@@ -211,6 +189,9 @@ const Mypage = () => {
                     <div>
                         <br></br>
                         <Link href="/user/changepwd"><a>비밀번호 변경</a></Link>
+                    </div>
+                    <div>
+                        <button></button>
                     </div>
                 </div>
             </AppLayout>

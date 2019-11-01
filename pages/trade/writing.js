@@ -1,18 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react'
-import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
 import { Button, Table, Input, Icon, Tab, Dropdown, Menu, Label } from 'semantic-ui-react'
-import axios from 'axios'
 import Router from 'next/router'
 import Cookies from 'js-cookie';
 import {AuthStoreContext} from '../../store/AuthStroe'
+<<<<<<< HEAD
 import { stringify } from 'querystring'
 import { HttpServiceContext } from '../../store/HttpService'
+=======
+import {HttpServiceContext} from "../../store/HttpService"
+>>>>>>> 23ee29471a32559070719c1bc5de07c7a90ed644
 
 const Writing = () => {
     const HttpService = useContext(HttpServiceContext)
+<<<<<<< HEAD
     const AuthStore = useContext(AuthStoreContext)
     const baseURL = AuthStore.baseURL
+=======
+>>>>>>> 23ee29471a32559070719c1bc5de07c7a90ed644
     const [selected, setSelected] = useState("")
 
 
@@ -29,7 +34,9 @@ const Writing = () => {
 
     function ratiocal() {
       
-        if((selltokenamount!==0||selltokenamount!==null||selltokenamount!==undefined)&&(buytokenamount!==0||buytokenamount!==undefined||buytokenamount!==null) ){
+        if((selltokenamount!==0||selltokenamount!==null
+            ||selltokenamount!==undefined)&&(buytokenamount!==0||
+            buytokenamount!==undefined||buytokenamount!==null) ){
             console.log("asd")
             const ratio = selltokenamount/buytokenamount
             const result = ratio.toString() +"  :   1"
@@ -77,6 +84,7 @@ const Writing = () => {
 
     //글쓰기 등록
     function onRegisterClick(method) {
+<<<<<<< HEAD
 
         const token = Cookies.get("authToken");
         console.log(token);
@@ -84,8 +92,11 @@ const Writing = () => {
         HttpService.getUser()
         .then((data) => {
             var id = data.data.id;
+=======
+        HttpService.getUser().then((userId) => {
+            var id = userId
+>>>>>>> 23ee29471a32559070719c1bc5de07c7a90ed644
             console.log('id', id);
-
             if (id) {
               
                     console.log("판매테이블 생성");
