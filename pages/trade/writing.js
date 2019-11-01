@@ -4,20 +4,10 @@ import { Button, Table, Input, Icon, Tab, Dropdown, Menu, Label } from 'semantic
 import Router from 'next/router'
 import Cookies from 'js-cookie';
 import {AuthStoreContext} from '../../store/AuthStroe'
-<<<<<<< HEAD
-import { stringify } from 'querystring'
-import { HttpServiceContext } from '../../store/HttpService'
-=======
 import {HttpServiceContext} from "../../store/HttpService"
->>>>>>> 23ee29471a32559070719c1bc5de07c7a90ed644
 
 const Writing = () => {
     const HttpService = useContext(HttpServiceContext)
-<<<<<<< HEAD
-    const AuthStore = useContext(AuthStoreContext)
-    const baseURL = AuthStore.baseURL
-=======
->>>>>>> 23ee29471a32559070719c1bc5de07c7a90ed644
     const [selected, setSelected] = useState("")
 
 
@@ -84,18 +74,8 @@ const Writing = () => {
 
     //글쓰기 등록
     function onRegisterClick(method) {
-<<<<<<< HEAD
-
-        const token = Cookies.get("authToken");
-        console.log(token);
-
-        HttpService.getUser()
-        .then((data) => {
-            var id = data.data.id;
-=======
         HttpService.getUser().then((userId) => {
             var id = userId
->>>>>>> 23ee29471a32559070719c1bc5de07c7a90ed644
             console.log('id', id);
             if (id) {
               
