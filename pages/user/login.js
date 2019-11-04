@@ -16,7 +16,7 @@ const Login = () => {
     const AuthStore = useContext(AuthStoreContext)
     const HttpService = useContext(HttpServiceContext)
 
-
+    const baseURL = 'http://localhost:5555'
     const cookies = new Cookies()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -30,6 +30,13 @@ const Login = () => {
                 const token = response.data.token
                 cookies.set('authToken', token)
                 HttpService.setting();
+                console.log('onloginclick1')
+                var socket =io.connect(baseURL, {'reconnect': true, 'resourse': 'socket.io'})
+                console.log('onloginclick',socket)
+                socket.on("connect",function(){
+                    console.log("connect success")
+                })
+                socket.emit("client","입력과 출력")
                 Router.push('/')
             })
             .catch((e) => {

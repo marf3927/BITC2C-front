@@ -4,15 +4,17 @@ import Link from 'next/link'
 import {AuthStoreContext} from "../store/AuthStroe"
 import Router from "next/router"
 import { observable, computed, action, decorate } from 'mobx'
-
+import io from "socket.io-client"
 
 
 const Header = ({alarm}) => {
     const AuthStore = useContext(AuthStoreContext)
-
+    const baseURL = 'http://localhost:5555'
     const [isLoggedIn, setIslogedIn] = useState(AuthStore.isLoggedIn)
     
     const logout = () => {
+        var socket =io.connect(baseURL, {'reconnect': true, 'resourse': 'socket.io'})
+        socket.disconnect()
         AuthStore.deleteToken()
     }
    
