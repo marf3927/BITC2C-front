@@ -8,7 +8,6 @@ const Writing = () => {
     const HttpService = useContext(HttpServiceContext)
     const [selected, setSelected] = useState("")
 
-
     const [sellcoinselectd, setsellcoinselectd] = useState('')
     const [buycoinselectd, setbuycoinselectd] = useState('')
     const [selltokenamount, setselltokenamount] = useState(0)
@@ -17,7 +16,6 @@ const Writing = () => {
 
     useEffect(() => {
         ratiocal()
-
     }, [, selltokenamount, buytokenamount])
 
     function ratiocal() {
@@ -30,10 +28,7 @@ const Writing = () => {
             const result = ratio.toString() + "  :   1"
             setratio(result)
         }
-
-
     }
-
 
     const buycoinoption = [
         {key: 1, text: 'ETH', value: 'ETH'},
@@ -130,12 +125,8 @@ const Writing = () => {
                             거래 등록
                         </Button>
                     </div>
-
                 </div>
-
-
             </div>
-
         </AppLayout>
 
     )
