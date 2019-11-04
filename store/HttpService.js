@@ -13,20 +13,16 @@ class HttpService {
         this.state = {
             res : ''
         };
-
         this.authToken = cookies.get("authToken")
 
         console.log("http확인: ", this.authToken)
 
         axios.defaults.baseURL = 'http://localhost:5555'
 
-
-
         axios.interceptors.response.use(response => {
             return response
         }, originalError => {
             const {config} = originalError
-            console.log(originalError.response.data)
             if (originalError.response.data === 'jwt expired') {
                 cookies.remove('authToken')
                 alert('로그인 세션이 만료되었습니다. ')
