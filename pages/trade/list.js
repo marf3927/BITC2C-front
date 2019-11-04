@@ -2,9 +2,11 @@ import React, {useState, useEffect, useContext, useRef} from 'react'
 import AppLayout from '../../components/AppLayout'
 import {Button, Table, Input, Icon, Menu, Dropdown, Tab} from 'semantic-ui-react'
 import Router from "next/router"
+import {AuthStoreContext} from "../../store/AuthStroe"
 import {HttpServiceContext} from "../../store/HttpService"
 
 const List = () => {
+    const AuthStore = useContext(AuthStoreContext)
     const HttpService = useContext(HttpServiceContext)
 
     const [items, setItems] = useState([])

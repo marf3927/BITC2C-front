@@ -1,6 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react'
 import Header from './header'
 import Head from 'next/head'
+import {AuthStoreContext} from "../store/AuthStroe"
 import io from "socket.io-client"
 import {HttpServiceContext} from "../store/HttpService"
 
