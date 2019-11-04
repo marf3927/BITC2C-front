@@ -7,7 +7,6 @@ import {AuthStoreContext} from '../../store/AuthStroe'
 import {HttpServiceContext} from "../../store/HttpService"
 
 const Writing = () => {
-    const AuthStore = useContext(AuthStoreContext)
     const HttpService = useContext(HttpServiceContext)
     const [selected, setSelected] = useState("")
 
@@ -79,11 +78,14 @@ const Writing = () => {
             var id = userId
             console.log('id', id);
             if (id) {
+              
                     console.log("판매테이블 생성");
-                    HttpService.createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id)
+                    return  HttpService.createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id)
                         .then((response) => {
                             Router.push('/trade/list');
                         })
+                
+                
             }
             else{
                 Router.push('/user/login/');
