@@ -1,24 +1,50 @@
 import {createContext, useContext} from "react"
 import axios from 'axios'
 import Router from "next/router"
-import {reaction} from 'mobx'
+import {action, computed, observable, reaction} from 'mobx'
 import {Cookies} from "react-cookie"
 
 const cookies = new Cookies()
 
+class AuthStore {
+
+    baseURL = "http://localhost:5555"
+
+    @observable
+    authToken = cookies.get('authToken')
+
+    @action
+    setToken(token) {
+        this.authToken = token
+        cookies.set('authToken', token)
+        Router.push('/')
+    }
+
+    @action
+    deleteToken() {
+        cookies.remove('authToken')
+        Router.push('/')
+    }
+
+    @computed
+    get isLoggedIn() {
+        return cookies.get('authToken') != null
+    }
+
+    get refresh_token() {
+        return cookies.get('refreshToken')
+    }
+}
+
 class HttpService {
-
-    authToken = ''
     constructor() {
-        this.state = {
-            res : ''
-        };
-        this.authToken = cookies.get("authToken")
-
-        console.log("http확인: ", this.authToken)
+        this.authStore = new AuthStore()
 
         axios.defaults.baseURL = 'http://localhost:5555'
-
+        axios.defaults.headers.common['authorization'] = 'jwt ' + this.authStore.authToken
+        reaction(() => this.authStore.authToken, () => {
+            axios.defaults.headers.common['authorization'] = 'jwt' + this.authStore.authToken
+        })
         axios.interceptors.response.use(response => {
             return response
         }, originalError => {
@@ -33,24 +59,27 @@ class HttpService {
 
     }
 
-    setting() {
-        axios.defaults.headers.common['authorization'] = 'jwt ' + cookies.get("authToken")
-        reaction(() => this.authToken, () => {
-            axios.defaults.headers.common['token'] = this.authToken
-        })
-    }
+    // setting() {
+    //     axios.defaults.headers.common['authorization'] = 'jwt ' + cookies.get("authToken")
+    //     reaction(() => this.authToken, () => {
+    //         axios.defaults.headers.common['token'] = this.authToken
+    //     })
+    // }
 
-    login(email, password){
+    login(email, password) {
         return axios.post(('/users/login/'),
             {
                 email,
                 password
-            })
+            }).then((res) => {
+            const token = res.data.token
+            this.authStore.setToken(token)
+            return token
+        })
     }
 
     getUser() {
         return axios.get('/users/getuser').then((response) => {
-            console.log("getUser: ", response)
             return response.data.id
         }).catch((e) => {
             console.log(e)
@@ -59,14 +88,12 @@ class HttpService {
     }
 
     getTradeItem(id) {
-
-        return axios.get('/trade/detail?id=' + id).then((response)=>{
+        return axios.get('/trade/detail?id=' + id).then((response) => {
             return response.data
         })
     }
 
     createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id) {
-
         return axios.post(('/trade/create/'),
             {
                 selltoken: sellcoinselectd,
@@ -95,19 +122,21 @@ class HttpService {
                 method: Sortname,
                 order: Iconbool
             }
-        }).then((res)=>{
+        }).then((res) => {
             return res
         })
     }
 
-    changePassword(email, password, newPassword){
+    changePassword(email, password, newPassword) {
         return axios.post((baseURL + '/pwd/change'),
             {
                 email,
                 password,
                 newPassword
-            }).then((res)=>{
-                return res
+            }).then((res) => {
+            this.authStore.deleteToken()
+            Router.push('/user/login')
+            return res
         })
     }
 
@@ -135,7 +164,7 @@ class HttpService {
         })
     }
 
-    myPageGetUser(user){
+    myPageGetUser(user) {
         return axios.get('/mypage/user', {
             params: {
                 id: user
@@ -143,7 +172,7 @@ class HttpService {
         })
     }
 
-    myPageGetWallet(data){
+    myPageGetWallet(data) {
         return axios.get('/mypage/wallet', {
             params: {
                 id: data
@@ -156,6 +185,18 @@ class HttpService {
             params: {
                 id: data
             }
+        })
+    }
+
+    onRegisterClick(name, email, password){
+        return axios.post(('/users/create/'),
+            {
+                email,
+                name,
+                password
+            })
+            .then((response) => {
+            Router.push('/user/emailcheck/');
         })
     }
 

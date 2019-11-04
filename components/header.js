@@ -1,6 +1,7 @@
 import React, {useContext,useState, useEffect} from 'react'
 import {Menu} from 'semantic-ui-react'
 import Link from 'next/link'
+<<<<<<< HEAD
 import {AuthStoreContext} from "../store/AuthStroe"
 import Router from "next/router"
 import { observable, computed, action, decorate } from 'mobx'
@@ -16,6 +17,15 @@ const Header = ({alarm}) => {
         var socket =io.connect(baseURL, {'reconnect': true, 'resourse': 'socket.io'})
         socket.disconnect()
         AuthStore.deleteToken()
+=======
+import {HttpServiceContext} from "../store/HttpService"
+
+const Header = ({alarm}) => {
+    const HttpService = useContext(HttpServiceContext)
+    
+    const logout = () => {
+        HttpService.authStore.deleteToken()
+>>>>>>> ba0e832c7c3f614575dab3faa5ebcec7e34d73e3
     }
    
         return (
@@ -24,18 +34,18 @@ const Header = ({alarm}) => {
                 <Menu.Item key="Exchage"><Link href="/trade/list"><a>Trade</a></Link></Menu.Item>
                 <Menu.Item key="QnA"><Link href="/QnA/detail"><a>Q&A</a></Link></Menu.Item>
                 {
-                    !AuthStore.isLoggedIn ?
+                    !HttpService.authStore.isLoggedIn ?
                      <Menu.Item key="login"><Link href="/user/login"><a>Login</a></Link></Menu.Item>
                         :<Menu.Item key="logout" onClick = {() => logout()}><a>Logout</a></Menu.Item>
 
                 }
                 {
-                    AuthStore.isLoggedIn ?
+                    HttpService.authStore.isLoggedIn ?
                         <Menu.Item key="My Page"><Link href="/user/mypage"><a>My Page</a></Link></Menu.Item>
                         :<></>
                 }
                 {
-                    AuthStore.isLoggedIn ?
+                    HttpService.authStore.isLoggedIn ?
                         <Menu.Item key="alarm"><Link href="/alarm"><a>Alarm {alarm}</a></Link></Menu.Item>
                         :<></>
                 }

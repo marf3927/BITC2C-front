@@ -3,13 +3,13 @@ import Router from 'next/router'
 import {Button, Input} from 'semantic-ui-react'
 import axios from 'axios'
 import AppLayout from '../../components/AppLayout';
-import {AuthStoreContext} from "../../store/AuthStroe"
+
+import {HttpServiceContext} from "../../store/HttpService"
 
 
 
 const Register = () =>{
-    const AuthStore = useContext(AuthStoreContext)
-    const baseURL = AuthStore.baseURL
+    const HttpService = useContext(HttpServiceContext)
 
     const [name, setName] = useState('') //유저 이름 변수
     const [email, setEmail] = useState('') //유저 이메일 변수
@@ -137,15 +137,10 @@ const Register = () =>{
 
     //regiser 보내기
     function onRegisterClick(name, email, password){
-        return axios.post((baseURL+'/users/create/'),
-        {   
-            email,
-            name,
-            password
-        })
-        .then((response) => {
-            Router.push('/user/emailcheck/');
-        })
+        HttpService.onRegisterClick(name, email, password)
+            .catch((e)=>{
+                console.log(e)
+            })
     }
 
     return (

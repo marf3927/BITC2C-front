@@ -2,16 +2,12 @@ import React, { useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
 import { Button, Table, Input, Icon, Tab } from 'semantic-ui-react'
-import axios from 'axios'
 import Router from "next/router"
 import {Cookies} from 'react-cookie';
-import { AuthStoreContext } from "../../store/AuthStroe"
 import { HttpServiceContext } from "../../store/HttpService"
 
 const Mypage = () => {
-    const AuthStore = useContext(AuthStoreContext)
     const HttpService = useContext(HttpServiceContext)
-    const baseURL = AuthStore.baseURL
 
     const [user, setUser] = useState();
     const [userData, setUserData] = useState();
@@ -70,7 +66,6 @@ const Mypage = () => {
                 });
             });
         });
-
     }
 
     function gotoDetail(itemiD, status, method) {

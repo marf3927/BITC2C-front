@@ -3,15 +3,13 @@ import {useRouter} from 'next/router'
 import AppLayout from '../../components/AppLayout'
 import fetch from 'isomorphic-unfetch'
 import Router from 'next/router'
-import {AuthStoreContext} from "../../store/AuthStroe"
+
 import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 import {HttpServiceContext} from "../../store/HttpService"
 
 
 const Detail = ({id}) => {
-    const AuthStore = useContext(AuthStoreContext)
     const HttpService = useContext(HttpServiceContext)
-    const baseURL = AuthStore.baseURL
 
     const router = useRouter()
 

@@ -3,9 +3,11 @@ import Header from './header'
 import Head from 'next/head'
 import {AuthStoreContext} from "../store/AuthStroe"
 import io from "socket.io-client"
+import {HttpServiceContext} from "../store/HttpService"
 
 
 const AppLayout = ({children}) => {
+<<<<<<< HEAD
     const AuthStore = useContext(AuthStoreContext)
     const baseURL = 'http://localhost:5555'
 <<<<<<< HEAD
@@ -34,6 +36,10 @@ const AppLayout = ({children}) => {
     }, [socketalarm]);
 
 =======
+=======
+    const HttpService = useContext(HttpServiceContext)
+    const baseURL = HttpService.authStore.baseURL
+>>>>>>> ba0e832c7c3f614575dab3faa5ebcec7e34d73e3
     const [socket, setSocket] = useState(io(baseURL))
 
     const [socketalarm, setSocketalarm] = useState([])

@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
-import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
 import { Button, Table, Input, Icon, Tab } from 'semantic-ui-react'
 import axios from 'axios'
 import Router from "next/router"
 import Cookies from 'js-cookie';
-import { AuthStoreContext } from "../../store/AuthStroe"
+import {HttpServiceContext} from "../../store/HttpService"
 
 const Forgot = () => {
-    const AuthStore = useContext(AuthStoreContext)
+    const HttpService = useContext(HttpServiceContext)
     const baseURL = AuthStore.baseURL
 
     const [email, setEmail] = useState('')
@@ -23,7 +22,6 @@ const Forgot = () => {
                 name
             })
             .then((response) => {
-                console.log('forgot ', response.data)
                 Router.push('/user/login')
             }).catch((e) => {
                 setAlert("아이디 또는 비밀번호를 다시 확인하세요.\n 등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.")
