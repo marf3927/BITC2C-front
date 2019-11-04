@@ -7,9 +7,11 @@ const cookies = new Cookies()
 
 class AuthStore{
 
+
     @observable
     baseURL = "http://localhost:5555"
 
+    @observable
     authToken = cookies.get('authToken')
 
     @action
