@@ -11,7 +11,7 @@ class AuthStore {
     baseURL = "http://localhost:5555"
 
     @observable
-    authToken = null
+    authToken = cookies.get('authToken')
 
     @action
     setToken(token) {

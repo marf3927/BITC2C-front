@@ -66,7 +66,6 @@ const Mypage = () => {
                 });
             });
         });
-
     }
 
     function gotoDetail(itemiD, status, method) {
