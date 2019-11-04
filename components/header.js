@@ -1,23 +1,6 @@
 import React, {useContext,useState, useEffect} from 'react'
 import {Menu} from 'semantic-ui-react'
 import Link from 'next/link'
-<<<<<<< HEAD
-import {AuthStoreContext} from "../store/AuthStroe"
-import Router from "next/router"
-import { observable, computed, action, decorate } from 'mobx'
-import io from "socket.io-client"
-
-
-const Header = ({alarm}) => {
-    const AuthStore = useContext(AuthStoreContext)
-    const baseURL = 'http://localhost:5555'
-    const [isLoggedIn, setIslogedIn] = useState(AuthStore.isLoggedIn)
-    
-    const logout = () => {
-        var socket =io.connect(baseURL, {'reconnect': true, 'resourse': 'socket.io'})
-        socket.disconnect()
-        AuthStore.deleteToken()
-=======
 import {HttpServiceContext} from "../store/HttpService"
 
 const Header = ({alarm}) => {
@@ -25,7 +8,6 @@ const Header = ({alarm}) => {
     
     const logout = () => {
         HttpService.authStore.deleteToken()
->>>>>>> ba0e832c7c3f614575dab3faa5ebcec7e34d73e3
     }
    
         return (

@@ -20,22 +20,6 @@ const Login = () => {
 
     function onLoginClick(email, password) {
         HttpService.login(email, password)
-<<<<<<< HEAD
-            .then((response) => {
-                const token = response.data.token
-                cookies.set('authToken', token)
-                HttpService.setting();
-                console.log('onloginclick1')
-                var socket =io.connect(baseURL, {'reconnect': true, 'resourse': 'socket.io'})
-                console.log('onloginclick',socket)
-                socket.on("connect",function(){
-                    console.log("connect success")
-                })
-                socket.emit("client","입력과 출력")
-                Router.push('/')
-            })
-=======
->>>>>>> ba0e832c7c3f614575dab3faa5ebcec7e34d73e3
             .catch((e) => {
             setLogAlert("아이디 또는 비밀번호를 다시 확인하세요.\n 등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.")
         })
