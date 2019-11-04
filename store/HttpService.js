@@ -41,9 +41,9 @@ class HttpService {
         this.authStore = new AuthStore()
 
         axios.defaults.baseURL = 'http://192.168.1.179:5555'
-        axios.defaults.headers.common['authorization'] = 'jwt ' + this.authStore.authToken
+        axios.defaults.headers.common['authorization'] = 'jwt '+ this.authStore.authToken
         reaction(() => this.authStore.authToken, () => {
-            axios.defaults.headers.common['authorization'] = 'jwt' + this.authStore.authToken
+            axios.defaults.headers.common['authorization'] = 'jwt ' + this.authStore.authToken
         })
         axios.interceptors.response.use(response => {
             return response
