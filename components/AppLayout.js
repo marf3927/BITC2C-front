@@ -6,20 +6,15 @@ import {HttpServiceContext} from "../store/HttpService"
 
 
 const AppLayout = ({children}) => {
+
+  
+  
+
     const HttpService = useContext(HttpServiceContext)
     const baseURL = HttpService.authStore.baseURL
-    const [socket, setSocket] = useState(io(baseURL))
 
-    const [socketalarm, setSocketalarm] = useState([])
-    console.log(socket.id)
 
-    if (!socket.id) {
-        socket.on('alarm', ({msg}) => {
-            console.log(socketalarm)
-            const message = msg
-            setSocketalarm([...socketalarm, message])
-        })
-    }
+    
 
     return (
         <>
@@ -31,7 +26,7 @@ const AppLayout = ({children}) => {
                 />
             </Head>
             <div>
-                <Header alarm={socketalarm}/>
+                <Header/>
                 {children}
 
             </div>

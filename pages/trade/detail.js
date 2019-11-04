@@ -41,10 +41,10 @@ const Detail = ({id}) => {
     // console.log(props.location.query);
     function getItems() {
         const id = router.query.id
-        HttpService.getTradeDetail(id)
-            .then((response) => {
-                console.log(response)
-            setItems(response.data)
+        HttpService.getTradeItem(id)
+            .then((data) => {
+                console.log(data)
+            setItems(data)
         })
     }
 

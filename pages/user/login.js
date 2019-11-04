@@ -10,7 +10,7 @@ import {HttpServiceContext} from "../../store/HttpService"
 const Login = () => {
     const HttpService = useContext(HttpServiceContext)
 
-
+    const baseURL = 'http://localhost:5555'
     const cookies = new Cookies()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
