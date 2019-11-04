@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
 import axios from 'axios';
-import {AuthStoreContext} from "../../store/AuthStroe"
 
 import Router,{ useRouter } from 'next/router'
 
@@ -16,8 +15,6 @@ const Purchasedecide = (method)=>{
 
 
 const Exchange = ()=>{
-    const AuthStore = useContext(AuthStoreContext)
-    const baseURL = AuthStore.baseURL
     const router = useRouter();
     
     useEffect(()=>{

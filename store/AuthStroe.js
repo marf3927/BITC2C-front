@@ -35,7 +35,6 @@ class AuthStore{
     get refresh_token() {
         return cookies.get('refreshToken')
     }
-
 }
 
 export const AuthStoreContext = createContext(new AuthStore())

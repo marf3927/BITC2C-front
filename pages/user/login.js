@@ -3,17 +3,11 @@ import Link from 'next/link'
 import {Cookies} from 'react-cookie'
 import AppLayout from '../../components/AppLayout'
 import {Button, Input} from 'semantic-ui-react'
-import Router from "next/router"
-import {AuthStoreContext} from "../../store/AuthStroe"
-import io from "socket.io-client"
-import {observer} from 'mobx-react-lite'
-import Header from "../../components/header"
 import {HttpServiceContext} from "../../store/HttpService"
-import axios from "axios"
+
 
 
 const Login = () => {
-    const AuthStore = useContext(AuthStoreContext)
     const HttpService = useContext(HttpServiceContext)
 
 
@@ -26,18 +20,12 @@ const Login = () => {
 
     function onLoginClick(email, password) {
         HttpService.login(email, password)
-            .then((response) => {
-                const token = response.data.token
-                cookies.set('authToken', token)
-                HttpService.setting();
-                Router.push('/')
-            })
             .catch((e) => {
             setLogAlert("아이디 또는 비밀번호를 다시 확인하세요.\n 등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.")
         })
     }
 
-    if (!AuthStore.isLoggedIn) {
+    if (!HttpService.authStore.isLoggedIn) {
         return (
             <>
                 <AppLayout>
