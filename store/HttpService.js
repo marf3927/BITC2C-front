@@ -8,7 +8,7 @@ const cookies = new Cookies()
 
 class AuthStore {
 
-    baseURL = "http://192.168.1.179:5555"
+    baseURL = "http://localhost:5555"
 
     @observable
     authToken = cookies.get('authToken')
@@ -40,7 +40,7 @@ class HttpService {
     constructor() {
         this.authStore = new AuthStore()
 
-        axios.defaults.baseURL = 'http://192.168.1.179:5555'
+        axios.defaults.baseURL = this.authStore.baseURL
         axios.defaults.headers.common['authorization'] = 'jwt '+ this.authStore.authToken
         reaction(() => this.authStore.authToken, () => {
             axios.defaults.headers.common['authorization'] = 'jwt ' + this.authStore.authToken
@@ -189,15 +189,26 @@ class HttpService {
     }
 
     onRegisterClick(name, email, password){
-        return axios.post(('/users/create/'),
+        return axios.post(('/users/create'),
             {
                 email,
                 name,
                 password
             })
             .then((response) => {
-            Router.push('/user/emailcheck/');
+            Router.push('/user/emailcheck');
         })
+    }
+
+    forgotPwd(name, email){
+        return axios.post(('/pwd/forgot/'),
+            {
+                email,
+                name
+            })
+            .then((response) => {
+                Router.push('/user/login')
+            })
     }
 
 }

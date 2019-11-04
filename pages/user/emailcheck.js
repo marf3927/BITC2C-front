@@ -5,7 +5,6 @@ const Emailcheck = () => {
 
     return (
         <>
-
             <AppLayout>
                 <div>
                     Email을 확인해 주세요!
