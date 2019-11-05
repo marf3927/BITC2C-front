@@ -6,8 +6,6 @@ class SocketIo {
     constructor() {
         this.socket = io('http://localhost:5555')
         this.socket.connect
-
-
     }
 }
 

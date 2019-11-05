@@ -3,8 +3,23 @@ import axios from 'axios'
 import Router from "next/router"
 import {action, computed, observable, reaction} from 'mobx'
 import {Cookies} from "react-cookie"
+import io from 'socket.io-client'
 
 const cookies = new Cookies()
+
+class SocketIo {
+    socket = ""
+
+    constructor() {
+        this.socket = io.connect('http://localhost:5555')
+    }
+
+    get_socket() {
+        return this.socket
+    }
+
+
+}
 
 class AuthStore {
 
@@ -36,12 +51,13 @@ class AuthStore {
     }
 }
 
+
 class HttpService {
     constructor() {
         this.authStore = new AuthStore()
-
+        this.socket = new SocketIo()
         axios.defaults.baseURL = this.authStore.baseURL
-        axios.defaults.headers.common['authorization'] = 'jwt '+ this.authStore.authToken
+        axios.defaults.headers.common['authorization'] = 'jwt ' + this.authStore.authToken
         reaction(() => this.authStore.authToken, () => {
             axios.defaults.headers.common['authorization'] = 'jwt ' + this.authStore.authToken
         })
@@ -51,12 +67,11 @@ class HttpService {
             const {config} = originalError
             if (originalError.response.data === 'jwt expired') {
                 cookies.remove('authToken')
-                alert('로그인 세션이 만료되었습니다. ')
                 Router.push('/user/login')
+                alert('로그인 세션이 만료되었습니다. ')
             }
             return Promise.reject(originalError)
         })
-
     }
 
     // setting() {
@@ -74,6 +89,11 @@ class HttpService {
             }).then((res) => {
             const token = res.data.token
             this.authStore.setToken(token)
+            this.socket.get_socket().emit('alarm', "dongwan")
+            console.log('asdfsadf')
+            this.socket.get_socket().on('alarm', (data) => {
+                console.log(data)
+            })
             return token
         })
     }
@@ -188,7 +208,7 @@ class HttpService {
         })
     }
 
-    onRegisterClick(name, email, password){
+    onRegisterClick(name, email, password) {
         return axios.post(('/users/create'),
             {
                 email,
@@ -196,11 +216,11 @@ class HttpService {
                 password
             })
             .then((response) => {
-            Router.push('/user/emailcheck');
-        })
+                Router.push('/user/emailcheck')
+            })
     }
 
-    forgotPwd(name, email){
+    forgotPwd(name, email) {
         return axios.post(('/pwd/forgot/'),
             {
                 email,
@@ -210,7 +230,6 @@ class HttpService {
                 Router.push('/user/login')
             })
     }
-
 }
 
 export const HttpServiceContext = createContext(new HttpService())

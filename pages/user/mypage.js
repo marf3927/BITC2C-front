@@ -67,7 +67,12 @@ const Mypage = () => {
             });
         });
     }
-
+    const alarm = () =>{
+        HttpService.socket.get_socket().emit('alarm',"dongwankim")
+        HttpService.socket.get_socket().on('alarm',data=>{
+            console.log(data);
+        })
+    }
     function gotoDetail(itemiD, status, method) {
         const itemID = itemiD;
         const statusCode = status
@@ -186,7 +191,8 @@ const Mypage = () => {
                         <Link href="/user/changepwd"><a>비밀번호 변경</a></Link>
                     </div>
                     <div>
-                        <button></button>
+
+                        <button onClick={()=>alarm()}>test</button>
                     </div>
                 </div>
             </AppLayout>

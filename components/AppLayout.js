@@ -1,20 +1,16 @@
 import React, {useContext, useState, useEffect} from 'react'
 import Header from './header'
 import Head from 'next/head'
-import io from "socket.io-client"
 import {HttpServiceContext} from "../store/HttpService"
 
 
 const AppLayout = ({children}) => {
-
-  
-  
-
     const HttpService = useContext(HttpServiceContext)
-    const baseURL = HttpService.authStore.baseURL
+    const [alarm, setAlarm] = useState(null)
 
-
-    
+    HttpService.socket.get_socket().on("alarm", (data)=>{
+        setAlarm(data)
+    })
 
     return (
         <>
@@ -26,7 +22,7 @@ const AppLayout = ({children}) => {
                 />
             </Head>
             <div>
-                <Header/>
+                <Header alarm={alarm}/>
                 {children}
 
             </div>
