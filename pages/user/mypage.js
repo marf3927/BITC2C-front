@@ -96,6 +96,12 @@ const Mypage = () => {
         }
 
     }
+    function Balanceinquiry(address){
+        HttpService.myPageGetBalance(address).then((res)=>{
+            console.log(res);
+            }
+        )
+    }
 
     return (
         <>
@@ -143,7 +149,7 @@ const Mypage = () => {
                                                         return <Table.Row key={data.id}>
                                                             <Table.Cell>{data.type}</Table.Cell>
                                                             <Table.Cell>{data.address}</Table.Cell>
-                                                            <Table.Cell>{data.amount}</Table.Cell>
+                                                            <Table.Cell></Table.Cell>
                                                         </Table.Row>
 
                                                     })}

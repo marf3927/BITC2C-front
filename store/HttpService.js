@@ -233,7 +233,13 @@ class HttpService {
             }
         })
     }
-
+    myPageGetBalance(addr){
+        return axios.get('/mypage/getbalance',{
+            params:{
+                address :addr
+            }
+        })
+    }
     onRegisterClick(name, email, password) {
 
             axios.post(('/users/create'),
