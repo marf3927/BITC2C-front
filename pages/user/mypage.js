@@ -13,6 +13,7 @@ const Mypage = () => {
     const [userData, setUserData] = useState();
     const [wallets, setWallets] = useState([]);
     const [boards, setBoards] = useState([]);
+    const [walletsamount,setwalletsamount] = useState([[,]]);
 
     const cookies = new Cookies()
 
@@ -45,7 +46,7 @@ const Mypage = () => {
 
     useEffect(() => {
         console.log("userData: ", userData)
-    }, [userData])
+    }, [userData,walletsamount])
 
 
     function getItems() {
@@ -73,6 +74,21 @@ const Mypage = () => {
             console.log(data);
         })
     }
+    function dictionaryfunc(type) {
+
+
+        for(let i=0;i<walletsamount.length;i++){
+            if(walletsamount[i][0]===type){
+                console.log('dictionnay func type',type)
+                console.log('dictionary func',walletsamount[i][0])
+                return walletsamount[i][0]
+            }else{
+                return
+            }
+
+        }
+    }
+    
     function gotoDetail(itemiD, status, method) {
         const itemID = itemiD;
         const statusCode = status
@@ -96,11 +112,17 @@ const Mypage = () => {
         }
 
     }
-    function Balanceinquiry(address){
+    function Balanceinquiry(address,id){
+        document.getElementById('button-'+id).remove()
         HttpService.myPageGetBalance(address).then((res)=>{
-            console.log(res);
+            console.log('res data ====',res.data);
+           document.getElementById('label-'+id).innerHTML=res.data;
+
             }
+
+
         )
+
     }
 
     return (
@@ -149,7 +171,10 @@ const Mypage = () => {
                                                         return <Table.Row key={data.id}>
                                                             <Table.Cell>{data.type}</Table.Cell>
                                                             <Table.Cell>{data.address}</Table.Cell>
-                                                            <Table.Cell></Table.Cell>
+
+                                                            <Table.Cell><button id={"button-"+data.id} onClick={()=>Balanceinquiry(data.address,data.id)}>잔액조회</button><label id={'label-'+data.id}></label>
+
+                                                            </Table.Cell>
                                                         </Table.Row>
 
                                                     })}
