@@ -149,7 +149,6 @@ const List = () => {
                         color: rgb(92, 5, 80);
                     }
                 `}</style>
-
                 <div>
                     <Menu compact>
                         <Dropdown text={Sellselected} options={selloption} onChange={onSellSelectChange} simple item/>
