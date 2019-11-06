@@ -79,10 +79,15 @@ class HttpService {
             return response
         }, originalError => {
             const { config } = originalError
-            if (originalError.response.data === 'jwt expired') {
-                cookies.remove('authToken')
-                Router.push('/user/login')
-                alert('로그인 세션이 만료되었습니다. ')
+            try{
+                if (originalError.response.data === 'jwt expired') {
+                    cookies.remove('authToken')
+                    Router.push('/user/login')
+                    return alert('로그인 세션이 만료되었습니다. ')
+                }
+            }
+            catch (e) {
+                return Promise.reject(originalError)
             }
             return Promise.reject(originalError)
         })
@@ -230,15 +235,21 @@ class HttpService {
     }
 
     onRegisterClick(name, email, password) {
-        return axios.post(('/users/create'),
-            {
-                email,
-                name,
-                password
+
+            axios.post(('/users/create'),
+                {
+                    email,
+                    name,
+                    password,
+
+                })
+                .then((response) => {
+                    Router.push('/user/emailcheck')
+                }).catch((e)=>{
+                    console.log(e)
             })
-            .then((response) => {
-                Router.push('/user/emailcheck')
-            })
+
+
     }
 
     forgotPwd(name, email) {
