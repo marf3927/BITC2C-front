@@ -96,11 +96,14 @@ const Detail = ({id}) => {
         else {
             opponentID = items.sellerId
         }
+
         var tradeData = {
             opponentID: opponentID,
-            userId: userId
+            userId: userId,
+            tableId: Router.query.tableid
         };
-        console.log("opponentID: ", opponentID, " MYID: ", userId)
+
+        console.log("opponentID: ", opponentID, " MYID: ", userId, " tableId: ", Router.query.tableid)
         HttpService.socket.get_socket().emit('trading', (tradeData))
     }
 
@@ -111,6 +114,8 @@ const Detail = ({id}) => {
                 <div className="ui two column centered grid">
                     <form className="ui fluid form">
                         <div className="field">
+
+
                         </div>
 
                         <div className="field">
@@ -179,9 +184,9 @@ const Detail = ({id}) => {
     )
 }
 
-// Detail.getInitialProps = async ({req}) => {
-//     const res = await fetch('http://192.168.1.173:3000/trade/list')
-//     return {id: res}
-// }
+Detail.getInitialProps = async ({req}) => {
+    const res = await fetch('http://192.168.1.173:3000/trade/list')
+    return {id: res}
+}
 
 export default Detail
