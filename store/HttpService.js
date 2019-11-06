@@ -234,21 +234,20 @@ class HttpService {
     }
 
     onRegisterClick(name, email, password) {
-        return axios.post(('/web3/createwallet'),{
-            password
-        }).then((res)=>{
-            const wallet=res.data;
+
             axios.post(('/users/create'),
                 {
                     email,
                     name,
                     password,
-                    wallet
+
                 })
                 .then((response) => {
                     Router.push('/user/emailcheck')
-                })
-        })
+                }).catch((e)=>{
+                    console.log(e)
+            })
+
 
     }
 

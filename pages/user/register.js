@@ -140,9 +140,7 @@ const Register = () =>{
     //regiser 보내기
     function onRegisterClick(name, email, password){
         HttpService.onRegisterClick(name, email, password)
-            .catch((e)=>{
-                console.log(e)
-            })
+
     }
 
     return (
