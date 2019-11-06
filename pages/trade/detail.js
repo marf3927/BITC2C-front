@@ -93,6 +93,26 @@ const Detail = ({id}) => {
             })
     }
 
+    function tradealarm() {
+
+        console.log("흐하아아아아: ")
+        var opponentID = ''
+        if (!items.sellerId) {
+            opponentID = items.buyerId
+        }
+        else {
+            opponentID = items.sellerId
+        }
+
+        var tradeData = {
+            opponentID: opponentID,
+            userId: userId
+        };
+
+        console.log("opponentID: ", opponentID, " MYID: ", userId)
+        HttpService.socket.get_socket().emit('trading', (tradeData))
+    }
+
     return (
 
         <>
@@ -159,6 +179,11 @@ const Detail = ({id}) => {
                             BUY
                         </button>}
 
+                    </div>
+                    <div>
+                        <Button onClick={() => tradealarm()}>
+                            test
+                            </Button>
                     </div>
                 </div>
 

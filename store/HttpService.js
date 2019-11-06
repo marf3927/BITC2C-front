@@ -1,8 +1,8 @@
-import {createContext, useContext} from "react"
+import { createContext, useContext } from "react"
 import axios from 'axios'
 import Router from "next/router"
-import {action, computed, observable, reaction} from 'mobx'
-import {Cookies} from "react-cookie"
+import { action, computed, observable, reaction } from 'mobx'
+import { Cookies } from "react-cookie"
 import io from 'socket.io-client'
 
 const cookies = new Cookies()
@@ -11,7 +11,7 @@ class SocketIo {
     socket = ""
 
     constructor() {
-        this.socket = io.connect('http://192.168.1.173:5555')
+        this.socket = io.connect('http://localhost:5555')
     }
 
     get_socket() {
@@ -19,11 +19,12 @@ class SocketIo {
     }
 
 
+
 }
 
 class AuthStore {
 
-    baseURL = "http://192.168.1.173:5555"
+    baseURL = "http://localhost:5555"
 
     @observable
     authToken = cookies.get('authToken')
@@ -53,9 +54,22 @@ class AuthStore {
 
 
 class HttpService {
+
+
     constructor() {
         this.authStore = new AuthStore()
         this.socket = new SocketIo()
+
+        if (this.authStore.authToken != undefined) {
+
+            this.getUser().then((userid) => {
+                console.log("userid: ", userid)
+                this.socket.get_socket().emit('storeClientInfo', userid);
+
+            });
+
+        }
+
         axios.defaults.baseURL = this.authStore.baseURL
         axios.defaults.headers.common['authorization'] = 'jwt ' + this.authStore.authToken
         reaction(() => this.authStore.authToken, () => {
@@ -64,7 +78,7 @@ class HttpService {
         axios.interceptors.response.use(response => {
             return response
         }, originalError => {
-            const {config} = originalError
+            const { config } = originalError
             if (originalError.response.data === 'jwt expired') {
                 cookies.remove('authToken')
                 Router.push('/user/login')
@@ -80,24 +94,6 @@ class HttpService {
     //         axios.defaults.headers.common['token'] = this.authToken
     //     })
     // }
-
-    login(email, password) {
-        return axios.post(('/users/login/'),
-            {
-                email,
-                password
-            }).then((res) => {
-            const token = res.data.token
-            this.authStore.setToken(token)
-            this.socket.get_socket().emit('alarm', "dongwan")
-            console.log('asdfsadf')
-            this.socket.get_socket().on('alarm', (data) => {
-                console.log(data)
-            })
-            return token
-        })
-    }
-
     getUser() {
         return axios.get('/users/getuser').then((response) => {
             return response.data.id
@@ -106,6 +102,31 @@ class HttpService {
             return e
         })
     }
+
+    login(email, password) {
+        return axios.post(('/users/login/'),
+            {
+                email,
+                password
+            }).then((res) => {
+                const token = res.data.token
+                this.authStore.setToken(token)
+
+                this.getUser().then((userid) => {
+                    console.log("userid: ", userid)
+                    this.socket.get_socket().emit('storeClientInfo', userid);
+
+                });
+
+
+
+
+
+                return token
+            })
+    }
+
+
 
     getTradeItem(id) {
         return axios.get('/trade/detail?id=' + id).then((response) => {
@@ -126,13 +147,12 @@ class HttpService {
             })
     }
 
-    goToTrade(id,paramuserid) {
-        console.log("httpservice gototrade")
+    goToTrade(id) {
         return axios.post('/trade/exchange', {
-            id: id,
-            userid : paramuserid
+            id: id
+        }).then((res) => {
+            return res
         })
-
     }
 
     getTradeList(page, Sellselected, Buyselected, Sortname, Iconbool) {
@@ -155,10 +175,10 @@ class HttpService {
                 password,
                 newPassword
             }).then((res) => {
-            this.authStore.deleteToken()
-            Router.push('/user/login')
-            return res
-        })
+                this.authStore.deleteToken()
+                Router.push('/user/login')
+                return res
+            })
     }
 
     sortItems(level, method) {
@@ -171,7 +191,19 @@ class HttpService {
     }
 
 
-
+    goToTrade() {
+        return axios.post('/trade/exchange', {
+            token, id
+        }).then((data) => {
+            console.log('goto tarde', data.data)
+            Router.push({
+                pathname: '/trade/exchange',
+                query: { name: data.data }
+            }
+                , '/exchange'
+            )
+        })
+    }
 
     myPageGetUser(user) {
         return axios.get('/mypage/user', {
