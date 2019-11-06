@@ -31,6 +31,7 @@ class AuthStore {
 
     @action
     setToken(token) {
+        cookies.remove('authToken')
         this.authToken = token
         cookies.set('authToken', token)
         Router.push('/')
@@ -61,7 +62,6 @@ class HttpService {
         this.socket = new SocketIo()
 
         if (this.authStore.authToken != undefined) {
-
             this.getUser().then((userid) => {
                 console.log("userid: ", userid)
                 this.socket.get_socket().emit('storeClientInfo', userid);

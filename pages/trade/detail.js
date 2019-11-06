@@ -20,7 +20,6 @@ const Detail = ({id}) => {
     useEffect(() => {
         getUser()
         getItems()
-        console.log('asdfasdf=' ,id)
     }, [])
 
     useEffect(()=>{
@@ -29,7 +28,6 @@ const Detail = ({id}) => {
 
 
     function confirmAction (message,callback,rejection) {
-        console.log('useConfirm')
         if (confirm(message)) {
             callback()
         } else {
@@ -40,10 +38,8 @@ const Detail = ({id}) => {
     // console.log(props.location.query);
     function getItems() {
         const id = Router.query.tableid
-        console.log('id = ??',id)
         HttpService.getTradeItem(id)
             .then((data) => {
-                console.log(data)
             setItems(data)
         })
     }
@@ -72,7 +68,6 @@ const Detail = ({id}) => {
             console.log('user usermatch in')
             return true
         }
-
         return false
     }
 
@@ -120,16 +115,12 @@ const Detail = ({id}) => {
                 <div className="ui two column centered grid">
                     <form className="ui fluid form">
                         <div className="field">
-                            <img className="ui medium circular image" src="/images/eth.png"/>
 
 
                         </div>
 
                         <div className="field">
-                            {console.log('selltoken1 = ',items.selltoken)}
-                            {items.selltoken===undefined ? "" : ""}
-
-                            {console.log("asdreturn")}
+                            <label>sellToken : {items.selltoken}</label>
                         </div>
                         <div className="ui divider"></div>
                         <div className="field">
@@ -193,7 +184,6 @@ const Detail = ({id}) => {
         </>
     )
 }
-
 
 Detail.getInitialProps = async ({req}) => {
     const res = await fetch('http://192.168.1.173:3000/trade/list')

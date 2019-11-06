@@ -64,15 +64,17 @@ const List = () => {
     }
 
     function gotoDetail(itemiD, status, method) {
+
+        console.log('click')
         const itemID = itemiD
         const statusCode = status
         // const method = method
         //진행상황이 0 이면 detail 페이지로 1이면 excahnge 페이지로
         if (statusCode === 0) {
-            Router.push('/trade/detail?tableid='+itemID
-
-            )
+            console.log('ssss')
+            Router.push('/trade/detail?tableid='+itemID)
         } else if (statusCode === 1) {
+            console.log('nnnnn')
             Router.push({
                     pathname: '/trade/exchange',
                     query: {name: method}
