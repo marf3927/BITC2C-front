@@ -19,7 +19,6 @@ class SocketIo {
     }
 
 
-
 }
 
 class AuthStore {
