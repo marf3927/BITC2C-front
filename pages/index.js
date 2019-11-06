@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import AppLayout from '../components/AppLayout';
-import Chart from '../module/chart'
+import Chart from '../components/tradeMain/chart'
 
 
 

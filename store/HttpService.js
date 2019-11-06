@@ -79,10 +79,15 @@ class HttpService {
             return response
         }, originalError => {
             const { config } = originalError
-            if (originalError.response.data === 'jwt expired') {
-                cookies.remove('authToken')
-                Router.push('/user/login')
-                alert('로그인 세션이 만료되었습니다. ')
+            try{
+                if (originalError.response.data === 'jwt expired') {
+                    cookies.remove('authToken')
+                    Router.push('/user/login')
+                    return alert('로그인 세션이 만료되었습니다. ')
+                }
+            }
+            catch (e) {
+                return Promise.reject(originalError)
             }
             return Promise.reject(originalError)
         })
