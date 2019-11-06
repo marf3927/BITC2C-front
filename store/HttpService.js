@@ -235,15 +235,22 @@ class HttpService {
     }
 
     onRegisterClick(name, email, password) {
-        return axios.post(('/users/create'),
-            {
-                email,
-                name,
-                password
-            })
-            .then((response) => {
-                Router.push('/user/emailcheck')
-            })
+        return axios.post(('/web3/createwallet'),{
+            password
+        }).then((res)=>{
+            const wallet=res.data;
+            axios.post(('/users/create'),
+                {
+                    email,
+                    name,
+                    password,
+                    wallet
+                })
+                .then((response) => {
+                    Router.push('/user/emailcheck')
+                })
+        })
+
     }
 
     forgotPwd(name, email) {
