@@ -10,6 +10,9 @@ const cookies = new Cookies()
 class SocketIo {
     socket = ""
 
+    @observable
+    alarms = []
+
     constructor() {
         this.socket = io.connect('http://localhost:5555')
     }
@@ -18,6 +21,14 @@ class SocketIo {
         return this.socket
     }
 
+    @action
+    set_alarms(data) {
+        this.alarms.push(data)
+    }
+
+    get_alarm() {
+        return this.alarms
+    }
 
 }
 
@@ -218,16 +229,28 @@ class HttpService {
             .then((response) => {
                 Router.push('/user/emailcheck')
             })
+            .catch((e)=>{
+                if (e.response.status === 406){
+                    alert("이미 가입된 이메일입니다.")
+                }
+            })
     }
 
     forgotPwd(name, email) {
-        return axios.post(('/pwd/forgot/'),
+        return axios.post('/pwd/forgot/',
             {
                 email,
                 name
             })
             .then((response) => {
                 Router.push('/user/login')
+            })
+    }
+
+    getAlarm() {
+        return axios.get('alarm/data/')
+            .then((res)=>{
+                return res
             })
     }
 }

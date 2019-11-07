@@ -7,10 +7,8 @@ import Router from 'next/router'
 import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 import {HttpServiceContext} from "../../store/HttpService"
 
-
 const Detail = ({id}) => {
     const HttpService = useContext(HttpServiceContext)
-
     const router = useRouter()
 
     const [items, setItems] = useState([])
@@ -143,8 +141,7 @@ const Detail = ({id}) => {
                                     거래현황
                                 </h1> : <button className="ui primary button"
                                                 onClick={useConfirm("거래를 진행하시겠습니까?", () => gotoTrade(), rejection)}>
-                                    BUY
-                                </button>}
+                                    BUY</button>}
 
                             </div>
 

@@ -11,8 +11,8 @@ import {HttpServiceContext} from "../../store/HttpService"
 const Register = () =>{
     const HttpService = useContext(HttpServiceContext)
 
-    const [name, setName] = useState('') //유저 이름 변수
-    const [email, setEmail] = useState('') //유저 이메일 변수
+    const [name, setName] = useState('') //유저 이름
+    const [email, setEmail] = useState('') //유저 이메일
     const [password, setPassword] = useState('') //유저 비밀번호
     const [walletpassword, setwalletPassword] = useState('') //지갑 비밀번호
 
@@ -138,9 +138,6 @@ const Register = () =>{
     //regiser 보내기
     function onRegisterClick(name, email, password){
         HttpService.onRegisterClick(name, email, password)
-            .catch((e)=>{
-                console.log(e)
-            })
     }
 
     return (
