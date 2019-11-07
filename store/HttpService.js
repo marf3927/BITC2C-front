@@ -1,8 +1,8 @@
-import {createContext, useContext} from "react"
+import { createContext, useContext } from "react"
 import axios from 'axios'
 import Router from "next/router"
-import {action, computed, observable, reaction} from 'mobx'
-import {Cookies} from "react-cookie"
+import { action, computed, observable, reaction } from 'mobx'
+import { Cookies } from "react-cookie"
 import io from 'socket.io-client'
 
 const cookies = new Cookies()
@@ -30,6 +30,7 @@ class SocketIo {
         return this.alarms
     }
 
+
 }
 
 class AuthStore {
@@ -41,6 +42,7 @@ class AuthStore {
 
     @action
     setToken(token) {
+        cookies.remove('authToken')
         this.authToken = token
         cookies.set('authToken', token)
         Router.push('/')
@@ -67,6 +69,16 @@ class HttpService {
     constructor() {
         this.authStore = new AuthStore()
         this.socket = new SocketIo()
+
+        if (this.authStore.authToken != undefined) {
+            this.getUser().then((userid) => {
+                console.log("userid: ", userid)
+                this.socket.get_socket().emit('storeClientInfo', userid);
+
+            });
+
+        }
+
         axios.defaults.baseURL = this.authStore.baseURL
         axios.defaults.headers.common['authorization'] = 'jwt ' + this.authStore.authToken
         reaction(() => this.authStore.authToken, () => {
@@ -75,11 +87,16 @@ class HttpService {
         axios.interceptors.response.use(response => {
             return response
         }, originalError => {
-            const {config} = originalError
-            if (originalError.response.data === 'jwt expired') {
-                cookies.remove('authToken')
-                Router.push('/user/login')
-                alert('로그인 세션이 만료되었습니다. ')
+            const { config } = originalError
+            try{
+                if (originalError.response.data === 'jwt expired') {
+                    cookies.remove('authToken')
+                    Router.push('/user/login')
+                    return alert('로그인 세션이 만료되었습니다. ')
+                }
+            }
+            catch (e) {
+                return Promise.reject(originalError)
             }
             return Promise.reject(originalError)
         })
@@ -91,24 +108,6 @@ class HttpService {
     //         axios.defaults.headers.common['token'] = this.authToken
     //     })
     // }
-
-    login(email, password) {
-        return axios.post(('/users/login/'),
-            {
-                email,
-                password
-            }).then((res) => {
-            const token = res.data.token
-            this.authStore.setToken(token)
-            this.socket.get_socket().emit('alarm', "dongwan")
-            console.log('asdfsadf')
-            this.socket.get_socket().on('alarm', (data) => {
-                console.log(data)
-            })
-            return token
-        })
-    }
-
     getUser() {
         return axios.get('/users/getuser').then((response) => {
             return response.data.id
@@ -117,6 +116,31 @@ class HttpService {
             return e
         })
     }
+
+    login(email, password) {
+        return axios.post(('/users/login/'),
+            {
+                email,
+                password
+            }).then((res) => {
+                const token = res.data.token
+                this.authStore.setToken(token)
+
+                this.getUser().then((userid) => {
+                    console.log("userid: ", userid)
+                    this.socket.get_socket().emit('storeClientInfo', userid);
+
+                });
+
+
+
+
+
+                return token
+            })
+    }
+
+
 
     getTradeItem(id) {
         return axios.get('/trade/detail?id=' + id).then((response) => {
@@ -165,10 +189,10 @@ class HttpService {
                 password,
                 newPassword
             }).then((res) => {
-            this.authStore.deleteToken()
-            Router.push('/user/login')
-            return res
-        })
+                this.authStore.deleteToken()
+                Router.push('/user/login')
+                return res
+            })
     }
 
     sortItems(level, method) {
@@ -187,9 +211,9 @@ class HttpService {
         }).then((data) => {
             console.log('goto tarde', data.data)
             Router.push({
-                    pathname: '/trade/exchange',
-                    query: {name: data.data}
-                }
+                pathname: '/trade/exchange',
+                query: { name: data.data }
+            }
                 , '/exchange'
             )
         })
@@ -218,21 +242,26 @@ class HttpService {
             }
         })
     }
-
+    myPageGetBalance(addr){
+        return axios.get('/mypage/getbalance',{
+            params:{
+                address :addr
+            }
+        })
+    }
     onRegisterClick(name, email, password) {
-        return axios.post(('/users/create'),
-            {
-                email,
-                name,
-                password
-            })
-            .then((response) => {
-                Router.push('/user/emailcheck')
-            })
-            .catch((e)=>{
-                if (e.response.status === 406){
-                    alert("이미 가입된 이메일입니다.")
-                }
+
+            axios.post(('/users/create'),
+                {
+                    email,
+                    name,
+                    password,
+
+                })
+                .then((response) => {
+                    Router.push('/user/emailcheck')
+                }).catch((e)=>{
+                    console.log(e)
             })
     }
 

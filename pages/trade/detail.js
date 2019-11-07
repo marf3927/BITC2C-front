@@ -13,35 +13,31 @@ const Detail = ({id}) => {
 
     const [items, setItems] = useState([])
     const [userId, setUserId] = useState()
-
+    const [tableId,settableId] = useState();
     //console.log('asdasd',id);
     useEffect(() => {
-        getItems()
         getUser()
-        console.log(id)
+        getItems()
     }, [])
 
-    const useConfirm = (message = "", callback, rejection) => {
-        if (typeof callback !== "function") {
-            return
-        }
-        const confirmAction = () => {
-            if (confirm(message)) {
-                callback()
-            } else {
-                rejection()
-            }
-        }
+    useEffect(()=>{
 
-        return confirmAction
+    },[,items,userId])
+
+
+    function confirmAction (message,callback,rejection) {
+        if (confirm(message)) {
+            callback()
+        } else {
+            rejection()
+        }
     }
 
     // console.log(props.location.query);
     function getItems() {
-        const id = router.query.id
+        const id = Router.query.tableid
         HttpService.getTradeItem(id)
             .then((data) => {
-                console.log(data)
             setItems(data)
         })
     }
@@ -51,54 +47,79 @@ const Detail = ({id}) => {
         HttpService.getUser()
             .then((id) => {
                 setUserId(id)
-                console.log('item = ', id)
-            })
+                console.log('userid = ', id)
+            }).catch((e)=>{
+            console.log(e);
+        })
     }
 
 
     //글쓴이가 아닌 사람이 글을 눌렀을때 버튼이 활성화 할지 확인하는 함수
     function usermatch() {
         console.log('usermatch//')
-        console.log(items)
-        if (userId === items.sellerId || items.buyerId) {
-            return false
-        }
+        let error = new Error()
 
-        return true
+        console.log('userId ==',userId , 'usertype',typeof(userId))
+
+        console.log('item seller id=',items.sellerId ,' items.sellerId',typeof(items.sellerId))
+        if (userId === Number(items.sellerId) || typeof(userId)==='object' ) {
+            console.log('user usermatch in')
+            return true
+        }
+        return false
     }
 
     const rejection = () => console.log("fail")
 
     // console.log(props.key);
-    function goToTrade() {
-        const {id} = router.query
-        console.log(token)
-        // const token = Cookies.get('logintoken');
-        //console.log('token = ',token);
-        HttpService.goToTrade(id)
-            .then((data) => {
-                console.log('goto tarde', data.data)
-                Router.push({
-                        pathname: '/trade/exchange',
-                        query: {name: data.data}
-                    }
-                    , '/exchange'
-                )
+    function gotoTrade() {
+        const id = Router.query.tableid
+        const paramuserid = userId
+        console.log('gotoTrade',id);
+        HttpService.goToTrade(id,paramuserid)
+            .then((res) => {
+            console.log("thentnenth",res)
+            Router.push('/trade/exchange')
+        })
+            .catch((e)=>{
+                console.log(e);
             })
     }
 
+    function tradealarm() {
+
+        console.log("흐하아아아아: ")
+        var opponentID = ''
+        if (!items.sellerId) {
+            opponentID = items.buyerId
+        }
+        else {
+            opponentID = items.sellerId
+        }
+
+        var tradeData = {
+            opponentID: opponentID,
+            userId: userId,
+            tableId: Router.query.tableid
+        };
+
+        console.log("opponentID: ", opponentID, " MYID: ", userId, " tableId: ", Router.query.tableid)
+        HttpService.socket.get_socket().emit('trading', (tradeData))
+    }
+
     return (
+
         <>
             <AppLayout>
                 <div className="ui two column centered grid">
                     <form className="ui fluid form">
                         <div className="field">
-                            <img className="ui medium circular image" src="/images/eth.png"/>
+
 
                         </div>
-                        <div className="field">
-                            <label>selltoken : {items.selltoken}</label>
 
+                        <div className="field">
+                            <label>sellToken : {items.selltoken}</label>
                         </div>
                         <div className="ui divider"></div>
                         <div className="field">
@@ -136,18 +157,24 @@ const Detail = ({id}) => {
                             <input type="password"/>
                         </div>
                         <div className="four column centered row">
-                            <div className="column">
-                                {usermatch() ? <h1>
-                                    거래현황
-                                </h1> : <button className="ui primary button"
-                                                onClick={useConfirm("거래를 진행하시겠습니까?", () => gotoTrade(), rejection)}>
-                                    BUY</button>}
 
-                            </div>
 
                         </div>
                     </form>
+                    <div className="column">
+                        {usermatch() ? <h1>
+                            거래현황
+                        </h1> : <button className="ui primary button"
+                                        onClick={()=>confirmAction("거래를 진행하시겠습니까?",gotoTrade, rejection)}>
+                            BUY
+                        </button>}
 
+                    </div>
+                    <div>
+                        <Button onClick={() => tradealarm()}>
+                            test
+                            </Button>
+                    </div>
                 </div>
 
 
@@ -157,10 +184,9 @@ const Detail = ({id}) => {
     )
 }
 
-
-Detail.getInitialProps = async ({req}) => {
-    const res = await fetch('http://localhost:3000/trade/list')
-    return {id: res}
-}
+// Detail.getInitialProps = async ({req}) => {
+//     const res = await fetch('http://192.168.1.173:3000/trade/list')
+//     return {id: res}
+// }
 
 export default Detail

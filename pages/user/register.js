@@ -33,6 +33,8 @@ const Register = () =>{
     const [walletpasswordCheckValid, setwalletPasswordCheckValid] = useState(false)//지갑 비밀번호 재입력 확인
     const [walletpasswordCheckValidTxt, setwalletPasswordCheckValidTxt] = useState('')//지갑 비밀번호 재입력 확인 안내
 
+    const [walletcreateaddr,setwalletcreateaddr] = useState(false);
+    const [walletcreatecheck,setwalletcreatecheck] = useState(false);
 
     //이메일 형식 확인
     function validateEmail(email) {
@@ -116,28 +118,28 @@ const Register = () =>{
     },[email]);
 
     useEffect(() => {
-        if(setEmailValid&&passwordCheckValid&&passwordValid&&name){
+        if(setEmailValid&&passwordCheckValid&&passwordValid&&name&&!walletcreatecheck){
             document.getElementById("registbtn").disabled = false;
         } else{
             document.getElementById("registbtn").disabled = true;
         }
     },[setEmailValid, passwordValid, passwordCheckValid, name]);
     //wallet 보내기
-    function onwalletRegisterClick(walletpassword){
-        return axios.post((baseURL+'/web3/create/'),
-        {   
-            walletpassword
-        })
-        .then((response) => {
-            console.log(response)
-            console.log("지갑생성 완료")
-        })
-    }
+    // function onwalletRegisterClick(walletpassword){
+    //     HttpService.onwalletRegisterClick(walletpassword).then((res)=>{
+    //         console.log(res.data);
+    //         setwalletcreateaddr(res.data);
+    //         setwalletcreatecheck(true);
+    //     }).catch((e)=>{
+    //         console.log(e);
+    //     })
+    // }
 
 
     //regiser 보내기
     function onRegisterClick(name, email, password){
         HttpService.onRegisterClick(name, email, password)
+
     }
 
     return (
@@ -160,22 +162,23 @@ const Register = () =>{
                         <Input type="password" onChange={e => setPasswordCheck(e.target.value)} name="passCheck" placeholder="Password Check" />
                         <a>{passwordCheckValidTxt}</a>
                     </div>
+                    {/*<div >*/}
+                    {/*    <label>지갑생성</label>*/}
+                    {/*</div>*/}
+                    {/*<div >*/}
+                    {/*    <Input type="password" onChange={e => setwalletPassword(e.target.value)} name="pass" placeholder="Password" />*/}
+                    {/*    <a>{walletpasswordValidTxt}</a>*/}
+                    {/*</div>*/}
+                    {/*<div >*/}
+                    {/*    <Input type="password" onChange={e => setwalletPasswordCheck(e.target.value)} name="passCheck" placeholder="Password Check" />*/}
+                    {/*    <a>{walletpasswordCheckValidTxt}</a>*/}
+                    {/*</div>*/}
+                    {/*{walletcreatecheck ? <div>{walletcreateaddr}</div> :""}*/}
+
                     <div >
-                        <label>지갑생성</label>
-                    </div>
-                    <div >
-                        <Input type="password" onChange={e => setwalletPassword(e.target.value)} name="pass" placeholder="Password" />
-                        <a>{walletpasswordValidTxt}</a>
-                    </div>
-                    <div >
-                        <Input type="password" onChange={e => setwalletPasswordCheck(e.target.value)} name="passCheck" placeholder="Password Check" />
-                        <a>{walletpasswordCheckValidTxt}</a>
-                    </div>
-                   
-                    <div >
-                    <Button id='walletregist' onClick={() => onwalletRegisterClick(walletpassword)}>
-                            지갑 생성
-                        </Button>
+                    {/*<Button id='walletregist' onClick={() => onwalletRegisterClick(walletpassword)}>*/}
+                    {/*        지갑 생성*/}
+                    {/*    </Button>*/}
                         <Button id='registbtn' onClick={() => onRegisterClick(name, email, password)}>
                             Register
                         </Button>
