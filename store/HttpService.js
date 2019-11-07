@@ -110,6 +110,7 @@ class HttpService {
     // }
     getUser() {
         return axios.get('/users/getuser').then((response) => {
+            console.log(response)
             return response.data.id
         }).catch((e) => {
             console.log(e)

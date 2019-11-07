@@ -3,7 +3,7 @@ import {Menu} from 'semantic-ui-react'
 import Link from 'next/link'
 import {HttpServiceContext} from "../store/HttpService"
 
-const Header = ({alarm}) => {
+const Header = () => {
     const HttpService = useContext(HttpServiceContext)
     const [alarms, setAlarms] = useState(0)
 
@@ -11,10 +11,15 @@ const Header = ({alarm}) => {
         if(HttpService.authStore.isLoggedIn){
             HttpService.getAlarm()
                 .then((alarms) =>{
-                    setAlarms(alarms.length())
+                    setAlarms(Object.keys(alarms.data).length)
                 })
         }
     }
+
+    HttpService.socket.get_socket().on("alarm", (data)=>{
+        setAlarms(alarms+1)
+    })
+
 
     useEffect(()=>{
         getAlarm()

@@ -38,7 +38,7 @@ const Detail = ({id}) => {
         const id = Router.query.tableid
         HttpService.getTradeItem(id)
             .then((data) => {
-            setItems(data)
+                setItems(data)
         })
     }
 
@@ -87,7 +87,6 @@ const Detail = ({id}) => {
     }
 
     function tradealarm() {
-
         console.log("흐하아아아아: ")
         var opponentID = ''
         if (!items.sellerId) {
