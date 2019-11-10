@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import Router from 'next/router'
-import {Button, Input} from 'semantic-ui-react'
+import {Button, Input ,Dimmer, Loader, Image, Segment} from 'semantic-ui-react'
 import axios from 'axios'
 import AppLayout from '../../components/AppLayout';
 
@@ -36,6 +36,7 @@ const Register = () =>{
     const [walletcreateaddr,setwalletcreateaddr] = useState(false);
     const [walletcreatecheck,setwalletcreatecheck] = useState(false);
 
+    const [registstart,setregiststart] = useState(false);
     //이메일 형식 확인
     function validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -138,14 +139,24 @@ const Register = () =>{
 
     //regiser 보내기
     function onRegisterClick(name, email, password){
+        setregiststart(true);
         HttpService.onRegisterClick(name, email, password)
 
+        
     }
 
     return (
         <>
             <AppLayout>
+            <Segment>
                 <div>
+                
+      <Dimmer active={registstart}>
+        <Loader size='huge'>지갑 생성중</Loader>
+      </Dimmer>
+
+    
+             
                     <h1>Register</h1>
                     <div>
                         <Input type="text" onChange={e => setName(e.target.value)} name="username" placeholder="Name" />
@@ -184,6 +195,7 @@ const Register = () =>{
                         </Button>
                     </div>
                 </div>
+                </Segment>
             </AppLayout>
         </>
     );
