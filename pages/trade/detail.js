@@ -7,11 +7,8 @@ import Router from 'next/router'
 import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 import {HttpServiceContext} from "../../store/HttpService"
 
-
 const Detail = ({id}) => {
     const HttpService = useContext(HttpServiceContext)
-
-    //const router = useRouter()
 
     const [items, setItems] = useState([])
     const [userId, setUserId] = useState()
@@ -40,7 +37,7 @@ const Detail = ({id}) => {
         const id = Router.query.tableid
         HttpService.getTradeItem(id)
             .then((data) => {
-            setItems(data)
+                setItems(data)
         })
     }
 
@@ -184,9 +181,9 @@ const Detail = ({id}) => {
     )
 }
 
-Detail.getInitialProps = async ({req}) => {
-    const res = await fetch('http://192.168.1.173:3000/trade/list')
-    return {id: res}
-}
+// Detail.getInitialProps = async ({req}) => {
+//     const res = await fetch('http://192.168.1.173:3000/trade/list')
+//     return {id: res}
+// }
 
 export default Detail
