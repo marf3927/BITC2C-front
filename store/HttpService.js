@@ -274,16 +274,6 @@ class HttpService {
             })
     }
 
-    getTabledata(tableId) {
-        return axios.get('alarm/tabledata/', {
-            params: {
-                tableId: tableId
-            }
-        })
-            .then((res) => {
-                return res
-            })
-    }
 }
 
 export const HttpServiceContext = createContext(new HttpService())

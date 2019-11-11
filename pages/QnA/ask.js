@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
-import Head from 'next/head';
-import { Cookies } from 'react-cookie';
+import React from 'react';
 import AppLayout from '../../components/AppLayout';
-import { Button, Input, Table } from 'semantic-ui-react'
-import axios from "axios"
-import Router from "next/router"
+import { Button, Input } from 'semantic-ui-react'
+import axios from 'axios'
 
 const Ask = () => {
     function upload(){
-
+        axios.post('http://localhost:3000/QnA',
+            {
+                title: "title",
+                content: "content",
+                username: "username",
+                date: "date"
+            }
+        ).then((response) => {
+            
+        });
     }
 
     return (
@@ -18,7 +23,7 @@ const Ask = () => {
             <div>
                 <h1>질문하기</h1>
                 <div>
-                    <Button>
+                    <Button onClick={upload}>
                         작성완료
                     </Button>
                     <br/>
