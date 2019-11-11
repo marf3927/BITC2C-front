@@ -68,16 +68,13 @@ class HttpService {
     constructor() {
         this.authStore = new AuthStore()
         this.socket = new SocketIo()
-
         if (this.authStore.authToken != undefined) {
             this.getUser().then((userid) => {
                 console.log("userid: ", userid)
                 this.socket.get_socket().emit('storeClientInfo', userid);
-
             });
 
         }
-
         axios.defaults.baseURL = this.authStore.baseURL
         axios.defaults.headers.common['authorization'] = 'jwt ' + this.authStore.authToken
         reaction(() => this.authStore.authToken, () => {
@@ -89,7 +86,7 @@ class HttpService {
             const { config } = originalError
             try{
                 if (originalError.response.data === 'jwt expired') {
-                    cookies.remove('authToken')
+                    cookies.remove('authToken' , {path :  ' / ' })
                     Router.push('/user/login')
                     return alert('로그인 세션이 만료되었습니다. ')
                 }
@@ -101,14 +98,8 @@ class HttpService {
         })
     }
 
-    // setting() {
-    //     axios.defaults.headers.common['authorization'] = 'jwt ' + cookies.get("authToken")
-    //     reaction(() => this.authToken, () => {
-    //         axios.defaults.headers.common['token'] = this.authToken
-    //     })
-    // }
     getUser() {
-        return axios.get('/users/getuser').then((response) => {
+        return axios.get('/users/getuser/').then((response) => {
             console.log(response)
             return response.data.id
         }).catch((e) => {
@@ -125,22 +116,13 @@ class HttpService {
             }).then((res) => {
                 const token = res.data.token
                 this.authStore.setToken(token)
-
                 this.getUser().then((userid) => {
-                    console.log("userid: ", userid)
                     this.socket.get_socket().emit('storeClientInfo', userid);
-
                 });
-
-
-
-
-
-                return token
-            })
+            }).catch((e)=>{
+                console.log(e)
+        })
     }
-
-
 
     getTradeItem(id) {
         return axios.get('/trade/detail?id=' + id).then((response) => {
@@ -149,7 +131,7 @@ class HttpService {
     }
 
     createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id) {
-        return axios.post(('/trade/create/'),
+        return axios.post(('/trade/create'),
             {
                 selltoken: sellcoinselectd,
                 buytoken: buycoinselectd,
@@ -279,7 +261,7 @@ class HttpService {
     }
 
     getAlarm() {
-        return axios.get('alarm/data/')
+        return axios.get('alarm/data')
             .then((res)=>{
                 return res
             })

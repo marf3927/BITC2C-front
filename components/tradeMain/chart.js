@@ -15,16 +15,16 @@ class Chart extends Component {
     let chart = am4core.create("chartdiv", am4charts.XYChart);
 
     chart.paddingRight = 20;
-    chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
+    chart.dateFormatter.inputDateFormat = "yyyy-MM-dd-hh";
 
     // 데이터하드코딩한부분
     let data = [
       {
         "date": "2017-08-01",
         "open": "136.65",
+        "close": "136.49",
         "high": "180.96",
         "low": "134.15",
-        "close": "136.49"
       },
       {
         "date": "2017-08-02",
