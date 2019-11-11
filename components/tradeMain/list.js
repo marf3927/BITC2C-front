@@ -169,6 +169,7 @@ const List = () => {
                         <Dropdown text={Buyselected} options={buyoption} onChange={onBuySelectChange} simple item/>
                     </Menu>
                     <Table singleLine>
+                        
                         <Table.Header>
                             <Table.Row>
                                 <Table.HeaderCell>SELL</Table.HeaderCell>

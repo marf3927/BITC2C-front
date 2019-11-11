@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react'
-import {Menu} from 'semantic-ui-react'
+import {Menu, Icon} from 'semantic-ui-react'
 import Link from 'next/link'
 import {HttpServiceContext} from "../store/HttpService"
 
@@ -47,7 +47,8 @@ const Header = () => {
             }
             {
                 HttpService.authStore.isLoggedIn ?
-                    <Menu.Item key="alarm"><Link href="/alarm"><a>Alarm {alarms}</a></Link></Menu.Item>
+                    // <Menu.Item key="alarm"><Link href="/alarm"><a>Alarm {alarms}</a></Link></Menu.Item>
+                    <Icon name='bell outline'><Link href="/alarm/list"><a> {alarms}</a></Link></Icon>
                     : <></>
             }
         </Menu>
