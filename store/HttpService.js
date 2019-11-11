@@ -10,6 +10,9 @@ const cookies = new Cookies()
 class SocketIo {
     socket = ""
 
+    @observable
+    alarms = []
+
     constructor() {
         this.socket = io.connect('http://localhost:5555')
     }
@@ -18,6 +21,14 @@ class SocketIo {
         return this.socket
     }
 
+    @action
+    set_alarms(data) {
+        this.alarms.push(data)
+    }
+
+    get_alarm() {
+        return this.alarms
+    }
 
 
 }
@@ -55,8 +66,6 @@ class AuthStore {
 
 
 class HttpService {
-
-
     constructor() {
         this.authStore = new AuthStore()
         this.socket = new SocketIo()
@@ -101,6 +110,7 @@ class HttpService {
     // }
     getUser() {
         return axios.get('/users/getuser').then((response) => {
+            console.log(response)
             return response.data.id
         }).catch((e) => {
             console.log(e)
@@ -233,6 +243,7 @@ class HttpService {
             }
         })
     }
+
     myPageGetBalance(addr){
         return axios.get('/mypage/getbalance',{
             params:{
@@ -240,6 +251,7 @@ class HttpService {
             }
         })
     }
+
     onRegisterClick(name, email, password) {
 
             axios.post(('/users/create'),
@@ -254,18 +266,41 @@ class HttpService {
                 }).catch((e)=>{
                     console.log(e)
             })
-
-
     }
 
     forgotPwd(name, email) {
-        return axios.post(('/pwd/forgot/'),
+        return axios.post('/pwd/forgot/',
             {
                 email,
                 name
             })
             .then((response) => {
                 Router.push('/user/login')
+            })
+    }
+
+    getAlarm() {
+        return axios.get('alarm/data/')
+            .then((res)=>{
+                return res
+            })
+    }
+
+    getAlarmlist() {
+        return axios.get('alarm/list/')
+            .then((res) => {
+                return res
+            })
+    }
+
+    getTabledata(tableId) {
+        return axios.get('alarm/tabledata/', {
+            params: {
+                tableId: tableId
+            }
+        })
+            .then((res) => {
+                return res
             })
     }
 }
