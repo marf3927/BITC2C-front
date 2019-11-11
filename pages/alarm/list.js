@@ -9,12 +9,6 @@ const List = () => {
 
     const [items, setItems] = useState([])
 
-    let tablearray=[];
-
-    useEffect(() => {
-        console.log("rendering ", items)
-    }, [items]);
-
     useEffect(() => {
         getItems()
     }, [])
@@ -24,26 +18,9 @@ const List = () => {
             .then((response) => {
                 const data = response.data
                 console.log("zzzzzzzzzzzzzzzzz: " , data);
-                const count = data.length
-
-                for (var ele in data) {
-                    console.log(data[ele].tableId)
-                    HttpService.getTabledata(data[ele].tableId).then((responese) => {
-                        const data2 = responese.data;
-                        // setItems([...items, data2]);
-                        tablearray.push(data2);
-                    })
-                }
-                setItems(tablearray);
-                // HttpService.getTabledata(data.tableId).then((responese) => {
-                //     const data2 = responese.data;
-                //     setItems(data2)
-                // })
+                setItems(data);
             })               
-
     }
-
-    
 
       return (
         <>
@@ -51,9 +28,6 @@ const List = () => {
                 <div>
                     <div className="ui segment active tab">
                         <Table singleLine>
-                            {
-                                  console.log(items)
-                            }
                             <Table.Body>
                                 {items.map((item) => {
                                     return <Table.Row key={item.id} >
@@ -64,7 +38,6 @@ const List = () => {
                                         <Table.Cell>{item.updatedAt}</Table.Cell>
                                         <Table.Cell>{item.Expirydate}</Table.Cell>
                                     </Table.Row>
-
                                 })}
                             </Table.Body>
                         </Table>
