@@ -75,11 +75,7 @@ const List = () => {
             Router.push('/trade/detail?tableid='+itemID)
         } else if (statusCode === 1) {
             console.log('nnnnn')
-            Router.push({
-                    pathname: '/trade/exchange',
-                    query: {name: method}
-                }
-                , '/exchange'
+            Router.push('/trade/exchange'
             )
         } else {
         }
