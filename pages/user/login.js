@@ -10,17 +10,16 @@ import {HttpServiceContext} from "../../store/HttpService"
 const Login = () => {
     const HttpService = useContext(HttpServiceContext)
 
-    const baseURL = 'http://localhost:5555'
-    const cookies = new Cookies()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [logalert, setLogAlert] = useState('')
+    const [logAlert, setLogAlert] = useState('')
 
     //regiser 보내기
 
     function onLoginClick(email, password) {
         HttpService.login(email, password)
             .catch((e) => {
+                console.log(e)
             setLogAlert("아이디 또는 비밀번호를 다시 확인하세요.\n 등록되지 않은 아이디이거나, 아이디 또는 비밀번호를 잘못 입력하셨습니다.")
         })
     }
@@ -41,7 +40,7 @@ const Login = () => {
                                    placeholder="Password"/>
                         </div>
                         <div>
-                            <a>{logalert}</a>
+                            <a>{logAlert}</a>
                         </div>
 
                         <div>

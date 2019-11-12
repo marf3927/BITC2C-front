@@ -19,7 +19,7 @@ const List = () => {
                 const data = response.data
                 console.log("zzzzzzzzzzzzzzzzz: " , data);
                 setItems(data);
-            })               
+            })
     }
 
       return (
@@ -38,6 +38,7 @@ const List = () => {
                                         <Table.Cell>{item.updatedAt}</Table.Cell>
                                         <Table.Cell>{item.Expirydate}</Table.Cell>
                                     </Table.Row>
+
                                 })}
                             </Table.Body>
                         </Table>

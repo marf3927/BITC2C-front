@@ -9,7 +9,6 @@ import {HttpServiceContext} from "../../store/HttpService"
 
 const Detail = ({id}) => {
     const HttpService = useContext(HttpServiceContext)
-    const router = useRouter()
 
     const [items, setItems] = useState([])
     const [userId, setUserId] = useState()
@@ -87,7 +86,6 @@ const Detail = ({id}) => {
     }
 
     function tradealarm() {
-        console.log("흐하아아아아: ")
         var opponentID = ''
         if (!items.sellerId) {
             opponentID = items.buyerId

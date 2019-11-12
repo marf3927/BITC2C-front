@@ -1,38 +1,35 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
-import { Button, Table, Input, Icon, Tab } from 'semantic-ui-react'
+import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
 import Router from "next/router"
-import {Cookies} from 'react-cookie';
-import { HttpServiceContext } from "../../store/HttpService"
+import {Cookies} from 'react-cookie'
+import {HttpServiceContext} from "../../store/HttpService"
 
 const Mypage = () => {
     const HttpService = useContext(HttpServiceContext)
 
-    const [user, setUser] = useState();
-    const [userData, setUserData] = useState();
-    const [wallets, setWallets] = useState([]);
-    const [boards, setBoards] = useState([]);
-    const [walletsamount,setwalletsamount] = useState([[,]]);
+    const [user, setUser] = useState()
+    const [userData, setUserData] = useState()
+    const [wallets, setWallets] = useState([])
+    const [boards, setBoards] = useState([])
+    const [walletsamount, setwalletsamount] = useState([[,]])
+    const [balance, setBalance] = useState([])
 
     const cookies = new Cookies()
 
-    const token = cookies.get("authToken");
+    const token = cookies.get("authToken")
     useEffect(() => {
         getId()
     }, [])
 
     function getId() {
-
         HttpService.getUser().then((userId) => {
             var id = userId
-            console.log('id', id);
-
             if (id) {
-                setUser(id);
-            }
-            else {
-                Router.push('/user/login/');
+                setUser(id)
+            } else {
+                Router.push('/user/login/')
             }
         })
     }
@@ -43,68 +40,50 @@ const Mypage = () => {
         }
     }, [user])
 
-
-    useEffect(() => {
-        console.log("userData: ", userData)
-    }, [userData,walletsamount])
-
-
     function getItems() {
         // user정보 가져오기
         HttpService.myPageGetUser(user).then((data) => {
-            console.log('ID ', data.data.id)
-
             // wallet 정보 가져오기
             HttpService.myPageGetWallet(data.data.id).then((wdata) => {
-                console.log("walletdata: ", wdata);
-
                 // 거래게시판 이용내역 가져오기
                 HttpService.myPageGetTboard(data.data.id).then((board) => {
-                    console.log("boards: ", board.data);
-                    setBoards(board.data);
-                    setWallets(wdata.data);
-                    setUserData(data);
-                });
-            });
-        });
-    }
-    const alarm = () =>{
-        HttpService.socket.get_socket().emit('alarm',"dongwankim")
-        HttpService.socket.get_socket().on('alarm',data=>{
-            console.log(data);
+                    console.log(board.data)
+                    setBoards(board.data)
+                    setWallets(wdata.data)
+                    setUserData(data)
+                })
+            })
         })
     }
+
+
     function dictionaryfunc(type) {
-
-
-        for(let i=0;i<walletsamount.length;i++){
-            if(walletsamount[i][0]===type){
-                console.log('dictionnay func type',type)
-                console.log('dictionary func',walletsamount[i][0])
+        for (let i = 0; i < walletsamount.length; i++) {
+            if (walletsamount[i][0] === type) {
                 return walletsamount[i][0]
-            }else{
+            } else {
                 return
             }
 
         }
     }
-    
+
     function gotoDetail(itemiD, status, method) {
-        const itemID = itemiD;
+        const itemID = itemiD
         const statusCode = status
         // const method = method
         //진행상황이 0 이면 detail 페이지로 1이면 excahnge 페이지로
         if (statusCode === 0) {
             Router.push({
-                pathname: '/trade/detail',
-                query: { id: itemID }
-            }, '/detail'
+                    pathname: '/trade/detail',
+                    query: {id: itemID}
+                }, '/detail'
             )
         } else if (statusCode === 1) {
             Router.push({
-                pathname: '/trade/exchange',
-                query: { name: method }
-            }
+                    pathname: '/trade/exchange',
+                    query: {name: method}
+                }
                 , '/exchange'
             )
         } else {
@@ -112,29 +91,22 @@ const Mypage = () => {
         }
 
     }
-    function Balanceinquiry(address,id){
-        document.getElementById('button-'+id).remove()
-        HttpService.myPageGetBalance(address).then((res)=>{
-            console.log('res data ====',res.data);
-           document.getElementById('label-'+id).innerHTML=res.data;
 
+    function GetBalance(address) {
+        HttpService.myPageGetBalance(address).then((res) => {
+                setBalance(res.data)
             }
-
-
         )
-
     }
 
     return (
         <>
             <AppLayout>
-                {console.log("확인")}
                 <div>
                     <h1>MyPage</h1>
                     {
                         (function () {
                             if (userData) {
-                                console.log("userData22222: ", userData)
                                 return (
 
                                     <div>
@@ -156,25 +128,25 @@ const Mypage = () => {
                                         <div>
                                             <br></br>
                                             <h2>지갑</h2>
+                                            <Button onClick={() => GetBalance(wallets[0].address)}>잔액 조회</Button>
                                             <Table singleLine>
                                                 <Table.Header>
                                                     <Table.Row>
-                                                        <Table.HeaderCell>Type</Table.HeaderCell>
                                                         <Table.HeaderCell>Address</Table.HeaderCell>
-                                                        <Table.HeaderCell>Amount</Table.HeaderCell>
-
+                                                        <Table.HeaderCell>ETH</Table.HeaderCell>
+                                                        <Table.HeaderCell>A_Token</Table.HeaderCell>
+                                                        <Table.HeaderCell>B_Token</Table.HeaderCell>
+                                                        <Table.HeaderCell>C_Token</Table.HeaderCell>
                                                     </Table.Row>
                                                 </Table.Header>
                                                 <Table.Body>
                                                     {wallets.map((data) => {
-                                                        console.log("??? ", wallets);
                                                         return <Table.Row key={data.id}>
-                                                            <Table.Cell>{data.type}</Table.Cell>
                                                             <Table.Cell>{data.address}</Table.Cell>
-
-                                                            <Table.Cell><button id={"button-"+data.id} onClick={()=>Balanceinquiry(data.address,data.id)}>잔액조회</button><label id={'label-'+data.id}></label>
-
-                                                            </Table.Cell>
+                                                            <Table.Cell>{balance[3]}</Table.Cell>
+                                                            <Table.Cell>{balance[0]}</Table.Cell>
+                                                            <Table.Cell>{balance[1]}</Table.Cell>
+                                                            <Table.Cell>{balance[2]}</Table.Cell>
                                                         </Table.Row>
 
                                                     })}
@@ -187,32 +159,52 @@ const Mypage = () => {
                                             <Table singleLine>
                                                 <Table.Header>
                                                     <Table.Row>
-                                                        <Table.HeaderCell>method</Table.HeaderCell>
-                                                        <Table.HeaderCell>status</Table.HeaderCell>
-                                                        <Table.HeaderCell>type</Table.HeaderCell>
-                                                        <Table.HeaderCell>price</Table.HeaderCell>
-                                                        <Table.HeaderCell>amount</Table.HeaderCell>
-                                                        <Table.HeaderCell>updated</Table.HeaderCell>
+                                                        <Table.HeaderCell>내 토큰</Table.HeaderCell>
+                                                        <Table.HeaderCell>거래량</Table.HeaderCell>
+                                                        <Table.HeaderCell></Table.HeaderCell>
+                                                        <Table.HeaderCell>교환 토큰</Table.HeaderCell>
+                                                        <Table.HeaderCell>거래량</Table.HeaderCell>
+                                                        <Table.HeaderCell>상태</Table.HeaderCell>
+                                                        <Table.HeaderCell>등록 날짜</Table.HeaderCell>
                                                     </Table.Row>
                                                 </Table.Header>
                                                 <Table.Body>
                                                     {boards.map((item) => {
+                                                        if (userData.data.id === item.buyerId) {
+                                                            return (
+                                                                <Table.Row key={item.id}
+                                                                           onClick={() => gotoDetail(item.id, item.status, item.method)}>
+                                                                    <Table.Cell>{item.buytoken}</Table.Cell>
+                                                                    <Table.Cell>{item.buytokenamount}</Table.Cell>
+                                                                    <Table.HeaderCell>{"==>"}</Table.HeaderCell>
+                                                                    <Table.Cell>{item.selltoken}</Table.Cell>
+                                                                    <Table.Cell>{item.selltokenamount}</Table.Cell>
+                                                                    <Table.Cell>{item.status}</Table.Cell>
+                                                                    <Table.Cell>{item.updatedAt}</Table.Cell>
+                                                                </Table.Row>
+                                                            )
+                                                        } else {
+                                                            return (
+                                                                <Table.Row key={item.id}
+                                                                           onClick={() => gotoDetail(item.id, item.status, item.method)}>
+                                                                    <Table.Cell>{item.selltoken}</Table.Cell>
+                                                                    <Table.Cell>{item.selltokenamount}</Table.Cell>
+                                                                    <Table.HeaderCell><Icon name = "arrow right" /></Table.HeaderCell>
+                                                                    <Table.Cell>{item.buytoken}</Table.Cell>
+                                                                    <Table.Cell>{item.buytokenamount}</Table.Cell>
+                                                                    <Table.Cell>|  {item.status}</Table.Cell>
+                                                                    <Table.Cell>{item.updatedAt}</Table.Cell>
+                                                                </Table.Row>
+                                                            )
+                                                        }
 
-                                                        return <Table.Row key={item.id} onClick={() => gotoDetail(item.id, item.status, item.method)}>
-                                                            <Table.Cell>{item.method}</Table.Cell>
-                                                            <Table.Cell>{item.status}</Table.Cell>
-                                                            <Table.Cell>{item.type}</Table.Cell>
-                                                            <Table.Cell>{item.price}</Table.Cell>
-                                                            <Table.Cell>{item.amount}</Table.Cell>
-                                                            <Table.Cell>{item.updatedAt}</Table.Cell>
-                                                        </Table.Row>
 
                                                     })}
                                                 </Table.Body>
                                             </Table>
                                         </div>
                                     </div>
-                                );
+                                )
                             }
                         })()
                     }
@@ -221,10 +213,6 @@ const Mypage = () => {
                         <br></br>
                         <Link href="/user/changepwd"><a>비밀번호 변경</a></Link>
                     </div>
-                    <div>
-
-                        <button onClick={()=>alarm()}>test</button>
-                    </div>
                 </div>
             </AppLayout>
         </>
@@ -232,4 +220,4 @@ const Mypage = () => {
 }
 
 
-export default Mypage;
+export default Mypage
