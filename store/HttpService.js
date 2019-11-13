@@ -14,7 +14,7 @@ class SocketIo {
     alarms = []
 
     constructor() {
-        this.socket = io.connect('http://192.168.1.173:5555')
+        this.socket = io.connect('http://localhost:5555')
     }
 
     get_socket() {
@@ -34,7 +34,7 @@ class SocketIo {
 
 class AuthStore {
 
-    baseURL = "http://192.168.1.173:5555"
+    baseURL = "http://localhost:5555"
 
     @observable
     authToken = cookies.get('authToken')
@@ -179,7 +179,14 @@ class HttpService {
             }
         })
     }
+    gotoaddrconfirm(password){
 
+        const token = this.authStore.authToken;
+
+        return axios.post('/trade/confirm',{
+                token,password
+        })
+    }
 
     goToTrade(boardId,userId) {
         return axios.post('/trade/exchange', {
