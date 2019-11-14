@@ -76,13 +76,7 @@ const Detail = ({id}) => {
         const paramuserid = userId
         console.log('gotoTrade',id);
         HttpService.goToTrade(id,paramuserid)
-            .then((res) => {
-            console.log("thentnenth",res)
-            Router.push('/trade/exchange')
-        })
-            .catch((e)=>{
-                console.log(e);
-            })
+        tradealarm()
     }
 
     function tradealarm() {
