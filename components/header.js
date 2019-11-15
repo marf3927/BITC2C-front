@@ -11,7 +11,10 @@ const Header = () => {
         if(HttpService.authStore.isLoggedIn){
             HttpService.getAlarm()
                 .then((alarms) =>{
-                    setAlarms(Object.keys(alarms.data).length)
+                    console.log(alarms)
+                    if(alarms){
+                        setAlarms(Object.keys(alarms.data).length)
+                    }
                 })
         }
     }
@@ -48,7 +51,7 @@ const Header = () => {
             {
                 HttpService.authStore.isLoggedIn ?
                     // <Menu.Item key="alarm"><Link href="/alarm"><a>Alarm {alarms}</a></Link></Menu.Item>
-                    <Icon name='circle'><Link href="/alarm/list"><a> {alarms}</a></Link></Icon>
+                    <Icon name='bell outline'><Link href="/alarm/list"><a> {alarms}</a></Link></Icon>
                     : <></>
             }
         </Menu>
