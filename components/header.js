@@ -11,7 +11,10 @@ const Header = () => {
         if(HttpService.authStore.isLoggedIn){
             HttpService.getAlarm()
                 .then((alarms) =>{
-                    setAlarms(Object.keys(alarms.data).length)
+                    console.log(alarms)
+                    if(alarms){
+                        setAlarms(Object.keys(alarms.data).length)
+                    }
                 })
         }
     }

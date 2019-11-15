@@ -227,7 +227,6 @@ class HttpService {
     }
 
     onRegisterClick(name, email, password) {
-
             axios.post(('/users/create'),
                 {
                     email,
