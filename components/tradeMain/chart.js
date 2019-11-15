@@ -18,24 +18,26 @@ if (process.browser) {
 class Chart extends Component {
   constructor(props) {
     super(props);
-    this.state = { token: 'A' }
+    this.state = {
+      chartData : [],
+      token: 'Atoken'
+    }
   }
 
   TokenChange(key) {
     switch (key) {
       case 1:
-        this.setState({ token: 'A' })
+        this.setState({ token: 'Atoken' })
         console.log(this.state.token)
         break;
       case 2:
-        this.setState({ token: 'B' })
+        this.setState({ token: 'Btoken' })
         console.log(this.state.token)
 
         break;
       case 3:
-        this.setState({ token: 'C' })
+        this.setState({ token: 'Ctoken' })
         console.log(this.state.token)
-
         break;
     }
   }
@@ -51,7 +53,6 @@ class Chart extends Component {
       .then((res) => {
         arraydata = res.data
         console.log(arraydata)
-
         for (var ele in arraydata) {
           console.log("ele: ", ele);
           var object = new Object();
@@ -63,7 +64,7 @@ class Chart extends Component {
           data.push(object);
         }
       }).then(() => {
-        return data;
+        this.setState({chartData:data});
       })
   }
 
@@ -107,30 +108,13 @@ class Chart extends Component {
     chart.paddingRight = 20;
     chart.dateFormatter.inputDateFormat = "yyyy-MM-dd hh:mm";
 
-    let data = [];
-    
-    data = this.getData('Atoken');
-    chart.data = data;
+
+    this.getData(this.state.token);
+    chart.data = this.state.chartData;
     this.chart = chart;
     this.chartOptions();
   }
 
-  componentWillUpdate(){
-    let data = [];
-
-    if(this.state.token == 'B'){
-      data = this.getData('Btoken');
-    }
-    if (this.state.token == 'C'){
-      data = this.getData('Ctoken');
-    }
-    else{
-      data = this.getData('Atoken');
-    }
-    this.chart.data = data;
-
-    this.chartOptions();
-  }
 
   componentDidUpdate(oldProps) {
     if (oldProps.paddingRight !== this.props.paddingRight) {
