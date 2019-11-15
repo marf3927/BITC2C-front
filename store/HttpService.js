@@ -14,7 +14,7 @@ class SocketIo {
     alarms = []
 
     constructor() {
-        this.socket = io.connect('http://192.168.1.173:5555')
+        this.socket = io.connect('http://localhost:5555')
     }
 
     get_socket() {
@@ -179,12 +179,35 @@ class HttpService {
             }
         })
     }
+    gotoaddrconfirm(password,TableID){
 
+        const token = this.authStore.authToken;
+
+        return axios.post('/trade/confirm',{
+                token,password,TableID
+        })
+    }
+
+    confirmsellbuy(boardId){
+        return axios.pose('/trade/sellandbuy',{
+            boardId
+        })
+    }
 
     goToTrade(boardId,userId) {
         return axios.post('/trade/exchange', {
             boardId,userId
+        }).then((res) => {
+            console.log("thentnenth",res)
+            Router.push('/trade/exchange')
         })
+            .catch((e)=>{
+                console.log(e);
+            })
+    }
+
+    gotoGetDate(){
+        return axios.get('/trade/gettime',)
     }
 
     myPageGetUser(user) {
