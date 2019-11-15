@@ -117,6 +117,7 @@ class Chart extends Component {
 
   componentWillUpdate(){
     let data = [];
+    console.log('click!!! ', this.state.token)
 
     if(this.state.token == 'B'){
       data = this.getData('Btoken');
