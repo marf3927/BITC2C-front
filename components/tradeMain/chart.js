@@ -18,24 +18,26 @@ if (process.browser) {
 class Chart extends Component {
   constructor(props) {
     super(props);
-    this.state = { token: 'A' }
+    this.state = {
+      chartData : [],
+      token: 'Atoken'
+    }
   }
 
   TokenChange(key) {
     switch (key) {
       case 1:
-        this.setState({ token: 'A' })
+        this.setState({ token: 'Atoken' })
         console.log(this.state.token)
         break;
       case 2:
-        this.setState({ token: 'B' })
+        this.setState({ token: 'Btoken' })
         console.log(this.state.token)
 
         break;
       case 3:
-        this.setState({ token: 'C' })
+        this.setState({ token: 'Ctoken' })
         console.log(this.state.token)
-
         break;
     }
   }
@@ -51,7 +53,6 @@ class Chart extends Component {
       .then((res) => {
         arraydata = res.data
         console.log(arraydata)
-
         for (var ele in arraydata) {
           console.log("ele: ", ele);
           var object = new Object();
@@ -63,7 +64,15 @@ class Chart extends Component {
           data.push(object);
         }
       }).then(() => {
-        return data;
+        console.log(data)
+        this.setState({chartData:data})
+      }).then(()=>{
+        let chart = am4core.create("chartdiv", am4charts.XYChart);
+        chart.paddingRight = 20;
+        chart.dateFormatter.inputDateFormat = "yyyy-MM-dd hh:mm";
+        chart.data = this.state.chartData;
+        this.chart = chart;
+        this.chartOptions();
       })
   }
 
@@ -82,7 +91,7 @@ class Chart extends Component {
     series.dataFields.lowValueY = "low";
     series.dataFields.highValueY = "high";
     series.simplifiedProcessing = true;
-    series.tooltipText = "Open:${openValueY.value}\nLow:${lowValueY.value}\nHigh:${highValueY.value}\nClose:${valueY.value}";
+    series.tooltipText = "Open:{openValueY.value} eth\nLow:{lowValueY.value} eth\nHigh:{highValueY.value} eth\nClose:{valueY.value} eth";
     this.chart.cursor = new am4charts.XYCursor();
 
     let lineSeries = this.chart.series.push(new am4charts.LineSeries());
@@ -103,45 +112,16 @@ class Chart extends Component {
   }
 
   componentDidMount() {
-    let chart = am4core.create("chartdiv", am4charts.XYChart);
-    chart.paddingRight = 20;
-    chart.dateFormatter.inputDateFormat = "yyyy-MM-dd hh:mm";
-
-    let data = [];
-    
-    data = this.getData('Atoken');
-    chart.data = data;
-    this.chart = chart;
-    this.chartOptions();
+    this.getData(this.state.token)
   }
 
-  componentWillUpdate(){
-    let data = [];
-    console.log('click!!! ', this.state.token)
 
-    if(this.state.token == 'B'){
-      data = this.getData('Btoken');
-    }
-    if (this.state.token == 'C'){
-      data = this.getData('Ctoken');
-    }
-    else{
-      data = this.getData('Atoken');
-    }
-    this.chart.data = data;
-
-    this.chartOptions();
-  }
-
-  componentDidUpdate(oldProps) {
+  componentDidUpdate(oldProps, prevState) {
     if (oldProps.paddingRight !== this.props.paddingRight) {
       this.chart.paddingRight = this.props.paddingRight;
     }
-  }
-
-  componentWillUnmount() {
-    if (this.chart) {
-      this.chart.dispose();
+    if (prevState.token !== this.state.token){
+      this.getData(this.state.token)
     }
   }
 
