@@ -17,18 +17,29 @@ const Exchange = ()=>{
 
     useEffect(()=>{
         getDate();
-    },[])
+    },[boolconfirm,lodderbool])
 
     function getDate(){
         //data[1] == sellerconfirm ,data[2] == buyerconfirm ,data[3] ==user ID,data[4] ==tableId
         HttpSrvice.gotoGetDate().then((result)=>{
             console.log('tableId ==',result.data[4])
+            console.log('user ID ===',result.data[3]);
+            console.log('sellerconfirm ==',result.data[1])
+            console.log('buyerconfirm ==',result.data[2])
+
+
+            console.log('user ID type ===',typeof( result.data[3]));
+            console.log('sellerconfirm type ===',typeof (result.data[1]))
+            console.log('buyerconfirm type ===',typeof(result.data[2]))
+
             settableid(result.data[4]);
             setdatetime(result.data[0]);
 
             if(result.data[3]===(result.data[1]||result.data[2])){
+                console.log("gggggggggggg")
                 setboolconfirm(true);
             }else{
+                console.log("bbbbbbbbbbbbbbbbbbbb")
                 setboolconfirm(false);
             }
 
@@ -38,17 +49,22 @@ const Exchange = ()=>{
     function addrconfirm (){
         setlodderbool(true);
         HttpSrvice.gotoaddrconfirm(password,tableid).then((result)=>{
-            console.log('addrconfirm =' ,result)
-            setlodderbool(false);
+            console.log('addrconfirm =' ,result.data)
+                setlodderbool(false);
+                setboolconfirm(result.data);
+
         })
     }
 
     return(<>
         <Segment>
         <Dimmer active={lodderbool}>
-            <Loader size='huge'>지갑 생성중</Loader>
+            <Loader size='huge'>지갑 암호를 확인중입니다.</Loader>
         </Dimmer>
 
+            <Dimmer active={boolconfirm}>
+                <Loader size='huge'>확인완료 잠시만 기다려주세요.</Loader>
+            </Dimmer>
         <Grid columns='equal' divided inverted padded>
             <Grid.Row color='black' textAlign='center'>
                 <Grid.Column>
@@ -57,7 +73,7 @@ const Exchange = ()=>{
                             <Icon name='circle notched' loading />
                             <Message.Content>
 
-                                {datetime===undefined ? "": <Timer seconds={datetime}/>}
+                                {(datetime===undefined) ? "": <Timer seconds={datetime}/>}
 
                                 <Message.Header><Icon name='detective'/>경고 <Icon name='detective'/> 전송을 시작하면 취소가 불가능합니다.</Message.Header>
                                 <Message.Header>지갑 암호를 넣어주세요.</Message.Header>
@@ -67,10 +83,10 @@ const Exchange = ()=>{
                             </Message.Content>
 
                         </Message>
-                        {boolconfirm ? ""
-                            : <><Input onChange={e => setPassword(e.target.value)} type="password" name="pass" placeholder="Password"/>
-                                <Button inverted color='green' onClick={addrconfirm}>전송</Button></>
-                              }
+
+                        {!boolconfirm?<> <Input onChange={e => setPassword(e.target.value)} type="password" name="pass" placeholder="Password"/>
+                                <Button inverted color='green' onClick={addrconfirm}>전송</Button></>:""}
+
 
 
                     </Segment>
