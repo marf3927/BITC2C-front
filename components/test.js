@@ -7,12 +7,12 @@ const Timer = ({ seconds }) => {
 
   useEffect(() => {
     // exit early when we reach 0
-    if (!timeLeft) return Router.push('/trade/cancle');
+    if (!timeLeft) return Router.push('/trade/cancel');
 
     // save intervalId to clear the interval when the
     // component re-renders
     const intervalId = setInterval(() => {
-      console.log(timeLeft)
+
 
       setTimeLeft(timeLeft - 1);
     }, 1000);
