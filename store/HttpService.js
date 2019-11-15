@@ -34,7 +34,7 @@ class SocketIo {
 
 class AuthStore {
 
-    baseURL = "http://192.168.1.173:5555"
+    baseURL = "http://localhost:5555"
 
     @observable
     authToken = cookies.get('authToken')

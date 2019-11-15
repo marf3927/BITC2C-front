@@ -48,7 +48,7 @@ const Header = () => {
             {
                 HttpService.authStore.isLoggedIn ?
                     // <Menu.Item key="alarm"><Link href="/alarm"><a>Alarm {alarms}</a></Link></Menu.Item>
-                    <Icon name='circle'><Link href="/alarm/list"><a> {alarms}</a></Link></Icon>
+                    <Icon name='bell outline'><Link href="/alarm/list"><a> {alarms}</a></Link></Icon>
                     : <></>
             }
         </Menu>
