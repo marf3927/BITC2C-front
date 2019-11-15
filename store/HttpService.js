@@ -179,19 +179,35 @@ class HttpService {
             }
         })
     }
-    gotoaddrconfirm(password){
+    gotoaddrconfirm(password,TableID){
 
         const token = this.authStore.authToken;
 
         return axios.post('/trade/confirm',{
-                token,password
+                token,password,TableID
+        })
+    }
+
+    confirmsellbuy(boardId){
+        return axios.pose('/trade/sellandbuy',{
+            boardId
         })
     }
 
     goToTrade(boardId,userId) {
         return axios.post('/trade/exchange', {
             boardId,userId
+        }).then((res) => {
+            console.log("thentnenth",res)
+            Router.push('/trade/exchange')
         })
+            .catch((e)=>{
+                console.log(e);
+            })
+    }
+
+    gotoGetDate(){
+        return axios.get('/trade/gettime',)
     }
 
     myPageGetUser(user) {
