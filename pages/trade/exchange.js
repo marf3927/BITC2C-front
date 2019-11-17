@@ -1,12 +1,13 @@
 import React, {useState, useEffect, useContext} from 'react'
 import Router,{ useRouter } from 'next/router';
 import {Grid, Segment, Message, Icon, Button, Input, Dimmer, Loader} from 'semantic-ui-react'
-import 'semantic-ui-css/semantic.min.css'
+
 import Timer from '../../components/test'
 //구매와 판매 판별하는 함수
 
 import {HttpServiceContext} from "../../store/HttpService"
-const Exchange = ()=>{
+
+const exchange = ()=>{
     const [password,setPassword] = useState('');
     const HttpSrvice=useContext(HttpServiceContext);
     const [datetime,setdatetime] =useState()
@@ -50,13 +51,25 @@ const Exchange = ()=>{
         setlodderbool(true);
         HttpSrvice.gotoaddrconfirm(password,tableid).then((result)=>{
             console.log('addrconfirm =' ,result.data)
-                setlodderbool(false);
-                setboolconfirm(result.data);
+
+            const a =result.data
+
+            if(a.boolconfirm&&a.balanceconfirm&&a.transfer){
+                Router.push('/trade/success')
+                console.log("트랜스퍼 성공")
+            }else if(!(a.boolconfirm||a.balanceconfirm||a.transfer)){
+                Router.push('/trade/cancel')
+                console.log("잔액부족 ")
+            }else{
+                setboolconfirm(a.boolconfirm);
+            }
+            setlodderbool(false);
 
         })
     }
 
-    return(<>
+    return(
+    <>
         <Segment>
         <Dimmer active={lodderbool}>
             <Loader size='huge'>지갑 암호를 확인중입니다.</Loader>
@@ -96,8 +109,9 @@ const Exchange = ()=>{
             </Grid.Row>
         </Grid>
         </Segment>
+
         </>)
 
 }
 
-export default Exchange;
+export default exchange

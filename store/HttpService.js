@@ -217,7 +217,10 @@ class HttpService {
             }
         })
     }
-
+    //거래 종료
+    tradefinish(){
+        return axios.get('/trade/finish')
+    }
     myPageGetWallet(data) {
         return axios.get('/mypage/wallet', {
             params: {

@@ -28,16 +28,16 @@ class Chart extends Component {
     switch (key) {
       case 1:
         this.setState({ token: 'Atoken' })
-        console.log(this.state.token)
+
         break;
       case 2:
         this.setState({ token: 'Btoken' })
-        console.log(this.state.token)
+
 
         break;
       case 3:
         this.setState({ token: 'Ctoken' })
-        console.log(this.state.token)
+
         break;
     }
   }
@@ -52,9 +52,9 @@ class Chart extends Component {
     })
       .then((res) => {
         arraydata = res.data
-        console.log(arraydata)
+
         for (var ele in arraydata) {
-          console.log("ele: ", ele);
+
           var object = new Object();
           object.date = arraydata[ele].date
           object.open = arraydata[ele].begin
@@ -64,7 +64,7 @@ class Chart extends Component {
           data.push(object);
         }
       }).then(() => {
-        console.log(data)
+
         this.setState({chartData:data})
       }).then(()=>{
         let chart = am4core.create("chartdiv", am4charts.XYChart);
