@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from 'react'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon, Menu, Dropdown, Tab} from 'semantic-ui-react'
+import {Button, Table, Input, Icon, Menu, Dropdown, Tab, Segment} from 'semantic-ui-react'
 import Router from "next/router"
 import {HttpServiceContext} from "../../store/HttpService"
 
@@ -139,6 +139,13 @@ const List = () => {
     return (
         <>
             <AppLayout>
+                <Segment
+                 inverted
+                 textAlign='center'
+                 style={{ minHeight: 500, padding: '1em 0em' }}
+                 vertical>
+
+               
                 <style jsx>{`
                     .type_right {
                         float: right;
@@ -204,6 +211,7 @@ const List = () => {
                     <span className="type_right"><Button id="WritingBoard"
                                                          onClick={() => WritingBoard()}>Writing</Button></span>
                 </div>
+                </Segment>
             </AppLayout>
         </>
     )

@@ -1,16 +1,11 @@
-import React, {useContext, useState, useEffect} from 'react'
 import {Menu, Icon, Container, Button,Responsive,Visibility ,Segment } from 'semantic-ui-react'
-import Link from 'next/link'
-import {HttpServiceContext} from "../store/HttpService"
-import DesktopContainer from "./DesktopContainer";
-import MobileContainer from "./MobileContainer";
-import Footer from './footer';
+import Link from "next/link";
+import React, {useState} from "react";
+
 import Router,{ useRouter } from 'next/router';
 
+const DesktopContainer = ({children}) =>{
 
-const Header = ({children}) => {
-    const HttpService = useContext(HttpServiceContext)
-    const [alarms, setAlarms] = useState(0)
     const [fixed,setfixed] =useState();
     const [activeItem,setactiveItem] =useState();
 
@@ -24,7 +19,7 @@ const Header = ({children}) => {
         }
         else if(name==='trade'){
             Router.push('/trade/list')
-        }else if(name==='mypage'){
+        }else if(name===mypage){
             Router.push('/user/mypage')
         }
     }
@@ -39,38 +34,9 @@ const Header = ({children}) => {
     }
 
 
-    const getAlarm = () => {
-        if(HttpService.authStore.isLoggedIn){
-            HttpService.getAlarm()
-                .then((alarms) =>{
-                    console.log(alarms)
-                    if(alarms){
-                        setAlarms(Object.keys(alarms.data).length)
-                    }
-                })
-        }
-    }
+    return(
 
-    HttpService.socket.get_socket().on("alarm", (data)=>{
-        setAlarms(alarms+1)
-    })
-
-
-    useEffect(()=>{
-        getAlarm()
-    })
-
-
-
-    const logout = () => {
-        HttpService.authStore.deleteToken()
-    }
-
-    return (
-
-        <>
-            <div>
-            <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
+        <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
             <Visibility
                 once={false}
                 onBottomPassed={showFixedMenu}
@@ -79,7 +45,7 @@ const Header = ({children}) => {
                 <Segment
                     inverted
                     textAlign='center'
-                    style={{ minHeight: 150, padding: '1em 0em' }}
+                    style={{ minHeight: 100, padding: '1em 0em' }}
                     vertical
                 >
                     <Menu
@@ -96,18 +62,14 @@ const Header = ({children}) => {
                             <Menu.Item  name="trade" active={activeItem==='trade'} content='TRADE' onClick={handleItemClick}/>
                             
                             <Menu.Item  name="QNA" active={activeItem==='QNA'} content='QNA' onClick={handleItemClick}>QNA</Menu.Item>
-                            
+                            <Menu.Item name="MYPAGE" active={activeItem==='MYPAGE'} content='MYPAGE' onClick={handleItemClick}>MYPAGE</Menu.Item>
                             <Menu.Item position='right'>
-                            {HttpService.authStore.isLoggedIn ?<> <Menu.Item name="MYPAGE" active={activeItem==='MYPAGE'} content='MYPAGE' onClick={handleItemClick}/>
-                             <Menu.Item name="LOGOUT" active={activeItem==='LOGOUT'} content='LOGOUT' onClick={logout}/></>
-                                :                               
-                                <> <Button as='a' inverted={!fixed}>
-                                    <Link href="/user/login"><a>Log in</a></Link>
+                                <Button as='a' inverted={!fixed}>
+                                    Log in
                                 </Button>
                                 <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
-                                <Link href="/user/register"><a>Sign Up</a></Link> 
-                                </Button></>}
-                               
+                                    Sign Up
+                                </Button>
                             </Menu.Item>
                             
                         </Container>
@@ -119,14 +81,11 @@ const Header = ({children}) => {
             {children}
            
         </Responsive>
-                {/* <MobileContainer>{children}</MobileContainer> */}
-                <Footer/>
-            </div>
-
-
-            </>
+    
     )
+
 
 }
 
-export default Header
+
+export default DesktopContainer ;

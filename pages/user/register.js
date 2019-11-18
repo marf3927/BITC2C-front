@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import Router from 'next/router'
-import {Button, Input ,Dimmer, Loader, Image, Segment} from 'semantic-ui-react'
+import {Button, Input ,Dimmer, Loader, Image, Segment,Form,Label} from 'semantic-ui-react'
 import axios from 'axios'
 import AppLayout from '../../components/AppLayout';
 
@@ -21,7 +21,7 @@ const Register = () =>{
 
     const [passwordValid, setPasswordValid] = useState(false) //비밀번호 형식 확인
     const [passwordValidTxt, setPasswordValidTxt] = useState('') //비밀번호 형식 확인 안내
-    
+
     const [walletpasswordValid, setwalletPasswordValid] = useState(false) //지갑 비밀번호 형식 확인
     const [walletpasswordValidTxt, setwalletPasswordValidTxt] = useState('') //지갑 비밀번호 형식 확인 안내
 
@@ -44,7 +44,7 @@ const Register = () =>{
     }
 
     //비밀번호 형식 확인
-    function validatePassword(password) { 
+    function validatePassword(password) {
         var decimal= /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}/;
         return decimal.test(String(password).toLowerCase());
     }
@@ -142,59 +142,60 @@ const Register = () =>{
         setregiststart(true);
         HttpService.onRegisterClick(name, email, password)
 
-        
+
     }
 
     return (
         <>
             <AppLayout>
-            <Segment>
-                <div>
-                
-      <Dimmer active={registstart}>
-        <Loader size='huge'>지갑 생성중</Loader>
-      </Dimmer>
 
-    
-             
-                    <h1>Register</h1>
-                    <div>
-                        <Input type="text" onChange={e => setName(e.target.value)} name="username" placeholder="Name" />
-                    </div>
-                    <div>
-                        <Input onChange={e => setEmail(e.target.value)} type="text" name="email" placeholder="Email" />
-                        <a>{emailValidTxt}</a>
-                    </div>
-                    <div >
-                        <Input type="password" onChange={e => setPassword(e.target.value)} name="pass" placeholder="Password" />
-                        <a>{passwordValidTxt}</a>
-                    </div>
-                    <div >
-                        <Input type="password" onChange={e => setPasswordCheck(e.target.value)} name="passCheck" placeholder="Password Check" />
-                        <a>{passwordCheckValidTxt}</a>
-                    </div>
-                    {/*<div >*/}
-                    {/*    <label>지갑생성</label>*/}
-                    {/*</div>*/}
-                    {/*<div >*/}
-                    {/*    <Input type="password" onChange={e => setwalletPassword(e.target.value)} name="pass" placeholder="Password" />*/}
-                    {/*    <a>{walletpasswordValidTxt}</a>*/}
-                    {/*</div>*/}
-                    {/*<div >*/}
-                    {/*    <Input type="password" onChange={e => setwalletPasswordCheck(e.target.value)} name="passCheck" placeholder="Password Check" />*/}
-                    {/*    <a>{walletpasswordCheckValidTxt}</a>*/}
-                    {/*</div>*/}
-                    {/*{walletcreatecheck ? <div>{walletcreateaddr}</div> :""}*/}
 
-                    <div >
-                    {/*<Button id='walletregist' onClick={() => onwalletRegisterClick(walletpassword)}>*/}
-                    {/*        지갑 생성*/}
-                    {/*    </Button>*/}
-                        <Button id='registbtn' onClick={() => onRegisterClick(name, email, password)}>
-                            Register
-                        </Button>
-                    </div>
-                </div>
+                <Segment>
+
+
+                        <Dimmer active={registstart}>
+                            <Loader size='huge'>지갑 생성중</Loader>
+                        </Dimmer>
+
+                        <Segment inverted>
+                            <Form inverted>
+                                <Form.Group widths='equal'>
+                                    <Form.Input fluid label='Username' placeholder="Name" type="text" onChange={e => setName(e.target.value)}  />
+
+                                </Form.Group>
+
+                                <Form.Group widths='equal'>
+                                    <Form.Input fluid label='Email' onChange={e => setEmail(e.target.value)} type="text" name="email" placeholder="Email" />
+
+                                </Form.Group>
+                                {emailValidTxt ? <Form.Group><Label basic color='red' pointing>
+                                    {emailValidTxt}
+                                </Label>
+                                </Form.Group> : "" }
+                                <Form.Group widths='equal'>
+                                    <Form.Input fluid label='Password' type="password" onChange={e => setPassword(e.target.value)} name="pass" placeholder="Password" />
+
+                                </Form.Group>
+                                {passwordValidTxt ? <Form.Group><Label basic color='red' pointing>
+                                        {passwordValidTxt}
+                                    </Label>
+                                </Form.Group>: ""}
+
+                                <Form.Group widths='equal'>
+                                    <Form.Input fluid label='Password Check' type="password" onChange={e => setPasswordCheck(e.target.value)} name="passCheck" placeholder="Password Check" />
+
+                                </Form.Group>
+
+                                    {passwordCheckValidTxt ? <Form.Group><Label basic color='red' pointing>
+                                            {passwordCheckValidTxt}
+                                        </Label>
+                                        </Form.Group> : ""}
+                                <Button inverted id='registbtn' onClick={() => onRegisterClick(name, email, password)}>Register</Button>
+
+                            </Form>
+                        </Segment>
+
+
                 </Segment>
             </AppLayout>
         </>
