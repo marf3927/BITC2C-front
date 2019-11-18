@@ -24,7 +24,7 @@ const Header = ({children}) => {
         else if(name==='trade'){
             Router.push('/trade/tradeMain')
         }else if(name==='mypage'){
-            console.log('asdasd')
+         
             Router.push('/user/mypage')
         }
     }
@@ -96,7 +96,7 @@ const Header = ({children}) => {
                     >
                         <Container>
                             
-                            {console.log('container',activeItem)}
+                           
                             <Menu.Item name="home" active={activeItem==='home'} content='Home' onClick={handleItemClick}/ >
                             
                             <Menu.Item  name="trade" active={activeItem==='trade'} content='TRADE' onClick={handleItemClick}/>

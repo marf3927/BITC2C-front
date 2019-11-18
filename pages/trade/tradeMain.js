@@ -14,7 +14,7 @@ const Home = () => {
           <Grid columns={3} divided>
     <Grid.Row>
       <Grid.Column>
-       <List/>
+      <Segment> <List/></Segment>
       </Grid.Column>
       <Grid.Column>
         <Segment><Chart/></Segment>
