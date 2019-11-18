@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon, Tab, Dropdown, Menu, Label} from 'semantic-ui-react'
+import {Button, Table, Input, Icon, Tab, Dropdown, Menu, Label, Segment, Grid, Message, Form} from 'semantic-ui-react'
 import Router from 'next/router'
 import {HttpServiceContext} from "../../store/HttpService"
 
@@ -85,49 +85,73 @@ const Writing = () => {
     }
 
     return (
-        
+        <>
+            <AppLayout>
+            <Segment
+                 style={{ minHeight: 650, padding: '5em 0em' }}
+                 vertical
+                >
 
-            <div>
-                <div>
-                    <h1>교환</h1>
-                    <div>
-                        method: exchange
-                    </div>
-                    <div>
-                        status: 0
-                    </div>
-                    <div>
+<Grid columns='equal'>
+    <Grid.Column>
+      
+    </Grid.Column>
+    <Grid.Column width={4}>
+    <Message icon>
+    <Icon name='first order' loading />
+    <Message.Content>
+      <Message.Header>거래글 등록</Message.Header>
+      
+Please fill in all fields .
+    </Message.Content>
+  </Message>
+ 
+
+                        <Segment inverted>
+                        <Grid.Column style={{padding : '1em 0em'}}>
                         sellcoin: <Menu compact>
                         <Dropdown text={sellcoinoption.text} options={sellcoinoption} onChange={onSellCoinChange} simple
                                   item/>
                     </Menu>
-                    </div>
+                    </Grid.Column>
 
-                    <div>
+                    <Grid.Column style={{padding : '1em 0em'}}>
                         amount: <Input type="number" onChange={e => setselltokenamount(e.target.value)} name="amount1"
                                        placeholder="거래량"/>
-                    </div>
-                    <div>
+                   </Grid.Column>
+                   <Grid.Column style={{padding : '1em 0em'}}>
                         buycoin: <Menu compact>
                         <Dropdown text={buycoinoption.text} options={buycoinoption} onChange={onBuyCoinChange} simple
                                   item/>
                     </Menu>
-                    </div>
-                    <div>
+                    </Grid.Column>
+                    <Grid.Column style={{padding : '1em 0em'}}>
                         amount: <Input type="number" onChange={e => setbuytokenamount(e.target.value)} name="amount2"
                                        placeholder="거래량"/>
-                    </div>
-                    <div>
+                    </Grid.Column>
+                    <Grid.Column>
                         ratio : {ratio}
-                    </div>
-                    <div>
-                        <Button id='writeTrade' onClick={() => onRegisterClick(2)}>
+                        </Grid.Column>
+                        <Grid.Column>
+                       
+                        </Grid.Column>
+                        </Segment>
+                        <Segment textAlign="right">
+                        <Button positive id='writeTrade' onClick={() => onRegisterClick(2)}>
                             거래 등록
                         </Button>
-                    </div>
-                </div>
-            </div>
-        
+                        </Segment>
+                        
+    </Grid.Column>
+    <Grid.Column>
+      
+    </Grid.Column>
+  </Grid>
+               
+                </Segment>   
+            </AppLayout>
+
+        </>
 
     )
 }

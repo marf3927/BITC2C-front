@@ -1,10 +1,11 @@
-import {Menu, Icon, Container, Button,Responsive,Visibility ,Segment,Header } from 'semantic-ui-react'
+import {Menu, Icon, Container, Button,Responsive,Visibility ,Segment,Header, Image } from 'semantic-ui-react'
 import React, {useState} from "react";
+import  Router  from 'next/router';
 
 
 const HomepageHeading = () =>{
 
-
+    const gototrade = () => Router.push('/trade/tradeMain')
 
 
     return(
@@ -15,6 +16,7 @@ const HomepageHeading = () =>{
                     vertical
         >
         <Container>
+        <Image size='small' src="/static/image/logo.png" centered circular />
             <Header
                 as='h1'
                 content='이더리움은 혁신적인 결제 네트워크이자 신종 화폐입니다.'
@@ -36,7 +38,7 @@ const HomepageHeading = () =>{
                     
                 }}
             />
-            <Button primary size='huge'>
+            <Button primary size='huge' onClick={gototrade}>
                 거래 시작하기
                 <Icon name='right arrow' />
             </Button>

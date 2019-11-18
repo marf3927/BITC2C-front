@@ -13,14 +13,14 @@ const Home = () => {
             <Segment>
           <Grid columns={3} divided>
     <Grid.Row>
-      <Grid.Column>
+      <Grid.Column width={6}>
       <Segment> <List/></Segment>
       </Grid.Column>
-      <Grid.Column>
+      <Grid.Column width={4}>
         <Segment><Chart/></Segment>
         <Segment><Writing/></Segment>
       </Grid.Column>
-      <Grid.Column>
+      <Grid.Column width={6}>
         <Segment><Mypage/></Segment>
    
       </Grid.Column>

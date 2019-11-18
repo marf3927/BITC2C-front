@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import Router from 'next/router'
-import {Button, Input ,Dimmer, Loader, Image, Segment,Form,Label} from 'semantic-ui-react'
+import {Button, Input ,Dimmer, Loader, Image, Segment,Form,Label,Grid,Message,Icon} from 'semantic-ui-react'
 import axios from 'axios'
 import AppLayout from '../../components/AppLayout';
 
@@ -148,17 +148,25 @@ const Register = () =>{
     return (
         <>
             <AppLayout>
-
-
-                <Segment
-                 inverted
-                 textAlign='center'
-                 style={{ minHeight: 600, padding: '1em 0em' }}
+            <Segment
+                 style={{ minHeight: 650, padding: '5em 0em' }}
                  vertical
                 >
 
-
-                        <Dimmer active={registstart}>
+<Grid columns='equal'>
+    <Grid.Column>
+      
+    </Grid.Column>
+    <Grid.Column width={4}>
+    <Message icon>
+    <Icon name='circle notched' loading />
+    <Message.Content>
+      <Message.Header>Sign Up</Message.Header>
+      
+Please fill in all fields .
+    </Message.Content>
+  </Message>
+    <Dimmer active={registstart}>
                             <Loader size='huge'>지갑 생성중</Loader>
                         </Dimmer>
 
@@ -199,9 +207,17 @@ const Register = () =>{
 
                             </Form>
                         </Segment>
+                        
+                        
+    </Grid.Column>
+    <Grid.Column>
+      
+    </Grid.Column>
+  </Grid>
+               
+                </Segment>   
 
-
-                </Segment>
+              
             </AppLayout>
         </>
     );

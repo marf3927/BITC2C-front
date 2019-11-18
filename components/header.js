@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react'
-import {Menu, Icon, Container, Button,Responsive,Visibility ,Segment,Label } from 'semantic-ui-react'
+import {Menu, Icon, Container, Button,Responsive,Visibility ,Segment,Label, Image } from 'semantic-ui-react'
 import Link from 'next/link'
 import {HttpServiceContext} from "../store/HttpService"
 
@@ -87,6 +87,7 @@ const Header = ({children}) => {
                     style={{ minHeight: 150, padding: '1em 0em' }}
                     vertical
                 >
+                    
                     <Menu
                         fixed={fixed ? 'top' : null}
                         inverted={!fixed}
@@ -96,7 +97,7 @@ const Header = ({children}) => {
                     >
                         <Container>
                             
-                           
+                            
                             <Menu.Item name="home" active={activeItem==='home'} content='Home' onClick={handleItemClick}/ >
                             
                             <Menu.Item  name="trade" active={activeItem==='trade'} content='TRADE' onClick={handleItemClick}/>
