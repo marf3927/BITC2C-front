@@ -150,7 +150,12 @@ const Register = () =>{
             <AppLayout>
 
 
-                <Segment>
+                <Segment
+                 inverted
+                 textAlign='center'
+                 style={{ minHeight: 600, padding: '1em 0em' }}
+                 vertical
+                >
 
 
                         <Dimmer active={registstart}>

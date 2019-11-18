@@ -2,9 +2,9 @@ import React, {useContext, useEffect, useState} from 'react'
 import Link from 'next/link'
 import {Cookies} from 'react-cookie'
 import AppLayout from '../../components/AppLayout'
-import { Button, Divider, Form, Grid, Segment } from 'semantic-ui-react'
+import { Button, Divider, Form, Grid, Segment,Header,Image,Message } from 'semantic-ui-react'
 import {HttpServiceContext} from "../../store/HttpService"
-
+require('semantic-ui-css/semantic.min.css')
 
 
 const Login = () => {
@@ -27,8 +27,38 @@ const Login = () => {
     if (!HttpService.authStore.isLoggedIn) {
         return (
             <>
-                <AppLayout>
-                    <Segment placeholder>
+            <AppLayout>
+                 <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+    <Grid.Column style={{ maxWidth: 450 }}>
+      <Header as='h2' color='teal' textAlign='center'>
+        <Image src='/logo.png' /> Log-in to your account
+      </Header>
+      <Form size='large'>
+        <Segment stacked>
+          <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address'  onChange={e => setEmail(e.target.value)} type="text" name="email" />
+          <Form.Input
+            fluid
+            icon='lock'
+            iconPosition='left'
+            placeholder='Password'
+            type='password'
+            onChange={e => setPassword(e.target.value)} type="password" name="pass"
+          />
+
+          <Button color='teal' fluid size='large' onClick={() => onLoginClick(email, password)}>
+            Login
+          </Button>
+        </Segment>
+      </Form>
+      <Message>
+        New to us? <Link href="/user/register"><a>Sign Up</a></Link>
+      </Message>
+    </Grid.Column>
+  </Grid>
+                    <Segment  
+                 textAlign='center'
+                 style={{ minHeight: 400, padding: '1em 0em' }}
+                 vertical>
                         <Grid columns={2} relaxed='very' stackable>
                             <Grid.Column>
                                 <Form>
@@ -72,7 +102,7 @@ const Login = () => {
                     <Link href="/user/forgot">
                     <Button content='Username / Password?' icon='question circle' size='small' />
                     </Link>
-                </AppLayout>
+                    </AppLayout>
             </>
         )
     } else {

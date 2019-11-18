@@ -1,25 +1,29 @@
 import {Menu, Icon, Container, Button,Responsive,Visibility ,Segment,Header } from 'semantic-ui-react'
-import Link from "next/link";
 import React, {useState} from "react";
 
 
-const HomepageHeading = ({mobile}) =>{
+const HomepageHeading = () =>{
 
 
 
 
     return(
-
-        <Container text>
+        <Segment
+                 inverted
+                    textAlign='center'
+                    style={{ minHeight: 250, padding: '7em 0em' }}
+                    vertical
+        >
+        <Container>
             <Header
                 as='h1'
                 content='Imagine-a-Company'
                 inverted
                 style={{
-                    fontSize: mobile ? '2em' : '4em',
+                    
                     fontWeight: 'normal',
                     marginBottom: 0,
-                    marginTop: mobile ? '1.5em' : '3em',
+                   
                 }}
             />
             <Header
@@ -27,9 +31,9 @@ const HomepageHeading = ({mobile}) =>{
                 content='Do whatever you want when you want to.'
                 inverted
                 style={{
-                    fontSize: mobile ? '1.5em' : '1.7em',
+                    
                     fontWeight: 'normal',
-                    marginTop: mobile ? '0.5em' : '1.5em',
+                    
                 }}
             />
             <Button primary size='huge'>
@@ -37,6 +41,7 @@ const HomepageHeading = ({mobile}) =>{
                 <Icon name='right arrow' />
             </Button>
         </Container>
+        </Segment>
     )
 
 

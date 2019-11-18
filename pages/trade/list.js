@@ -140,9 +140,9 @@ const List = () => {
         <>
             <AppLayout>
                 <Segment
-                 inverted
+                 
                  textAlign='center'
-                 style={{ minHeight: 500, padding: '1em 0em' }}
+                 style={{ minHeight: 650, padding: '1em 0em' }}
                  vertical>
 
                
@@ -159,7 +159,7 @@ const List = () => {
                     </Menu>
 
                     <div className="ui segment active tab">
-                        <Table singleLine>
+                        <Table singleLine >
                             <Table.Header>
                                 <Table.Row>
 

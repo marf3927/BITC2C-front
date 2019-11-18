@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
+import {Button, Table, Input, Icon, Tab, Segment} from 'semantic-ui-react'
 import Router from "next/router"
 import {Cookies} from 'react-cookie'
 import {HttpServiceContext} from "../../store/HttpService"
@@ -102,6 +102,12 @@ const Mypage = () => {
     return (
         <>
             <AppLayout>
+                <Segment
+                
+                style={{ minHeight: 650, padding: '1em 0em' }}
+                vertical
+                
+                >
                 <div>
                     <h1>MyPage</h1>
                     {
@@ -214,6 +220,7 @@ const Mypage = () => {
                         <Link href="/user/changepwd"><a>비밀번호 변경</a></Link>
                     </div>
                 </div>
+                </Segment>
             </AppLayout>
         </>
     )

@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react'
-import {Menu, Icon, Container, Button,Responsive,Visibility ,Segment } from 'semantic-ui-react'
+import {Menu, Icon, Container, Button,Responsive,Visibility ,Segment,Label } from 'semantic-ui-react'
 import Link from 'next/link'
 import {HttpServiceContext} from "../store/HttpService"
 import DesktopContainer from "./DesktopContainer";
@@ -25,6 +25,7 @@ const Header = ({children}) => {
         else if(name==='trade'){
             Router.push('/trade/list')
         }else if(name==='mypage'){
+            console.log('asdasd')
             Router.push('/user/mypage')
         }
     }
@@ -59,7 +60,10 @@ const Header = ({children}) => {
     useEffect(()=>{
         getAlarm()
     })
-
+    const colors = [
+        'red'
+        
+      ]
 
 
     const logout = () => {
@@ -70,12 +74,14 @@ const Header = ({children}) => {
 
         <>
             <div>
+                
             <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
             <Visibility
                 once={false}
                 onBottomPassed={showFixedMenu}
                 onBottomPassedReverse={hideFixedMenu}
             >
+                
                 <Segment
                     inverted
                     textAlign='center'
@@ -90,6 +96,7 @@ const Header = ({children}) => {
                         size='large'
                     >
                         <Container>
+                            
                             {console.log('container',activeItem)}
                             <Menu.Item name="home" active={activeItem==='home'} content='Home' onClick={handleItemClick}/ >
                             
@@ -98,7 +105,18 @@ const Header = ({children}) => {
                             <Menu.Item  name="QNA" active={activeItem==='QNA'} content='QNA' onClick={handleItemClick}>QNA</Menu.Item>
                             
                             <Menu.Item position='right'>
-                            {HttpService.authStore.isLoggedIn ?<> <Menu.Item name="MYPAGE" active={activeItem==='MYPAGE'} content='MYPAGE' onClick={handleItemClick}/>
+                            {HttpService.authStore.isLoggedIn ?<> 
+                                
+    <Menu.Item as='a'>
+      <Icon name='mail' /> 알람
+      <Label color='red' floating>
+      {alarms}
+      </Label>
+    </Menu.Item>
+ 
+  
+                                <Icon name='bell outline'/><Link href="/alarm/list"><a> <Label circular color='red' key='red'>{alarms}</Label></a></Link>
+                            <Menu.Item name="mypage" active={activeItem==='mypage'} content='MYPAGE' onClick={handleItemClick}/>
                              <Menu.Item name="LOGOUT" active={activeItem==='LOGOUT'} content='LOGOUT' onClick={logout}/></>
                                 :                               
                                 <> <Button as='a' inverted={!fixed}>
