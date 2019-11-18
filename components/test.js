@@ -7,7 +7,7 @@ const Timer = ({ seconds }) => {
 
   useEffect(() => {
     // exit early when we reach 0
-    if (!timeLeft) {
+    if (!timeLeft||timeLeft<0) {
       Router.push('/trade/cancel')
     };
 

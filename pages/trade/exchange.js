@@ -57,7 +57,7 @@ const exchange = ()=>{
             if(a.boolconfirm&&a.balanceconfirm&&a.transfer){
                 Router.push('/trade/success')
                 console.log("트랜스퍼 성공")
-            }else if(!(a.boolconfirm||a.balanceconfirm||a.transfer)){
+            }else if(!(a.boolconfirm||(a.balanceconfirm&&a.transfer))){
                 Router.push('/trade/cancel')
                 console.log("잔액부족 ")
             }else{
