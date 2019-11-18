@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from 'react'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon, Menu, Dropdown, Tab, Segment} from 'semantic-ui-react'
+import {Button, Table, Input, Icon, Menu, Dropdown, Tab, Segment, Message} from 'semantic-ui-react'
 import Router from "next/router"
 import {HttpServiceContext} from "../../store/HttpService"
 
@@ -144,7 +144,7 @@ const List = () => {
                  textAlign='center'
                  style={{ minHeight: 650, padding: '1em 0em' }}
                  vertical>
-
+                <Message color='yellow'>거래등록현황</Message>
                
                 <style jsx>{`
                     .type_right {
@@ -153,10 +153,12 @@ const List = () => {
                     }
                 `}</style>
                 <div>
+                    <Segment textAlign="left">
                     <Menu compact>
                         <Dropdown text={Sellselected} options={selloption} onChange={onSellSelectChange} simple item/>
                         <Dropdown text={Buyselected} options={buyoption} onChange={onBuySelectChange} simple item/>
                     </Menu>
+                    </Segment>
 
                     <div className="ui segment active tab">
                         <Table singleLine >

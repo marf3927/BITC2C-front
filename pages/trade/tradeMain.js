@@ -1,6 +1,6 @@
 import React from 'react'
 import List from "./list"
-import Writing from "./writing"
+import Writing from "./tradewriting"
 import Mypage from "./trademypage"
 import AppLayout from '../../components/AppLayout'
 import Chart from "../../components/tradeMain/chart"

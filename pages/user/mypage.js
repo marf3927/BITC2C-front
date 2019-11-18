@@ -109,7 +109,8 @@ const Mypage = () => {
                 
                 >
                 <div>
-                    <h1>MyPage</h1>
+                <Message color='green'>MyPage</Message>
+                  
                     {
                         (function () {
                             if (userData) {

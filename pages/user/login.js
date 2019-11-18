@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import Link from 'next/link'
 import {Cookies} from 'react-cookie'
 import AppLayout from '../../components/AppLayout'
-import { Button, Divider, Form, Grid, Segment,Header,Image,Message } from 'semantic-ui-react'
+import { Button, Divider, Form, Grid, Segment,Header,Image,Message, Icon } from 'semantic-ui-react'
 import {HttpServiceContext} from "../../store/HttpService"
 require('semantic-ui-css/semantic.min.css')
 
@@ -31,7 +31,7 @@ const Login = () => {
                  <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 450 }}>
       <Header as='h2' color='teal' textAlign='center'>
-        <Image src='/logo.png' /> Log-in to your account
+        <Icon name="bitcoin"/> Log-in to your account
       </Header>
       <Form size='large'>
         <Segment stacked>
