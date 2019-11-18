@@ -9,7 +9,7 @@ const Home = () => {
     return (
         <>
             <AppLayout>
-                <Chart/>
+
                 <div>Hello World!</div>
             </AppLayout>
         </>

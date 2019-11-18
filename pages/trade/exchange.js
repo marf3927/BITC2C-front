@@ -62,8 +62,9 @@ const exchange = ()=>{
                 console.log("잔액부족 ")
             }else{
                 setboolconfirm(a.boolconfirm);
+                setlodderbool(false);
             }
-            setlodderbool(false);
+
 
         })
     }
@@ -83,7 +84,7 @@ const exchange = ()=>{
                 <Grid.Column>
                     <Segment color='black' inverted>
                         <Message icon>
-                            <Icon name='circle notched' loading />
+                            <Icon name='sync' loading />
                             <Message.Content>
 
                                 {(datetime===undefined) ? "": <Timer seconds={datetime}/>}
