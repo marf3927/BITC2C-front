@@ -138,7 +138,7 @@ const List = () => {
 
     return (
         <>
-            <AppLayout>
+          
                 <Segment
                  
                  textAlign='center'
@@ -165,16 +165,16 @@ const List = () => {
 
                                     <Table.HeaderCell>SELL</Table.HeaderCell>
                                     <Table.HeaderCell
-                                        onClick={() => Sortlist("selltokenamount")}>sellamount{decideSort("selltokenamount")}</Table.HeaderCell>
+                                        onClick={() => Sortlist("selltokenamount")}>판매개수{decideSort("selltokenamount")}</Table.HeaderCell>
                                     <Table.HeaderCell>BUY</Table.HeaderCell>
                                     <Table.HeaderCell
-                                        onClick={() => Sortlist("buytokenamount")}>buyamount{decideSort("buytokenamount")}</Table.HeaderCell>
+                                        onClick={() => Sortlist("buytokenamount")}>구매개수{decideSort("buytokenamount")}</Table.HeaderCell>
                                     <Table.HeaderCell
-                                        onClick={() => Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
+                                        onClick={() => Sortlist("status")}>상태{decideSort("status")}</Table.HeaderCell>
                                     <Table.HeaderCell
                                         onClick={() => Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
-                                    <Table.HeaderCell onClick={() => Sortlist("Expirydate")}>Expiry
-                                        date{decideSort("Expirydate")}</Table.HeaderCell>
+                                    {/* <Table.HeaderCell onClick={() => Sortlist("Expirydate")}>Expiry
+                                        date{decideSort("Expirydate")}</Table.HeaderCell> */}
                                 </Table.Row>
                             </Table.Header>
 
@@ -187,7 +187,7 @@ const List = () => {
                                         <Table.Cell>{item.buytokenamount}</Table.Cell>
                                         <Table.Cell>{statusdecide(item.status)}</Table.Cell>
                                         <Table.Cell>{item.updatedAt}</Table.Cell>
-                                        <Table.Cell>{item.Expirydate}</Table.Cell>
+                                        {/* <Table.Cell>{item.Expirydate}</Table.Cell> */}
                                     </Table.Row>
 
                                 })}
@@ -212,7 +212,7 @@ const List = () => {
                                                          onClick={() => WritingBoard()}>Writing</Button></span>
                 </div>
                 </Segment>
-            </AppLayout>
+            
         </>
     )
 }

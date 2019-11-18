@@ -85,7 +85,7 @@ const Writing = () => {
     }
 
     return (
-        <AppLayout>
+        
 
             <div>
                 <div>
@@ -127,7 +127,7 @@ const Writing = () => {
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        
 
     )
 }

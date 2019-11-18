@@ -2,8 +2,7 @@ import React, {useContext, useState, useEffect} from 'react'
 import {Menu, Icon, Container, Button,Responsive,Visibility ,Segment,Label } from 'semantic-ui-react'
 import Link from 'next/link'
 import {HttpServiceContext} from "../store/HttpService"
-import DesktopContainer from "./DesktopContainer";
-import MobileContainer from "./MobileContainer";
+
 import Footer from './footer';
 import Router,{ useRouter } from 'next/router';
 
@@ -23,7 +22,7 @@ const Header = ({children}) => {
             Router.push('/')
         }
         else if(name==='trade'){
-            Router.push('/trade/list')
+            Router.push('/trade/tradeMain')
         }else if(name==='mypage'){
             console.log('asdasd')
             Router.push('/user/mypage')
@@ -38,7 +37,7 @@ const Header = ({children}) => {
 
         return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
     }
-
+    
 
     const getAlarm = () => {
         if(HttpService.authStore.isLoggedIn){
@@ -108,14 +107,21 @@ const Header = ({children}) => {
                             {HttpService.authStore.isLoggedIn ?<> 
                                 
     <Menu.Item as='a'>
+
       <Icon name='mail' /> 알람
       <Label color='red' floating>
       {alarms}
       </Label>
+      
     </Menu.Item>
- 
+                                
   
                                 <Icon name='bell outline'/><Link href="/alarm/list"><a> <Label circular color='red' key='red'>{alarms}</Label></a></Link>
+                                <Label as='a' color='yellow' image>
+                                    <Icon name='user'></Icon>
+                                    Helen
+                                    <Label.Detail>Co-worker</Label.Detail>
+                                    </Label>
                             <Menu.Item name="mypage" active={activeItem==='mypage'} content='MYPAGE' onClick={handleItemClick}/>
                              <Menu.Item name="LOGOUT" active={activeItem==='LOGOUT'} content='LOGOUT' onClick={logout}/></>
                                 :                               
