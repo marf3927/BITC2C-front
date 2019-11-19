@@ -6,6 +6,7 @@ import Timer from '../../components/test'
 //구매와 판매 판별하는 함수
 
 import {HttpServiceContext} from "../../store/HttpService"
+import AppLayout from '../../components/AppLayout';
 
 const exchange = ()=>{
     const [password,setPassword] = useState('');
@@ -71,7 +72,15 @@ const exchange = ()=>{
 
     return(
     <>
-        <Segment>
+    <AppLayout>
+        <Segment
+        
+         textAlign='center'
+         style={{ minHeight: 550, padding: '1em 0em' }}
+         vertical
+        
+
+        >
         <Dimmer active={lodderbool}>
             <Loader size='huge'>지갑 암호를 확인중입니다.</Loader>
         </Dimmer>
@@ -80,7 +89,7 @@ const exchange = ()=>{
                 <Loader size='huge'>확인완료 잠시만 기다려주세요.</Loader>
             </Dimmer>
         <Grid columns='equal' divided inverted padded>
-            <Grid.Row color='black' textAlign='center'>
+            <Grid.Row color='black' textAlign='center'  style={{ minHeight: 550, padding: '1em 0em' }}>
                 <Grid.Column>
                     <Segment color='black' inverted>
                         <Message icon>
@@ -110,7 +119,7 @@ const exchange = ()=>{
             </Grid.Row>
         </Grid>
         </Segment>
-
+        </AppLayout>
         </>)
 
 }

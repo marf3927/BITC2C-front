@@ -23,8 +23,9 @@ const AppLayout = ({children}) => {
                 />
             </Head>
             <div>
-                <Header alarm={alarm}/>
+                <Header alarm={alarm}>
                 {children}
+                </Header>
 
             </div>
         </>

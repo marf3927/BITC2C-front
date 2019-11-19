@@ -4,7 +4,7 @@ import AppLayout from '../../components/AppLayout'
 import fetch from 'isomorphic-unfetch'
 import Router from 'next/router'
 
-import {Button, Table, Input, Icon, Tab} from 'semantic-ui-react'
+import {Button, Table, Input, Icon,List, Grid, Segment,Label,Image,Message} from 'semantic-ui-react'
 import {HttpServiceContext} from "../../store/HttpService"
 
 const Detail = ({id}) => {
@@ -102,73 +102,87 @@ const Detail = ({id}) => {
 
         <>
             <AppLayout>
-                <div className="ui two column centered grid">
-                    <form className="ui fluid form">
-                        <div className="field">
-
-
-                        </div>
-
-                        <div className="field">
-                            <label>sellToken : {items.selltoken}</label>
-                        </div>
-                        <div className="ui divider"></div>
-                        <div className="field">
-                            <label>sellamount : {items.selltokenamount}</label>
-
-                        </div>
-                        <div className="ui divider"></div>
-                        <div className="field" placeholder="Last Name">
-
-                            <label>buytoken : {items.buytoken}</label>
-                        </div>
-                        <div className="ui divider"></div>
-                        <div className="inline field">
-                            <label>buyamount : {items.buytokenamount}</label>
-                        </div>
-                        <div className="inline field">
-
-                            <input type="text" placeholder="amount"/>
-                            <div className="ui left pointing label">
-                                구매할 수량
-                            </div>
-                        </div>
-                        <div className="ui divider"></div>
-                        <div className="inline field">
-                            <div className="ui right pointing label">
-
-                            </div>
-                            <input type="password"/>
-                        </div>
-                        <div className="ui divider"></div>
-                        <div className="inline field">
-                            <div className="ui right pointing label">
-
-                            </div>
-                            <input type="password"/>
-                        </div>
-                        <div className="four column centered row">
-
-
-                        </div>
-                    </form>
-                    <div className="column">
-                        {usermatch() ? <h1>
+        
+                <Segment
+               textAlign='center'
+         style={{ minHeight: 550, padding: '1em 0em' }}
+         vertical
+                >
+<Message>
+    <Message.Header>거래 상세 상황</Message.Header>
+    <p>
+      We updated our privacy policy here to better service our customers. We
+      recommend reviewing the changes.
+    </p>
+  </Message>
+<Grid columns='equal'>
+    <Grid.Column>
+      
+    </Grid.Column>
+    <Grid.Column width={10}>
+    
+    <Grid columns={1}>
+    <Grid.Column>
+    <Segment inverted>
+    <List divided inverted relaxed>
+      <List.Item>
+        <List.Content>
+          <List.Header>SELLTOKEN</List.Header>
+          <Label key="midium" size="midium">
+          {items.selltoken}
+      </Label>
+          
+        </List.Content>
+      </List.Item>
+      <List.Item>
+        <List.Content>
+          <List.Header>SELLAMOUNT</List.Header>
+          <Label key="midium" size="midium">
+          {items.selltokenamount}
+      </Label>
+          
+        </List.Content>
+      </List.Item>
+      <List.Item>
+        <List.Content>
+          <List.Header>BUYTOKEN</List.Header>
+          <Label key="midium" size="midium">
+          {items.buytoken}
+      </Label>
+        </List.Content>
+      </List.Item>
+      <List.Item>
+        <List.Content>
+          <List.Header>BUYAMOUNT</List.Header>
+          <Label key="midium" size="midium">
+          {items.buytokenamount}
+      </Label>
+        </List.Content>
+      </List.Item>
+    </List>
+    
+  </Segment>    
+  <Segment textAlign='right'>
+                    {usermatch() ? <h1>
                             거래현황
                         </h1> : <button className="ui primary button"
                                         onClick={()=>confirmAction("거래를 진행하시겠습니까?",gotoTrade, rejection)}>
                             BUY
                         </button>}
+                        </Segment>
+    </Grid.Column>
+  </Grid>
+                        
+    </Grid.Column>
+    <Grid.Column>
+      
+    </Grid.Column>
+  </Grid>
+               
+                </Segment>     
+                
 
-                    </div>
-                    <div>
-                        <Button onClick={() => tradealarm()}>
-                            test
-                            </Button>
-                    </div>
-                </div>
-
-
+                              
             </AppLayout>
 
         </>

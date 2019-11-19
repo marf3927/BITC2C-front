@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react'
+import { Button, Message } from 'semantic-ui-react'
 import axios from 'axios'
 
 
@@ -128,10 +128,11 @@ class Chart extends Component {
   render() {
     return (
       <>
-        <div class="ui buttons">
-          <button class="ui button" onClick={() => this.TokenChange(1)}>Atoken</button>
-          <button class="ui button" onClick={() => this.TokenChange(2)}>Btoken</button>
-          <button class="ui button" onClick={() => this.TokenChange(3)}>Ctoken</button>
+         <Message color='blue'>거래 차트</Message>
+        <div className="ui buttons">
+          <button className="ui button" onClick={() => this.TokenChange(1)}>Atoken</button>
+          <button className="ui button" onClick={() => this.TokenChange(2)}>Btoken</button>
+          <button className="ui button" onClick={() => this.TokenChange(3)}>Ctoken</button>
         </div>
         <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>
       </>

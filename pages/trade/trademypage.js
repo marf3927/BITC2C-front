@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon, Tab, Segment} from 'semantic-ui-react'
+import {Button, Table, Input, Icon, Tab, Segment, Message} from 'semantic-ui-react'
 import Router from "next/router"
 import {Cookies} from 'react-cookie'
 import {HttpServiceContext} from "../../store/HttpService"
@@ -101,7 +101,7 @@ const Mypage = () => {
 
     return (
         <>
-            <AppLayout>
+            
                 <Segment
                 
                 style={{ minHeight: 650, padding: '1em 0em' }}
@@ -110,7 +110,6 @@ const Mypage = () => {
                 >
                 <div>
                 <Message color='green'>MyPage</Message>
-                  
                     {
                         (function () {
                             if (userData) {
@@ -222,7 +221,7 @@ const Mypage = () => {
                     </div>
                 </div>
                 </Segment>
-            </AppLayout>
+           
         </>
     )
 }

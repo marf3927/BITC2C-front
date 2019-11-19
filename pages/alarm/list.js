@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import AppLayout from '../../components/AppLayout'
-import { Button, Table, Input, Icon, Menu, Dropdown, Tab } from 'semantic-ui-react'
+import { Button, Table, Input, Icon, Menu, Dropdown, Tab, Segment,Grid,Label } from 'semantic-ui-react'
 import Router from "next/router"
 import { HttpServiceContext } from "../../store/HttpService"
 
@@ -25,9 +25,20 @@ const List = () => {
       return (
         <>
             <AppLayout>
-                <div>
-                    <div className="ui segment active tab">
-                        <Table singleLine>
+                <Segment
+                 style={{ minHeight: 650, padding: '5em 0em' }}
+                 vertical
+                >
+
+<Grid columns='equal'>
+    <Grid.Column>
+      
+    </Grid.Column>
+    <Grid.Column width={10}>
+    <Label as='a' color='red' tag>
+      알람
+    </Label>
+      <Table singleLine>
                             <Table.Body>
                                 {items.map((item) => {
                                     return <Table.Row key={item.id} >
@@ -42,10 +53,15 @@ const List = () => {
                                 })}
                             </Table.Body>
                         </Table>
-                    </div>
-                    
-                </div>
-
+                        
+                        
+    </Grid.Column>
+    <Grid.Column>
+      
+    </Grid.Column>
+  </Grid>
+               
+                </Segment>                     
             </AppLayout>
         </>
     )

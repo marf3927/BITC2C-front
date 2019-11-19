@@ -86,9 +86,9 @@ const Writing = () => {
 
     return (
         <>
-            <AppLayout>
+       
             <Segment
-                 style={{ minHeight: 650, padding: '5em 0em' }}
+                 style={{ minHeight: 650, padding: '0em 0em' }}
                  vertical
                 >
 
@@ -96,16 +96,9 @@ const Writing = () => {
     <Grid.Column>
       
     </Grid.Column>
-    <Grid.Column width={4}>
-    <Message icon>
-    <Icon name='first order' loading />
-    <Message.Content>
-      <Message.Header>거래글 등록</Message.Header>
-      
-Please fill in all fields .
-    </Message.Content>
-  </Message>
- 
+    <Grid.Column width={16}>
+    
+    <Message color='purple'>거래등록</Message>
 
                         <Segment inverted>
                         <Grid.Column style={{padding : '1em 0em'}}>
@@ -149,7 +142,7 @@ Please fill in all fields .
   </Grid>
                
                 </Segment>   
-            </AppLayout>
+          
 
         </>
 

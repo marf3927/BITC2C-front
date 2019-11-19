@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from 'react'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon, Menu, Dropdown, Tab} from 'semantic-ui-react'
+import {Button, Table, Input, Icon, Menu, Dropdown, Tab, Segment, Message} from 'semantic-ui-react'
 import Router from "next/router"
 import {HttpServiceContext} from "../../store/HttpService"
 
@@ -138,7 +138,14 @@ const List = () => {
 
     return (
         <>
-            <AppLayout>
+          
+                <Segment
+                 
+                 textAlign='center'
+                 style={{ minHeight: 650, padding: '1em 0em' }}
+                 vertical>
+                <Message color='yellow'>거래등록현황</Message>
+               
                 <style jsx>{`
                     .type_right {
                         float: right;
@@ -146,28 +153,30 @@ const List = () => {
                     }
                 `}</style>
                 <div>
+                    <Segment textAlign="left">
                     <Menu compact>
                         <Dropdown text={Sellselected} options={selloption} onChange={onSellSelectChange} simple item/>
                         <Dropdown text={Buyselected} options={buyoption} onChange={onBuySelectChange} simple item/>
                     </Menu>
+                    </Segment>
 
                     <div className="ui segment active tab">
-                        <Table singleLine>
+                        <Table singleLine >
                             <Table.Header>
                                 <Table.Row>
 
                                     <Table.HeaderCell>SELL</Table.HeaderCell>
                                     <Table.HeaderCell
-                                        onClick={() => Sortlist("selltokenamount")}>sellamount{decideSort("selltokenamount")}</Table.HeaderCell>
+                                        onClick={() => Sortlist("selltokenamount")}>판매개수{decideSort("selltokenamount")}</Table.HeaderCell>
                                     <Table.HeaderCell>BUY</Table.HeaderCell>
                                     <Table.HeaderCell
-                                        onClick={() => Sortlist("buytokenamount")}>buyamount{decideSort("buytokenamount")}</Table.HeaderCell>
+                                        onClick={() => Sortlist("buytokenamount")}>구매개수{decideSort("buytokenamount")}</Table.HeaderCell>
                                     <Table.HeaderCell
-                                        onClick={() => Sortlist("status")}>status{decideSort("status")}</Table.HeaderCell>
+                                        onClick={() => Sortlist("status")}>상태{decideSort("status")}</Table.HeaderCell>
                                     <Table.HeaderCell
                                         onClick={() => Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
-                                    <Table.HeaderCell onClick={() => Sortlist("Expirydate")}>Expiry
-                                        date{decideSort("Expirydate")}</Table.HeaderCell>
+                                    {/* <Table.HeaderCell onClick={() => Sortlist("Expirydate")}>Expiry
+                                        date{decideSort("Expirydate")}</Table.HeaderCell> */}
                                 </Table.Row>
                             </Table.Header>
 
@@ -180,7 +189,7 @@ const List = () => {
                                         <Table.Cell>{item.buytokenamount}</Table.Cell>
                                         <Table.Cell>{statusdecide(item.status)}</Table.Cell>
                                         <Table.Cell>{item.updatedAt}</Table.Cell>
-                                        <Table.Cell>{item.Expirydate}</Table.Cell>
+                                        {/* <Table.Cell>{item.Expirydate}</Table.Cell> */}
                                     </Table.Row>
 
                                 })}
@@ -204,7 +213,8 @@ const List = () => {
                     <span className="type_right"><Button id="WritingBoard"
                                                          onClick={() => WritingBoard()}>Writing</Button></span>
                 </div>
-            </AppLayout>
+                </Segment>
+            
         </>
     )
 }
