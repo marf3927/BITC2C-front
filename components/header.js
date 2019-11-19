@@ -98,7 +98,7 @@ const Header = ({children}) => {
                         <Container>
                             
                             
-                            <Menu.Item name="home" active={activeItem==='home'} content='Home' onClick={handleItemClick}/ >
+                            <Menu.Item name="home" active={activeItem==='home'} content='Home' onClick={handleItemClick}/>
                             
                             <Menu.Item  name="trade" active={activeItem==='trade'} content='TRADE' onClick={handleItemClick}/>
                             
@@ -118,17 +118,25 @@ const Header = ({children}) => {
                                 
   
                                 <Icon name='bell outline'/><Link href="/alarm/list"><a> <Label circular color='red' key='red'>{alarms}</Label></a></Link>
-                                <Label as='a' color='yellow' image>
+                                    <div>
+                                    </div>
+                                    <Label as='a' color='yellow' image>
                                     <Icon name='user'></Icon>
                                     Helen
                                     <Label.Detail>Co-worker</Label.Detail>
                                     </Label>
+                                    <div>
+                                    </div>
                             <Menu.Item name="mypage" active={activeItem==='mypage'} content='MYPAGE' onClick={handleItemClick}/>
+                                    <div>
+                                    </div>
                              <Menu.Item name="LOGOUT" active={activeItem==='LOGOUT'} content='LOGOUT' onClick={logout}/></>
                                 :                               
                                 <> <Button as='a' inverted={!fixed}>
                                     <Link href="/user/login"><a>Log in</a></Link>
                                 </Button>
+                                    <div>
+                                    </div>
                                 <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
                                 <Link href="/user/register"><a>Sign Up</a></Link> 
                                 </Button></>}
