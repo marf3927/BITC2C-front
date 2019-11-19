@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import Router from 'next/router'
-import {Button, Input ,Dimmer, Loader, Image, Segment,Form,Label} from 'semantic-ui-react'
+import {Button, Input ,Dimmer, Loader, Image, Segment,Form,Label, Grid} from 'semantic-ui-react'
 import axios from 'axios'
 import AppLayout from '../../components/AppLayout';
 
@@ -156,9 +156,17 @@ const Register = () =>{
                         <Dimmer active={registstart}>
                             <Loader size='huge'>지갑 생성중</Loader>
                         </Dimmer>
+                       
+                        <Grid columns='equal'>
+    <Grid.Column>
+      
+    </Grid.Column>
+    <Grid.Column width={5}>
+      <Segment><Segment 
+                        inverted
 
-                        <Segment inverted>
-                            <Form inverted>
+                        >
+                            <Form inverted >
                                 <Form.Group widths='equal'>
                                     <Form.Input fluid label='Username' placeholder="Name" type="text" onChange={e => setName(e.target.value)}  />
 
@@ -193,8 +201,14 @@ const Register = () =>{
                                 <Button inverted id='registbtn' onClick={() => onRegisterClick(name, email, password)}>Register</Button>
 
                             </Form>
-                        </Segment>
-
+                        </Segment></Segment>
+    </Grid.Column>
+    <Grid.Column>
+      
+    </Grid.Column>
+  </Grid>
+                        
+                     
 
                 </Segment>
             </AppLayout>
