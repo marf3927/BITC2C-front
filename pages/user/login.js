@@ -30,7 +30,7 @@ const Login = () => {
             <AppLayout>
                  <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 450 }}>
-      <Header as='h2' color='teal' textAlign='center'>
+      <Header as='h2' color='blue' textAlign='center'>
         <Icon name="bitcoin"/> Log-in to your account
       </Header>
       <Form size='large'>
@@ -42,10 +42,10 @@ const Login = () => {
             iconPosition='left'
             placeholder='Password'
             type='password'
-            onChange={e => setPassword(e.target.value)} type="password" name="pass"
+            onChange={e => setPassword(e.target.value)} name="pass"
           />
 
-          <Button color='teal' fluid size='large' onClick={() => onLoginClick(email, password)}>
+          <Button color='blue' fluid size='large' onClick={() => onLoginClick(email, password)}>
             Login
           </Button>
         </Segment>

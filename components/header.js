@@ -107,26 +107,11 @@ const Header = ({children}) => {
                             <Menu.Item position='right'>
                             {HttpService.authStore.isLoggedIn ?<> 
                                 
-    <Menu.Item as='a'>
 
-      <Icon name='mail' /> 알람
-      <Label color='red' floating>
-      {alarms}
-      </Label>
-      
-    </Menu.Item>
                                 
   
                                 <Icon name='bell outline'/><Link href="/alarm/list"><a> <Label circular color='red' key='red'>{alarms}</Label></a></Link>
-                                    <div>
-                                    </div>
-                                    <Label as='a' color='yellow' image>
-                                    <Icon name='user'></Icon>
-                                    Helen
-                                    <Label.Detail>Co-worker</Label.Detail>
-                                    </Label>
-                                    <div>
-                                    </div>
+
                             <Menu.Item name="mypage" active={activeItem==='mypage'} content='MYPAGE' onClick={handleItemClick}/>
                                     <div>
                                     </div>
