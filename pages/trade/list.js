@@ -171,10 +171,10 @@ const List = () => {
                                     <Table.HeaderCell>BUY</Table.HeaderCell>
                                     <Table.HeaderCell
                                         onClick={() => Sortlist("buytokenamount")}>구매개수{decideSort("buytokenamount")}</Table.HeaderCell>
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("status")}>상태{decideSort("status")}</Table.HeaderCell>
-                                    <Table.HeaderCell
-                                        onClick={() => Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>
+                                    {/*<Table.HeaderCell*/}
+                                    {/*    onClick={() => Sortlist("status")}>상태{decideSort("status")}</Table.HeaderCell>*/}
+                                    {/*<Table.HeaderCell*/}
+                                    {/*    onClick={() => Sortlist("updated")}>updated{decideSort("updated")}</Table.HeaderCell>*/}
                                     {/* <Table.HeaderCell onClick={() => Sortlist("Expirydate")}>Expiry
                                         date{decideSort("Expirydate")}</Table.HeaderCell> */}
                                 </Table.Row>

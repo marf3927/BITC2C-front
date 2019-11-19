@@ -88,8 +88,8 @@ const Writing = () => {
         <>
        
             <Segment
-                 style={{ minHeight: 650, padding: '0em 0em' }}
-                 vertical
+                 style={{ minHeight: 350, padding: '2em 0em' }}
+                 inverted
                 >
 
 <Grid columns='equal'>
@@ -98,9 +98,9 @@ const Writing = () => {
     </Grid.Column>
     <Grid.Column width={16}>
     
-    <Message color='purple'>거래등록</Message>
+    <Message width={3} color='purple'>거래등록</Message>
 
-                        <Segment inverted>
+                        <Segment inverted textAlign={"left"}>
                         <Grid.Column style={{padding : '1em 0em'}}>
                         sellcoin: <Menu compact>
                         <Dropdown text={sellcoinoption.text} options={sellcoinoption} onChange={onSellCoinChange} simple
@@ -129,7 +129,7 @@ const Writing = () => {
                        
                         </Grid.Column>
                         </Segment>
-                        <Segment textAlign="right">
+                        <Segment vertical textAlign="right">
                         <Button positive id='writeTrade' onClick={() => onRegisterClick(2)}>
                             거래 등록
                         </Button>
