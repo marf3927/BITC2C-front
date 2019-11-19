@@ -76,7 +76,7 @@ const Home = () => {
                             <Segment vertical textAlign={"right"}
 
                             >
-                            <Icon name="chevron circle left" size="big" onClick={onclickvisible}/>
+                            <Icon name="bitbucket" size="big" onClick={onclickvisible}/>
                             </Segment>
                         </Rail>
                     </Grid.Column>

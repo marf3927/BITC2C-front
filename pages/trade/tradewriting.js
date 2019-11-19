@@ -88,8 +88,8 @@ const Writing = () => {
         <>
        
             <Segment
-                 style={{ minHeight: 350, padding: '2em 0em' }}
-                 inverted
+                 style={{ minHeight: 350, padding: '2em 0em',margin: '4em 2em' }}
+                 vertical
                 >
 
 <Grid columns='equal'>
@@ -102,28 +102,38 @@ const Writing = () => {
 
                         <Segment inverted textAlign={"left"}>
                         <Grid.Column style={{padding : '1em 0em'}}>
-                        sellcoin: <Menu compact>
+                            <Label color='blue' key="blue">
+                                SELLCOIN
+                            </Label> <Menu compact>
                         <Dropdown text={sellcoinoption.text} options={sellcoinoption} onChange={onSellCoinChange} simple
                                   item/>
                     </Menu>
                     </Grid.Column>
 
                     <Grid.Column style={{padding : '1em 0em'}}>
-                        amount: <Input type="number" onChange={e => setselltokenamount(e.target.value)} name="amount1"
+                        <Label color='blue' key="blue">
+                            AMOUNT
+                        </Label> <Input type="number" onChange={e => setselltokenamount(e.target.value)} name="amount1"
                                        placeholder="거래량"/>
                    </Grid.Column>
                    <Grid.Column style={{padding : '1em 0em'}}>
-                        buycoin: <Menu compact>
+                       <Label color='blue' key="blue">
+                           BUYCOIN
+                       </Label> <Menu compact>
                         <Dropdown text={buycoinoption.text} options={buycoinoption} onChange={onBuyCoinChange} simple
                                   item/>
                     </Menu>
                     </Grid.Column>
                     <Grid.Column style={{padding : '1em 0em'}}>
-                        amount: <Input type="number" onChange={e => setbuytokenamount(e.target.value)} name="amount2"
+                        <Label color='blue' key="blue">
+                            AMOUNT
+                        </Label> <Input type="number" onChange={e => setbuytokenamount(e.target.value)} name="amount2"
                                        placeholder="거래량"/>
                     </Grid.Column>
                     <Grid.Column>
-                        ratio : {ratio}
+                        <Label color='blue' key="blue">
+                            RATIO
+                        </Label> <Label >{ratio}</Label>
                         </Grid.Column>
                         <Grid.Column>
                        
