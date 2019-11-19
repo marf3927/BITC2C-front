@@ -31,17 +31,17 @@ const Writing = () => {
     }
 
     const buycoinoption = [
-        {key: 1, text: 'ETH', value: 'ETH'},
-        {key: 2, text: 'Atoken', value: 'Atoken'},
-        {key: 3, text: 'Btoken', value: 'Btoken'},
-        {key: 4, text: 'Ctoken', value: 'Ctoken'},
+        {key: 1, text: 'ETH', value: 'ETH' ,label: { color: 'red', empty: true, circular: true }},
+        {key: 2, text: 'Atoken', value: 'Atoken',label: { color: 'blue', empty: true, circular: true }},
+        {key: 3, text: 'Btoken', value: 'Btoken',label: { color: 'black', empty: true, circular: true }},
+        {key: 4, text: 'Ctoken', value: 'Ctoken',label: { color: 'green', empty: true, circular: true }},
     ]
 
     const sellcoinoption = [
-        {key: 1, text: 'ETH', value: 'ETH'},
-        {key: 2, text: 'Atoken', value: 'Atoken'},
-        {key: 3, text: 'Btoken', value: 'Btoken'},
-        {key: 4, text: 'Ctoken', value: 'Ctoken'},
+        {key: 1, text: 'ETH', value: 'ETH',label: { color: 'red', empty: true, circular: true }},
+        {key: 2, text: 'Atoken', value: 'Atoken',label: { color: 'blue', empty: true, circular: true }},
+        {key: 3, text: 'Btoken', value: 'Btoken',label: { color: 'black', empty: true, circular: true }},
+        {key: 4, text: 'Ctoken', value: 'Ctoken',label: { color: 'green', empty: true, circular: true }},
     ]
 
 
@@ -53,14 +53,15 @@ const Writing = () => {
 
     const onSellCoinChange = (e, result) => {
         const {text, value} = result
-        console.log(value)
-        setsellcoinselectd(value)
+        console.log(text)
+
+        setsellcoinselectd(text)
     }
 
     const onBuyCoinChange = (e, result) => {
         const {text, value} = result
         console.log(value)
-        setbuycoinselectd(value)
+        setbuycoinselectd(text)
     }
 
 
@@ -74,7 +75,7 @@ const Writing = () => {
                 console.log("판매테이블 생성")
                 return HttpService.createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id)
                     .then((response) => {
-                        Router.push('/trade/list')
+                        Router.push('/trade/tradeMain')
                     })
 
 
@@ -88,7 +89,7 @@ const Writing = () => {
         <>
        
             <Segment
-                 style={{ minHeight: 350, padding: '2em 0em',margin: '4em 2em' }}
+                 style={{ minHeight: 350, padding: '2em 0em',margin: '2em 2em' }}
                  vertical
                 >
 
@@ -104,10 +105,31 @@ const Writing = () => {
                         <Grid.Column style={{padding : '1em 0em'}}>
                             <Label color='blue' key="blue">
                                 SELLCOIN
-                            </Label> <Menu compact>
-                        <Dropdown text={sellcoinoption.text} options={sellcoinoption} onChange={onSellCoinChange} simple
-                                  item/>
-                    </Menu>
+                            </Label>
+                            <Dropdown
+                                text={sellcoinselectd}
+                                icon='bitcoin'
+
+                                labeled
+                                button
+                                className='icon'
+                                options={sellcoinoption}
+
+                            >
+
+                                <Dropdown.Menu>
+                                <Dropdown.Header icon='tags' content='종류' />
+                                <Dropdown.Menu scrolling>
+                                    {buycoinoption.map((option) => (
+                                        <Dropdown.Item key={option.value} onClick={onSellCoinChange}{...option} />
+                                    ))}
+                                </Dropdown.Menu>
+                                </Dropdown.Menu>
+
+                            </Dropdown>
+                        {/*<Dropdown text={sellcoinoption.text} options={sellcoinoption} onChange={onSellCoinChange} simple*/}
+                        {/*          item/>*/}
+
                     </Grid.Column>
 
                     <Grid.Column style={{padding : '1em 0em'}}>
@@ -119,10 +141,29 @@ const Writing = () => {
                    <Grid.Column style={{padding : '1em 0em'}}>
                        <Label color='blue' key="blue">
                            BUYCOIN
-                       </Label> <Menu compact>
-                        <Dropdown text={buycoinoption.text} options={buycoinoption} onChange={onBuyCoinChange} simple
-                                  item/>
-                    </Menu>
+
+                       </Label>
+                       <Dropdown
+                           text={buycoinselectd}
+                           icon='bitcoin'
+
+                           labeled
+                           button
+                           className='icon'
+                           options={buycoinoption}
+
+                       >
+
+                           <Dropdown.Menu>
+                               <Dropdown.Header icon='tags' content='종류' />
+                               <Dropdown.Menu scrolling>
+                                   {buycoinoption.map((option) => (
+                                       <Dropdown.Item key={option.value} onClick={onBuyCoinChange}{...option} />
+                                   ))}
+                               </Dropdown.Menu>
+                           </Dropdown.Menu>
+
+                       </Dropdown>
                     </Grid.Column>
                     <Grid.Column style={{padding : '1em 0em'}}>
                         <Label color='blue' key="blue">
