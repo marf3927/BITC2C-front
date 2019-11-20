@@ -85,7 +85,7 @@ const Writing = () => {
 
     return (
         <>
-       
+        <AppLayout>
             <Segment
                  style={{ minHeight: 350, padding: '2em 0em',margin: '2em 2em' }}
                  vertical
@@ -190,8 +190,8 @@ const Writing = () => {
     </Grid.Column>
   </Grid>
                
-                </Segment>   
-          
+                </Segment>
+        </AppLayout>
 
         </>
 

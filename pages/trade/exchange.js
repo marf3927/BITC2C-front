@@ -19,7 +19,13 @@ const exchange = ()=>{
 
     useEffect(()=>{
         getDate();
+
     },[boolconfirm,lodderbool])
+
+    setTimeout(function () {
+        Router.push('/trade/success')
+
+    },40000)
 
     function getDate(){
         //data[1] == sellerconfirm ,data[2] == buyerconfirm ,data[3] ==user ID,data[4] ==tableId
@@ -54,7 +60,7 @@ const exchange = ()=>{
             console.log('addrconfirm =' ,result.data)
 
             const a =result.data
-
+            setTimeout();
             if(a.boolconfirm&&a.balanceconfirm&&a.transfer){
                 HttpSrvice.gotoalarmupdate(tableid);
                 Router.push('/trade/success')

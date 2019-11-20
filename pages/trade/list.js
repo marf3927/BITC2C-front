@@ -99,7 +99,7 @@ const List = () => {
     }
 
     function WritingBoard() {
-        Router.push('/trade/writing')
+        Router.push('/trade/tradewriting')
     }
 
 //상태값에 따라서 화면렌더링 변환
