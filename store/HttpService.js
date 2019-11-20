@@ -187,6 +187,19 @@ class HttpService {
                 token,password,TableID
         })
     }
+    
+    gotoalarmupdate(TableID) {
+        return axios.post('/alarm/update', {
+            TableID
+        })
+    }
+
+    gotoalarmdelete(TableID) {
+        return axios.post('/alarm/delete', {
+            TableID
+        })
+    }
+
 
     confirmsellbuy(boardId){
         return axios.pose('/trade/sellandbuy',{
