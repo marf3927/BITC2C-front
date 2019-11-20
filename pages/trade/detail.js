@@ -55,12 +55,7 @@ const Detail = ({id}) => {
 
     //글쓴이가 아닌 사람이 글을 눌렀을때 버튼이 활성화 할지 확인하는 함수
     function usermatch() {
-        console.log('usermatch//')
         let error = new Error()
-
-        console.log('userId ==',userId , 'usertype',typeof(userId))
-
-        console.log('item seller id=',items.sellerId ,' items.sellerId',typeof(items.sellerId))
         if (userId === Number(items.sellerId) || typeof(userId)==='object' ) {
             console.log('user usermatch in')
             return true
