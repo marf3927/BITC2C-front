@@ -210,8 +210,8 @@ const List = () => {
                             }
                         }}></i>
                     </span>
-                    <span className="type_right"><Button id="WritingBoard"
-                                                         onClick={() => WritingBoard()}>Writing</Button></span>
+                    {/*<span className="type_right"><Button id="WritingBoard"*/}
+                    {/*                                     onClick={() => WritingBoard()}>Writing</Button></span>*/}
                 </div>
                 </Segment>
             

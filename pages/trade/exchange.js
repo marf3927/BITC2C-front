@@ -60,7 +60,7 @@ const exchange = ()=>{
             console.log('addrconfirm =' ,result.data)
 
             const a =result.data
-            setTimeout();
+            //setTimeout();
             if(a.boolconfirm&&a.balanceconfirm&&a.transfer){
                 HttpSrvice.gotoalarmupdate(tableid);
                 Router.push('/trade/success')
