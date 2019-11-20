@@ -71,14 +71,12 @@ const Writing = () => {
             var id = userId
             console.log('id', id)
             if (id) {
-
                 console.log("판매테이블 생성")
+                alert("거래 등록 완료!")
                 return HttpService.createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id)
                     .then((response) => {
                         Router.push('/trade/tradeMain')
                     })
-
-
             } else {
                 Router.push('/user/login/')
             }
