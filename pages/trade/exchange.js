@@ -15,6 +15,7 @@ const exchange = ()=>{
     const [boolconfirm,setboolconfirm]=useState(false);
     const [tableid,settableid] =useState()
     const [lodderbool,setlodderbool]=useState(false);
+    const [userid,setuserid]=useState();
     const router = useRouter();
 
     useEffect(()=>{
@@ -34,7 +35,7 @@ const exchange = ()=>{
             console.log('user ID ===',result.data[3]);
             console.log('sellerconfirm ==',result.data[1])
             console.log('buyerconfirm ==',result.data[2])
-
+            setuserid(result.data[3]);
 
             console.log('user ID type ===',typeof( result.data[3]));
             console.log('sellerconfirm type ===',typeof (result.data[1]))
@@ -54,6 +55,9 @@ const exchange = ()=>{
         });
     }
 
+
+    
+
     function addrconfirm (){
         setlodderbool(true);
         HttpSrvice.gotoaddrconfirm(password,tableid).then((result)=>{
@@ -63,6 +67,7 @@ const exchange = ()=>{
             //setTimeout();
             if(a.boolconfirm&&a.balanceconfirm&&a.transfer){
                 HttpSrvice.gotoalarmupdate(tableid);
+                HttpSrvice.get_socket().emit("success",{userid:userid,tableid:tableid})
                 Router.push('/trade/success')
                 console.log("트랜스퍼 성공")
             }else if(!(a.boolconfirm||(a.balanceconfirm&&a.transfer))){
