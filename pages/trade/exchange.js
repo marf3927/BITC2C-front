@@ -54,7 +54,9 @@ const exchange = ()=>{
 
         });
     }
-
+    HttpSrvice.get_socket().on('complete',()=>{
+        Router.push('/trade/success')
+    })
 
     
 
