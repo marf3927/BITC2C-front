@@ -90,6 +90,7 @@ const Writing = () => {
                 alert("거래 등록 완료!")
                 return HttpService.createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id)
                     .then((response) => {
+                        setlodderbool(false)
                         Router.push('/trade/tradeMain')
                     })
             } else {
@@ -101,8 +102,8 @@ const Writing = () => {
     return (
         <>
             <Dimmer active={lodderbool}>
-                <Loader size='huge'>지갑 암호를 확인중입니다.</Loader>
-
+                <Loader size='huge'>생성중입니다.</Loader>
+            </Dimmer>
             <Segment
                  style={{ minHeight: 350, padding: '2em 0em',margin: '2em 2em' }}
                  vertical
@@ -209,7 +210,7 @@ const Writing = () => {
   </Grid>
                
                 </Segment>
-            </Dimmer>
+           
 
         </>
 

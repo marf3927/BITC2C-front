@@ -23,11 +23,7 @@ const exchange = ()=>{
 
     },[boolconfirm,lodderbool])
 
-    setTimeout(function () {
-        Router.push('/trade/success')
-
-    },40000)
-
+  
     function getDate(){
         //data[1] == sellerconfirm ,data[2] == buyerconfirm ,data[3] ==user ID,data[4] ==tableId
         HttpSrvice.gotoGetDate().then((result)=>{
@@ -54,7 +50,8 @@ const exchange = ()=>{
 
         });
     }
-    HttpSrvice.get_socket().on('complete',()=>{
+    HttpSrvice.socket.get_socket().on('complete',()=>{
+        console.log("왓는가???")
         Router.push('/trade/success')
     })
 
@@ -69,7 +66,7 @@ const exchange = ()=>{
             //setTimeout();
             if(a.boolconfirm&&a.balanceconfirm&&a.transfer){
                 HttpSrvice.gotoalarmupdate(tableid);
-                HttpSrvice.get_socket().emit("success",{userid:userid,tableid:tableid})
+                HttpSrvice.socket.get_socket().emit("success",{userid:userid,tableid:tableid})
                 Router.push('/trade/success')
                 console.log("트랜스퍼 성공")
             }else if(!(a.boolconfirm||(a.balanceconfirm&&a.transfer))){
