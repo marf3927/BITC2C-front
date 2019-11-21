@@ -1,6 +1,20 @@
 import React, {useState, useEffect, useContext} from 'react'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon, Tab, Dropdown, Menu, Label, Segment, Grid, Message, Form} from 'semantic-ui-react'
+import {
+    Button,
+    Table,
+    Input,
+    Icon,
+    Tab,
+    Dropdown,
+    Menu,
+    Label,
+    Segment,
+    Grid,
+    Message,
+    Form,
+    Dimmer, Loader
+} from 'semantic-ui-react'
 import Router from 'next/router'
 import {HttpServiceContext} from "../../store/HttpService"
 
@@ -13,7 +27,7 @@ const Writing = () => {
     const [selltokenamount, setselltokenamount] = useState(0)
     const [buytokenamount, setbuytokenamount] = useState(0)
     const [ratio, setratio] = useState("")
-
+    const [lodderbool,setlodderbool]=useState(false);
     useEffect(() => {
         ratiocal()
     }, [, selltokenamount, buytokenamount])
@@ -67,18 +81,17 @@ const Writing = () => {
 
     //글쓰기 등록
     function onRegisterClick(method) {
+        setlodderbool(true)
         HttpService.getUser().then((userId) => {
             var id = userId
             console.log('id', id)
             if (id) {
-
                 console.log("판매테이블 생성")
+                alert("거래 등록 완료!")
                 return HttpService.createTrade(sellcoinselectd, buycoinselectd, selltokenamount, buytokenamount, id)
                     .then((response) => {
                         Router.push('/trade/tradeMain')
                     })
-
-
             } else {
                 Router.push('/user/login/')
             }
@@ -87,13 +100,16 @@ const Writing = () => {
 
     return (
         <>
-       
+            <Dimmer active={lodderbool}>
+                <Loader size='huge'>지갑 암호를 확인중입니다.</Loader>
+
             <Segment
                  style={{ minHeight: 350, padding: '2em 0em',margin: '2em 2em' }}
                  vertical
                 >
 
 <Grid columns='equal'>
+
     <Grid.Column>
       
     </Grid.Column>
@@ -192,8 +208,8 @@ const Writing = () => {
     </Grid.Column>
   </Grid>
                
-                </Segment>   
-          
+                </Segment>
+            </Dimmer>
 
         </>
 

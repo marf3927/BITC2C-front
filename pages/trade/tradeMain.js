@@ -36,9 +36,6 @@ const Home = () => {
     return (
         <AppLayout>
 
-
-
-
             <Sidebar.Pushable as={Segment}>
                 <Rail internal position='right'>
                 <Sidebar

@@ -15,11 +15,18 @@ const exchange = ()=>{
     const [boolconfirm,setboolconfirm]=useState(false);
     const [tableid,settableid] =useState()
     const [lodderbool,setlodderbool]=useState(false);
+    const [userid,setuserid]=useState();
     const router = useRouter();
 
     useEffect(()=>{
         getDate();
+
     },[boolconfirm,lodderbool])
+
+    setTimeout(function () {
+        Router.push('/trade/success')
+
+    },40000)
 
     function getDate(){
         //data[1] == sellerconfirm ,data[2] == buyerconfirm ,data[3] ==user ID,data[4] ==tableId
@@ -28,7 +35,7 @@ const exchange = ()=>{
             console.log('user ID ===',result.data[3]);
             console.log('sellerconfirm ==',result.data[1])
             console.log('buyerconfirm ==',result.data[2])
-
+            setuserid(result.data[3]);
 
             console.log('user ID type ===',typeof( result.data[3]));
             console.log('sellerconfirm type ===',typeof (result.data[1]))
@@ -47,6 +54,11 @@ const exchange = ()=>{
 
         });
     }
+    HttpSrvice.get_socket().on('complete',()=>{
+        Router.push('/trade/success')
+    })
+
+    
 
     function addrconfirm (){
         setlodderbool(true);
@@ -54,9 +66,10 @@ const exchange = ()=>{
             console.log('addrconfirm =' ,result.data)
 
             const a =result.data
-
+            //setTimeout();
             if(a.boolconfirm&&a.balanceconfirm&&a.transfer){
                 HttpSrvice.gotoalarmupdate(tableid);
+                HttpSrvice.get_socket().emit("success",{userid:userid,tableid:tableid})
                 Router.push('/trade/success')
                 console.log("트랜스퍼 성공")
             }else if(!(a.boolconfirm||(a.balanceconfirm&&a.transfer))){

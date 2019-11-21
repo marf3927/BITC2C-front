@@ -1,7 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react'
 import Link from 'next/link'
 import AppLayout from '../../components/AppLayout'
+<<<<<<< HEAD
 import { Button, Table, Input, Icon, Tab, Message, Segment} from 'semantic-ui-react'
+=======
+import {Button, Table, Input, Icon, Tab, Segment, Message} from 'semantic-ui-react'
+>>>>>>> ab1ae90c14b48febd066d370dbd6e3c51cd3fd6b
 import Router from "next/router"
 import {Cookies} from 'react-cookie'
 import {HttpServiceContext} from "../../store/HttpService"
