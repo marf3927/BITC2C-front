@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import Router,{ useRouter } from 'next/router';
+import Router from 'next/router';
 import {Grid, Segment, Message, Icon, Button, Input, Dimmer, Loader} from 'semantic-ui-react'
 
 import Timer from '../../components/test'
@@ -16,7 +16,7 @@ const exchange = ()=>{
     const [tableid,settableid] =useState()
     const [lodderbool,setlodderbool]=useState(false);
     const [userid,setuserid]=useState();
-    const router = useRouter();
+    
 
     useEffect(()=>{
         getDate();

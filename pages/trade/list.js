@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from 'react'
 import AppLayout from '../../components/AppLayout'
-import {Button, Table, Input, Icon, Menu, Dropdown, Tab, Segment, Message} from 'semantic-ui-react'
+import {Button, Table, Input, Icon, Menu, Dropdown, Label, Segment, Message} from 'semantic-ui-react'
 import Router from "next/router"
 import {HttpServiceContext} from "../../store/HttpService"
 
@@ -9,8 +9,8 @@ const List = () => {
 
     const [items, setItems] = useState([])
     const [page, setPage] = useState(1)
-    const [Sellselected, setSellselected] = useState("구매")
-    const [Buyselected, setBuyselected] = useState("판매")
+    const [Sellselected, setSellselected] = useState("ALL")
+    const [Buyselected, setBuyselected] = useState("ALL")
     const [Sortname, setSortname] = useState("")
     const [Iconbool, setIconbool] = useState(true)
     const idReference = useRef()
@@ -45,7 +45,7 @@ const List = () => {
     }, [, page, Sellselected, Buyselected, Iconbool, Sortname])
 
     function getItems() {
-        if (Sellselected === "판매" || Buyselected === "구매") {
+        if (Sellselected === "ALL" || Buyselected === "ALL") {
             return
         }
         if (Sortname !== "") {
@@ -155,7 +155,9 @@ const List = () => {
                 <div>
                     <Segment textAlign="left">
                     <Menu compact>
+                    <Label color="blue"  >판매</Label>
                         <Dropdown text={Sellselected} options={selloption} onChange={onSellSelectChange} simple item/>
+                        <Label color="blue"  >구매</Label>
                         <Dropdown text={Buyselected} options={buyoption} onChange={onBuySelectChange} simple item/>
                     </Menu>
                     </Segment>

@@ -65,7 +65,7 @@ const List = () => {
                                             <Table.Cell>{item.selltokenamount}</Table.Cell>
                                             <Table.Cell>{item.buytoken}</Table.Cell>
                                             <Table.Cell>{item.buytokenamount}</Table.Cell>
-                                            <Table.Cell>{item.updatedAt}</Table.Cell>
+                                            <Table.Cell>{item.createdAt}</Table.Cell>
                                             <Table.Cell>{statusdecide(item.status)}</Table.Cell>
                                         </Table.Row>
 

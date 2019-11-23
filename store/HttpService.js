@@ -14,6 +14,7 @@ class SocketIo {
     alarms = []
 
     constructor() {
+        
         this.socket = io.connect('http://localhost:5555')
     }
 
@@ -68,13 +69,7 @@ class HttpService {
     constructor() {
         this.authStore = new AuthStore()
         this.socket = new SocketIo()
-        if (this.authStore.authToken != undefined) {
-            this.getUser().then((userid) => {
-                console.log("userid: ", userid)
-                this.socket.get_socket().emit('storeClientInfo', userid);
-            });
-
-        }
+       
         axios.defaults.baseURL = this.authStore.baseURL
         axios.defaults.headers.common['authorization'] = 'jwt ' + this.authStore.authToken
         reaction(() => this.authStore.authToken, () => {
@@ -96,6 +91,17 @@ class HttpService {
             }
             return Promise.reject(originalError)
         })
+
+        if (this.authStore.authToken != undefined) {
+      
+            axios.get('/users/getuser/').then((response) => {
+             
+                this.socket.get_socket().emit('storeClientInfo', response.data.id);
+           
+            })
+         
+
+        }
     }
 
     getUser() {

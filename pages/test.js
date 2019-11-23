@@ -1,31 +1,37 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import List from "../components/tradeMain/list"
 import Writing from "../components/tradeMain/writing"
 import Mypage from "../components/tradeMain/myWallet"
 import AppLayout from '../components/AppLayout'
 import Chart from "../components/tradeMain/chart"
-import { Grid, Segment } from 'semantic-ui-react'
+import { Grid, Segment,Button } from 'semantic-ui-react'
+import {HttpServiceContext} from "../store/HttpService"
+
+
 
 
 const Home = () => {
+
+    const HttpSrvice=useContext(HttpServiceContext);
+
+    HttpSrvice.socket.get_socket().on('complete',()=>{
+        console.log("왓는가???")
+        Router.push('/trade/success')
+    })
+
+
+const onclick = ()=>{
+    
+    console.log("onlcick --")
+
+    HttpSrvice.socket.get_socket().emit("success",{userid:2,tableid:65})
+}
     return (
+
         <AppLayout>
 
-            <Grid columns={3} divided>
-                <Grid.Row stretched>
-                    <Grid.Column>
-                        <Segment><List/></Segment>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Segment>  <Chart/></Segment>
-                        <Segment><Writing/></Segment>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Segment> <Mypage/></Segment>
-
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
+         
+         <Button onClick={onclick}>test buton</Button>
 
 
         </AppLayout>
