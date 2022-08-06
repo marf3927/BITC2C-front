@@ -16,7 +16,7 @@
     "mobx": "^5.14.2",
     "mobx-react": "^6.1.4",
     "mobx-react-lite": "^1.5.0",
-    "next": "9.0.7",
+    "next": "12.1.0",
     "next-images": "^1.2.0",
     "react": "16.10.1",
     "react-cookie": "^4.0.1",
